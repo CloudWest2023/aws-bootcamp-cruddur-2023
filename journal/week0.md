@@ -20,3 +20,10 @@
 | Installed AWS CLI | -- |
 | Create a Billing Alarm | -- |
 | Create a Budget | -- |
+
+## Current AWS Organizations Structure
+
+![Organization Structure](../_docs/assets/organization-structure.png)
+
+1. `cruddur-dev` account contains IAM role `iamdeveloper` with just enough permissions for development.
+2. Only ccounts under **DEV OU** are permitted to assume `iamdeveloper` role for access to AWS resources, otherwise permissions are very limited.
