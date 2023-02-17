@@ -31,7 +31,7 @@
 
 ## Architecture Diagrams
 
-HemaKar (HK):
+HemaKar (HK): [Conceptual and Logical Diagrams] (https://lucid.app/lucidchart/d1407ad3-3f3d-4015-a3b1-36adbcfb8061/edit?viewport_loc=-1038%2C-358%2C2520%2C1612%2C0_0&invitationId=inv_7919566f-49fa-4510-8171-ea7c72ce9235) and (https://lucid.app/lucidchart/d1407ad3-3f3d-4015-a3b1-36adbcfb8061/edit?viewport_loc=205%2C-11%2C1680%2C1075%2CO__xqT0hEh-a&invitationId=inv_7919566f-49fa-4510-8171-ea7c72ce9235)
 
 k3kmani (Mani Raj):
 
