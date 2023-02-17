@@ -18,8 +18,8 @@
 | Use CloudShell | -- |
 | Generate AWS Credentials | -- |
 | Installed AWS CLI | -- |
-| Create a Billing Alarm | -- |
-| Create a Budget | -- |
+| Create a Billing Alarm | :heavy_check_mark: |
+| Create a Budget | :heavy_check_mark: |
 
 ## Current AWS Organizations Structure
 
@@ -27,3 +27,18 @@
 
 1. `cruddur-dev` account contains IAM role `iamdeveloper` with just enough permissions for development.
 2. Only ccounts under **DEV OU** are permitted to assume `iamdeveloper` role for access to AWS resources, otherwise permissions are very limited.
+
+
+## Architecture Diagrams
+
+HemaKar (HK):
+
+k3kmani (Mani Raj):
+
+allan-hsu (Allan Hsu): [Conceptual and Logical Diagrams](https://lucid.app/lucidchart/f7e59b81-605f-4131-af03-1657c3f03f6e/edit?invitationId=inv_fcbe1868-1e2e-4e80-a987-ff61c0c6f463)
+
+mariachiinajar:
+
+ultraman-labs:
+
+maayaa06:
