@@ -39,6 +39,6 @@ allan-hsu (Allan Hsu): [Conceptual and Logical Diagrams](https://lucid.app/lucid
 
 mariachiinajar:
 
-ultraman-labs (Tony Quntanilla):
+ultraman-labs (Tony Quintanilla):
 
 maayaa06:
