@@ -39,6 +39,6 @@ allan-hsu (Allan Hsu): [Conceptual and Logical Diagrams](https://lucid.app/lucid
 
 mariachiinajar:
 
-ultraman-labs (Tony Quintanilla): [Conceptual Diagrams] (https://lucid.app/lucidchart/d2677e12-bcf6-476a-aed2-3d9d7ef324b8/edit?viewport_loc=-321%2C64%2C2560%2C1244%2C0_0&invitationId=inv_bb3d008f-13c4-4567-a2d5-ea2dfe5556bb) and [Logical Diagrams pending]
+ultraman-labs (Tony Quintanilla): [Conceptual Diagrams](https://lucid.app/lucidchart/d2677e12-bcf6-476a-aed2-3d9d7ef324b8/edit?viewport_loc=-321%2C64%2C2560%2C1244%2C0_0&invitationId=inv_bb3d008f-13c4-4567-a2d5-ea2dfe5556bb) and [Logical Diagrams pending]
 
 maayaa06:
