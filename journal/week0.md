@@ -39,7 +39,7 @@ allan-hsu (Allan Hsu): [Conceptual and Logical Diagrams](https://lucid.app/lucid
 
 mariachiinajar:
 
-ultraman-labs (Tony Quintanilla): [Conceptual Diagrams](https://lucid.app/lucidchart/invitations/accept/inv_bb3d008f-13c4-4567-a2d5-ea2dfe5556bb) and [Logical Diagrams pending]
+ultraman-labs (Tony Quintanilla): [Conceptual Diagrams](https://lucid.app/lucidchart/invitations/accept/inv_bb3d008f-13c4-4567-a2d5-ea2dfe5556bb) and [Logical Diagrams ](https://lucid.app/lucidchart/d1ab9877-6c23-4cfe-a972-45be0f5d3757/edit?viewport_loc=-137%2C-357%2C1872%2C910%2C0_0&invitationId=inv_119312fa-3f6b-4505-af42-5ad2b6b5165b)
 
 maayaa06 (Sharon Sekyere):
 
