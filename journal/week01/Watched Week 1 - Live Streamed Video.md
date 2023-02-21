@@ -101,18 +101,18 @@ env | grep FRONTEND
 
 ## Resources
 
-🔗 Week 1 learning material - [https://github.com/omenking/aws-bootcamp-cruddur-2023/tree/main](https://github.com/omenking/aws-bootcamp-cruddur-2023/tree/main)
+🔗 Week 1 learning material - [omenking/aws-bootcamp-cruddur-2023](https://github.com/omenking/aws-bootcamp-cruddur-2023/tree/main)
 
 🔗 [Linuxserver.io](http://linuxserver.io/)
 
-🔗 [jfrog.com](http://jfrog.com/)
+🔗 [jfrog.com](http://jfrog.com/)  
 
-🔗 [https://github.com/docker-library/python/blob/master/3.10/slim-buster/Dockerfile](https://github.com/docker-library/python/blob/master/3.10/slim-buster/Dockerfile)
+🔗 [github.com/docker-library/python/blob/master/3.10/slim-buster/Dockerfile](https://github.com/docker-library/python/blob/master/3.10/slim-buster/Dockerfile)  
 
-Sponsors
+### **Sponsors**
 
-🔗 [meetup.com/aws-ontario-virtual-user-group/](http://meetup.com/aws-ontario-virtual-user-group/)
-🔗 [cantrill.io](http://cantrill.io/)
-🔗 [learn.cantrill.io/p/docker-fundamentals](http://learn.cantrill.io/p/docker-fundamentals)
-🔗 WeCloudData
-🔗 AWS
+🔗 [meetup.com/aws-ontario-virtual-user-group/](http://meetup.com/aws-ontario-virtual-user-group/)  
+🔗 [cantrill.io](http://cantrill.io/)  
+🔗 [learn.cantrill.io/p/docker-fundamentals](http://learn.cantrill.io/p/docker-fundamentals)  
+🔗 WeCloudData  
+🔗 AWS  
