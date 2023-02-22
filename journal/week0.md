@@ -13,7 +13,7 @@
 | Watched Chirag's - Spend Considerations   | :heavy_check_mark: |
 | Watched Ashish's - Security Considerations | :heavy_check_mark: |
 | Recreate Conceptual Diagram in Lucid Charts or on a Napkin | :heavy_check_mark: |
-| Recreate Logical Architectual Diagram in Lucid Charts | -- |
+| Recreate Logical Architectual Diagram in Lucid Charts | :heavy_check_mark: |
 | Create an Admin User | :heavy_check_mark: |
 | Use CloudShell | :heavy_check_mark: |
 | Generate AWS Credentials | :heavy_check_mark: |
