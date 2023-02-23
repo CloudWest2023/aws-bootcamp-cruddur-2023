@@ -143,11 +143,26 @@ paths:
         '200':
           description: Return a single message
           content:
-            application/json:
+            application/json:  
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Message'
+  /api/activities/notifications:
+    get: 
+      description: 'Return a feed of activities for all those that I follow.'
+      tags:
+        - activities
+      parameters: []
+      responses:
+        '200':
+          description: Returns an array of activities
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
 
 components:
   schemas:
