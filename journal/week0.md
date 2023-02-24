@@ -41,6 +41,6 @@ mariachiinajar (Goeun Gil): [Conceptual Diagram](https://lucid.app/lucidchart/3a
 
 ultraman-labs (Tony Quintanilla): [Conceptual Diagram](https://lucid.app/lucidchart/invitations/accept/inv_bb3d008f-13c4-4567-a2d5-ea2dfe5556bb) and [Logical Diagram ](https://lucid.app/lucidchart/d1ab9877-6c23-4cfe-a972-45be0f5d3757/edit?viewport_loc=-137%2C-357%2C1872%2C910%2C0_0&invitationId=inv_119312fa-3f6b-4505-af42-5ad2b6b5165b) Bonus: [Napkin Diagram](https://lucid.app/lucidchart/d1ab9877-6c23-4cfe-a972-45be0f5d3757/edit?viewport_loc=-1808%2C257%2C3699%2C1797%2CwBAyAOmu1KnF&invitationId=inv_119312fa-3f6b-4505-af42-5ad2b6b5165b)
 
-maayaa06 (Sharon Sekyere): [Conceptual Diagram](https://lucid.app/lucidchart/110e6690-4013-4f7c-97f6-492366c3fc82/edit?invitationId=inv_e8818191-7dd1-4afa-b61c-4d075528a485&page=0_0#)
+maayaa06 (Sharon Sekyere): [Conceptual and Logical Diagram](https://lucid.app/lucidchart/110e6690-4013-4f7c-97f6-492366c3fc82/edit?invitationId=inv_e8818191-7dd1-4afa-b61c-4d075528a485&page=0_0#)
 
 Harneetk21 (Harneet Kaur):
