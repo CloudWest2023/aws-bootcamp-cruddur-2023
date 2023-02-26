@@ -39,13 +39,13 @@ export default function DesktopSidebar(props) {
       {suggested}
       {join}
       <footer>
-        <Link to="/about" className="action">
+        <Link to="/about" className="action text-color">
           About
         </Link>
-        <Link to="/termsofservice" className="action">
+        <Link to="/termsofservice" className="action text-color">
           Terms of Service
         </Link>
-        <Link to="/privacypolicy" className="action">
+        <Link to="/privacypolicy" className="action text-color">
           Privacy Policy
         </Link>
       </footer>

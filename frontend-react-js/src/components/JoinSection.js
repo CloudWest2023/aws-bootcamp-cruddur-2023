@@ -5,8 +5,8 @@ export default function JoinSection(props) {
   return (
     <div className="join">
       <div className='join-title'>
-        Join The Party!
-      </div>
+        <span>Join The Party! <img className='icon' src='/party-popper-svgrepo-com.svg' /></span>
+      </div> 
       <div className='join-content'>
         <p>
           Have something you want to say?

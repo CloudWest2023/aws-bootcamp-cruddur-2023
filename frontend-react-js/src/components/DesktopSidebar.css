@@ -19,3 +19,7 @@ section footer a {
 section footer a:hover {
   color: rgba(255,255,255,1);
 }
+
+.text-color {
+  color: hwb(270 42% 3%)
+}
