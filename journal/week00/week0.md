@@ -25,8 +25,13 @@
 
 ## Architecture Diagrams
 
-mariachiinajar (Goeun (Gloria) Gil): [Conceptual Diagram](https://lucid.app/lucidchart/3a9760e3-df75-438a-b0e6-158e641871ef/edit?viewport_loc=-1863%2C-11885%2C7168%2C3412%2C0_0&invitationId=inv_38e40548-c558-46e2-aa36-f3e51ba96d6a) and [Logical Diagram](https://lucid.app/lucidchart/011e0247-49dc-4d1e-8a40-b6b116f8d571/edit?viewport_loc=-2120%2C-1667%2C3903%2C1858%2C0_0&invitationId=inv_5c09fd58-3214-41f2-88ac-bdf85d63413b)
+[Conceptual Diagram](https://lucid.app/lucidchart/3a9760e3-df75-438a-b0e6-158e641871ef/edit?viewport_loc=-1863%2C-11885%2C7168%2C3412%2C0_0&invitationId=inv_38e40548-c558-46e2-aa36-f3e51ba96d6a) 
 
+[image]()
+
+[Logical Diagram](https://lucid.app/lucidchart/011e0247-49dc-4d1e-8a40-b6b116f8d571/edit?viewport_loc=-2120%2C-1667%2C3903%2C1858%2C0_0&invitationId=inv_5c09fd58-3214-41f2-88ac-bdf85d63413b)
+
+[image]()
 
 <br>
 

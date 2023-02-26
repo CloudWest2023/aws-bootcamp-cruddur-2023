@@ -70,7 +70,7 @@ env | grep FRONTEND
 1:25:08 Troubleshooting - check the logs inside a docker container  
 - A useful tip: how to access shell inside the container.  
 
-![Attach Shell](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/893ad0c0-fb7c-437e-b452-4c52527e9281/Untitled.png)
+![Attach Shell](https://github.com/mariachiinajar/aws-bootcamp-cruddur-2023/blob/submissions/journal/resources/week01%20Live%20stream%20-%20attach%20shell.png)
 
 1:29:20 Solution - Set ENV variables and run the container again.
 - What Doesn’t work
@@ -94,7 +94,7 @@ env | grep FRONTEND
     - Debugging Docker commands,`ENV` variables
 🎙 James: starts straight with docker-compose to build an app — even he’s got only one container!
 
-**Closing**
+**Closing**  
 1:58:50 Homework notice
 
 <br>
