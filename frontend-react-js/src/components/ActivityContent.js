@@ -49,7 +49,9 @@ export default function ActivityContent(props) {
 
   return (
     <div className='activity_content_wrap'>
-      <div className='activity_avatar'></div>
+      <div className='activity_avatar'>
+        <img src="../public/mariachi in a jar-white.png" />
+      </div>
       <div className='activity_content'>
         <div className='activity_meta'>
           <Link className='activity_identity' to={`/@`+props.activity.handle}>

@@ -3,6 +3,7 @@ import Search from '../components/Search';
 import TrendingSection from '../components/TrendingsSection'
 import SuggestedUsersSection from '../components/SuggestedUsersSection'
 import JoinSection from '../components/JoinSection'
+import { Link } from "react-router-dom";
 
 export default function DesktopSidebar(props) {
   const trendings = [
@@ -38,9 +39,15 @@ export default function DesktopSidebar(props) {
       {suggested}
       {join}
       <footer>
-        <a href="#">About</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">Privacy Policy</a>
+        <Link to="/about" className="action">
+          About
+        </Link>
+        <Link to="/termsofservice" className="action">
+          Terms of Service
+        </Link>
+        <Link to="/privacypolicy" className="action">
+          Privacy Policy
+        </Link>
       </footer>
     </section>
   );
