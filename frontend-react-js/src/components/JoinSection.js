@@ -8,13 +8,9 @@ export default function JoinSection(props) {
         <span>Join The Party! <img className='icon' src='/party-popper-svgrepo-com.svg' /></span>
       </div> 
       <div className='join-content'>
-        <p>
-          Have something you want to say?
-        </p>
-        <p>
-          Don't think about it, just crud it!
-        </p>
-        <p>
+        <p className='passage' style={{'text-align': 'left'}}>
+          Have something you want to say? <br/>
+          Don't think about it, just crud it! <br/>
           Regret it? No worries, We'll forget it...
         </p>
         <Link to="/signup" className="action">
