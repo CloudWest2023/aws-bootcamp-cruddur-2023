@@ -8,35 +8,6 @@ import Cookies from 'js-cookie'
 
 export default function TermsOfServicePage() {
 
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [errors, setErrors] = React.useState('');
-
-  const onsubmit = async (event) => {
-    event.preventDefault();
-    setErrors('')
-    console.log('onsubmit')
-    if (Cookies.get('user.email') === email && Cookies.get('user.password') === password){
-      Cookies.set('user.logged_in', true)
-      window.location.href = "/"
-    } else {
-      setErrors("Email and password is incorrect or account doesn't exist")
-    }
-    return false
-  }
-
-  const email_onchange = (event) => {
-    setEmail(event.target.value);
-  }
-  const password_onchange = (event) => {
-    setPassword(event.target.value);
-  }
-
-  let el_errors;
-  if (errors){
-    el_errors = <div className='errors'>{errors}</div>;
-  }
-
   return (
     <article className="signin-article">
       <div className='signin-info'>
@@ -47,31 +18,20 @@ export default function TermsOfServicePage() {
           className='signin_form'
           onSubmit={onsubmit}
         >
-          <h2>This is a tester Terms of Service Page!</h2>
-          <div className='fields'>
-            <div className='field text_field username'>
-              <label>Email</label>
-              <input
-                type="text"
-                value={email}
-                onChange={email_onchange} 
-              />
+          <h2 className='white-text'>Our Terms of Service</h2>
+          <div className='white-text'>
+            <div>
+              <h3>Our Napkin of Service</h3>
+                <img className='image-terms-of-service' src="/week00 logical diagram_white_gloria_gil.svg" alt="image" />  
+                <br/>
+                You can check it out <a className='link-text' href="https://lucid.app/lucidchart/invitations/accept/inv_38e40548-c558-46e2-aa36-f3e51ba96d6a" target={'_blank'}>here</a>
             </div>
-            <div className='field text_field password'>
-              <label>Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={password_onchange} 
-              />
+            <div>
+              <h3>Our Concept of Service</h3>
+              <img className='image-terms-of-service' src="/week00 napkin diagram_white_gloria_gil.svg" alt="image" />  
+                You can check it out <a href="https://lucid.app/lucidchart/invitations/accept/inv_f704a63f-078f-4728-8cc3-d1edebdf2910" target={'_blank'}>here</a>
             </div>
           </div>
-          {el_errors}
-          <div className='submit'>
-            <Link to="/forgot" className="forgot-link">Forgot Password?</Link>
-            <button type='submit'>Sign In</button>
-          </div>
-
         </form>
         <div className="dont-have-an-account">
           <span>

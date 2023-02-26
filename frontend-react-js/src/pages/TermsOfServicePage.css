@@ -1,7 +1,7 @@
 article.signin-article .signin-info {
   flex-grow: 1;
   padding-left: 12px;
-}
+} */
 
 article.signin-article .signin-info .logo {
   width: 140px;
@@ -19,21 +19,22 @@ article.signin-article {
 
 article.signin-article .signin-wrapper {
   background: #202124;
-  width: 760px;
+  width: 1000px;
   display: flex;
   padding-top: 120px;
   flex-direction: column;
 }
+
 article.signin-article form {
   padding: 0px 120px;
   flex-grow: 1;
-}
+} 
 
 article.signin-article label {
   padding: 4px 0px;
   display: block;
   color: rgba(255,255,255,0.6);
-}
+} 
 
 article.signin-article input[type='text'],
 article.signin-article input[type='password'] {
@@ -52,21 +53,10 @@ article.signin-article input[type='password'] {
   color: #fff;
 }
 
-.field.password {
-  margin-top: 16px;
-}
 
 article.signin-article input[type='text']:focus ,
 article.signin-article input[type='password']:focus {
   border: solid 1px rgb(149,0,255,1);
-}
-
-article.signin-article .submit {
-  margin-top: 24px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
 }
 
 article.signin-article  h2 {
@@ -104,4 +94,17 @@ article.signin-article button[type='submit'] {
   color: rgba(149,0,255,1);
   text-decoration: none;
   font-weight: 600;
+}
+
+.white-text {
+  color: #fff;
+}
+
+a:visited {
+  color: hwb(270 42% 3%);
+}
+
+.image-terms-of-service {
+  width: 100%;
+  height: 100%;
 }

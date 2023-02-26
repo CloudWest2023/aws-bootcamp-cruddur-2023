@@ -80,6 +80,10 @@ article.signin-article  h2 {
   text-decoration: none;
 }
 
+.passage {
+  color: #fff;
+}
+
 article.signin-article a.forgot-link {
   color: #fff;
   font-weight: 600;

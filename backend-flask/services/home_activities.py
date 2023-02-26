@@ -4,7 +4,7 @@ class HomeActivities:
     now = datetime.now(timezone.utc).astimezone()
     results = [    {
       'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eef',
-      'handle':  'Mariachi in a Jar',
+      'handle': 'Mariachi in a Jar',
       'message': 'Week 01 - Create the notification feature (Backend and Front)',
       'created_at': (now - timedelta(days=2)).isoformat(),
       'expires_at': (now + timedelta(days=5)).isoformat(),

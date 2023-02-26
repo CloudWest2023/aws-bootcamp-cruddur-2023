@@ -21,12 +21,13 @@ export default function PrivacyPolicyPage() {
           <h2>Our Privacy Policy</h2>
           <div className='fields'>
             <div className='field text_field username'>
-              <h3 className="passage-title">Privacy</h3>
+              <h3 className='passage-title'>Privacy</h3>
+              <p className='passage'>Shh... I can't tell you about our privacy policy, because you know, it's private!</p>
             </div>
           </div>
           <div className='submit'>
             <Link to="/forgot" className="forgot-link">Forgot Password?</Link>
-            <button type='submit'>Sign In</button>
+            <button type='submit' title="This button does nothing. Just added for fun :D">Got it</button>
           </div>
 
         </form>

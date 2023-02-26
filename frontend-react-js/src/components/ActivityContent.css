@@ -17,6 +17,13 @@
   flex-shrink: 0;
 }
 
+.user-profile-picture {
+  height: 60px;
+  width: 60px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
 .activity_content .activity_meta {
   display: flex;
   justify-content: space-between;
