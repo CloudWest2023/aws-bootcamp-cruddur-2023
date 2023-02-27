@@ -49,6 +49,10 @@
   font-size: 16px;
 }
 
+.passage {
+  text-align: left;
+}
+
 .icon {
   height: 25px;
   width: 25px;

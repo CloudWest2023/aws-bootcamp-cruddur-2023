@@ -50,7 +50,7 @@ export default function ActivityContent(props) {
   return (
     <div className='activity_content_wrap'>
       <div className='activity_avatar'>
-        <img className='user-profile-picture' src='logo_mariachi_in_a_jar_white.png' alt='Mariachi logo'/>
+        <img className='user-profile-picture' src={props.activity.profile_picture} />
       </div>
       <div className='activity_content'>
         <div className='activity_meta'>
