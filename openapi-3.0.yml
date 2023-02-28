@@ -172,9 +172,6 @@ components:
         uuid:
           type: string
           example: 0056a369-4618-43a4-ad88-e7c371bf5582
-        profile_picture:
-          type: object
-          example: "/bubble.png"
         display_name:
           type: string
           example: "Andrew Brown"
