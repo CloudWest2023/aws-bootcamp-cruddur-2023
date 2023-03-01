@@ -14,7 +14,7 @@ class HomeActivities:
         'replies_count': 2,
         'reposts_count': 0,
         'replies': [{
-          'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea68',
+          'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea69',
           'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeg',
           'profile_picture': '/logo_mariachi_in_a_jar_white.png',
           'handle':  'Mariachi in a Jar',
@@ -25,7 +25,7 @@ class HomeActivities:
           'created_at': (now - timedelta(days=2)).isoformat()
       }, 
       {
-        'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea69',
+        'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea70',
         'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eef',
         'profile_picture': '/logo_mariachi_in_a_jar_white.png',
         'handle':  'Mariachi in a Jar',
@@ -46,28 +46,40 @@ class HomeActivities:
         'likes_count': 5,
         'replies_count': 2,
         'reposts_count': 0,
-        'replies': [{
-          'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea68',
-          'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eef',
-          'profile_picture': '/logo_mariachi_in_a_jar_white.png',
-          'handle':  'Mariachi in a Jar',
-          'message': 'Week 02 Sunday - Something went wrong with the Frontend. Doing this task all over again!',
-          'likes_count': 0,
-          'replies_count': 0,
-          'reposts_count': 0,
-          'created_at': (now - timedelta(days=2)).isoformat()
-        }, 
-        {
-          'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea69',
-          'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eef',
-          'profile_picture': '/logo_mariachi_in_a_jar_white.png',
-          'handle':  'Mariachi in a Jar',
-          'message': 'Week 02 Monday morning 3 AM - sidetracked from notification feature because frontend is so much fun! lol. Updated homefeed page and Desktop Sidebar feature!',
-          'likes_count': 0,
-          'replies_count': 0,
-          'reposts_count': 0,
-          'created_at': (now - timedelta(days=2)).isoformat()
-        }],
+        'replies': [
+          {
+            'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea65',
+            'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eef',
+            'profile_picture': '/logo_mariachi_in_a_jar_white.png',
+            'handle':  'Mariachi in a Jar',
+            'message': '✅ *DynamoDB and Postgres vs Docker*: Created Music table, furnished it with my fav songs! [Week 02 Wednesday]',
+            'likes_count': 0,
+            'replies_count': 0,
+            'reposts_count': 0,
+            'created_at': (now - timedelta(days=2)).isoformat()
+          }, 
+          {
+            'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea67',
+            'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eef',
+            'profile_picture': '/logo_mariachi_in_a_jar_white.png',
+            'handle':  'Mariachi in a Jar',
+            'message': '✅ Write a Flask Backend Endpoint for Notifications - Something went wrong with the Frontend. Doing this task all over again! [Week 02 Sunday]',
+            'likes_count': 0,
+            'replies_count': 0,
+            'reposts_count': 0,
+            'created_at': (now - timedelta(days=2)).isoformat()
+          }, 
+          {
+            'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea69',
+            'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eef',
+            'profile_picture': '/logo_mariachi_in_a_jar_white.png',
+            'handle':  'Mariachi in a Jar',
+            'message': '🔍 Sidetracked from notification feature because frontend is so much fun! lol. Updated homefeed page and Desktop Sidebar feature! [Week 02 Monday morning 3 AM]',
+            'likes_count': 0,
+            'replies_count': 0,
+            'reposts_count': 0,
+            'created_at': (now - timedelta(days=2)).isoformat()
+          }],
       },
       {
         'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eea',
@@ -82,7 +94,7 @@ class HomeActivities:
         'replies': 
         [
           {
-            'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea68',
+            'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea66',
             'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eea',
             'profile_picture': '/logo_mariachi_in_a_jar_white.png',
             'handle':  'Mariachi in a Jar',
