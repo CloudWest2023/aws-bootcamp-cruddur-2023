@@ -34,14 +34,31 @@ export default function DesktopNavigation(props) {
   return (
     <nav>
       <Logo className='logo' />
-      <DesktopNavigationLink url="/" 
+      <DesktopNavigationLink 
+        url="/" 
         name="Home"
         handle="home"
         active={props.active} />
-      {notificationsLink}
+      <DesktopNavigationLink 
+        url="/notifications" 
+        name="Notifications"
+        handle="notifications"
+        active={props.active} />
+      <DesktopNavigationLink 
+        url="/messages" 
+        name="Messages"
+        handle="messages"
+        active={props.active} />
+      <DesktopNavigationLink 
+        url="/profile" 
+        name="Profile"
+        handle="profile"
+        active={props.active} />
+      {/* {notificationsLink}
       {messagesLink}
-      {profileLink}
-      <DesktopNavigationLink url="/#" 
+      {profileLink} */}
+      <DesktopNavigationLink 
+        url="/more" 
         name="More" 
         handle="more"
         active={props.active} />

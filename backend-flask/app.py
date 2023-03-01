@@ -69,7 +69,7 @@ def data_home():
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
 def data_handle(handle):
   model = UserActivities.run(handle)
-  if model['errors'] is not None:
+  if model['errors'] is not None:   # Error validation
     return model['errors'], 422
   else:
     return model['data'], 200

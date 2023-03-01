@@ -32,7 +32,9 @@ export default function MessageGroupItem(props) {
 
   return (
     <Link className={classes()} to={`/messages/@`+props.message_group.handle}>
-      <div className='message_group_avatar'></div>
+      <div className='message_group_avatar'>
+        <img className='user-profile-picture' src={props.message_group.profile_picture} />
+      </div>
       <div className='message_content'>
         <div classsName='message_group_meta'>
           <div className='message_group_identity'>

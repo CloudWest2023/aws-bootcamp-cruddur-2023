@@ -2,6 +2,7 @@ import './App.css';
 
 import HomeFeedPage from './pages/HomeFeedPage';
 import UserFeedPage from './pages/UserFeedPage';
+import NotificationsPage from './pages/NotificationsPage';
 import SignupPage from './pages/SignupPage';
 import SigninPage from './pages/SigninPage';
 import RecoverPage from './pages/RecoverPage';
@@ -18,6 +19,8 @@ import {
   RouterProvider
 } from "react-router-dom";
 
+// Define routes (path) and map them to the actual react pages (element).
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/@:handle",
     element: <UserFeedPage />
+  },
+  {
+    path: "/notifications",
+    element: <NotificationsPage />
   },
   {
     path: "/messages",

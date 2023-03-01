@@ -177,7 +177,7 @@ components:
           example: "/bubble.png"
         display_name:
           type: string
-          example: "Andrew Brown"
+          example: "Mariachi in a Jar"
         handle:
           type: string
           example: "andrewbrown"
@@ -235,13 +235,13 @@ components:
           example: 0056a369-4618-43a4-ad88-e7c371bf5582
         display_name:
           type: string
-          example: "Andrew Brown"
+          example: "Mariachi in a Jar"
         handle:
           type: string
-          example: "andrewbrown"
+          example: "mariachiinajar"
         message:
           type: string
-          example: "Who likes pineapple on their pizza?"
+          example: "This is an example mssage in openapi-3.0"
         created_at:
           type: string
           example: "2023-02-06T18:11:03+00:00"
@@ -253,7 +253,7 @@ components:
           example: 0056a369-4618-43a4-ad88-e7c371bf5582
         display_name:
           type: string
-          example: "Worf"
+          example: "matincloud"
         handle:
           type: string
-          example: "worf"
+          example: "matincloud"
