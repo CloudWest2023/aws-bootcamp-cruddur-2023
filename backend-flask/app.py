@@ -14,7 +14,7 @@ from services.messages import *
 from services.create_message import *
 from services.show_activity import *
 
-a
+
 ####################### HONEYCOMB #######################
 # OTEL packages  --------------------------
 from opentelemetry import trace
