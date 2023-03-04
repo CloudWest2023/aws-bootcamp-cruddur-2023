@@ -1,0 +1,5 @@
+export HONEYCOMB_API_KEY="your_api_key_on_honeycomb"
+gp env HONEYCOMB_API_KEY="your_api_key_on_honeycomb"
+
+export HONEYCOMB_SERVICE_NAME="your_api_key_on_honeycomb"
+gp env HONEYCOMB_SERVICE_NAME="your_api_key_on_honeycomb"
