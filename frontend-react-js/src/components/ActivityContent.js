@@ -47,6 +47,25 @@ export default function ActivityContent(props) {
 
   }
 
+  let message_content;
+  let message_boldened;
+  let bold_source;
+  let bold;
+  if (props.activity.message) {
+    message_content = props.activity.message;
+    bold_source = message_content.match('\\*.*\\*')
+    if (bold_source) {
+      bold = bold_source[0].replace('*', '')
+      bold = bold.replace('*', '')
+      bold = "<span style={{ fontWeight: 'bold' }}>" + bold + "</span>";
+      console.log(bold_source[0])
+      console.log(bold)
+      message_boldened = message_content.replace(bold_source[0], bold);
+      console.log("message_content - ", message_content)
+      console.log("message_boldened - ", message_boldened)
+    }
+  }
+
   return (
     <div className='activity_content_wrap'>
       <div className='activity_avatar'>
@@ -58,14 +77,17 @@ export default function ActivityContent(props) {
             <div className='display_name'>{props.activity.display_name}</div>
             <div className="handle">@{props.activity.handle}</div>
           </Link>{/* activity_identity */}
-          <div className='activity_times'>
+          <div className='activity_times' style={{ flexDirection: 'row' }}>
             <div className="created_at" title={props.activity.created_at}>
               <span className='ago'>{format_time_created_at(props.activity.created_at)}</span> 
-            </div>
+            </div>&nbsp;
             {expires_at}
           </div>{/* activity_times */}
         </div>{/* activity_meta */}
-        <div className="message">{props.activity.message}</div>
+        <div className="message">
+          {props.activity.message}
+          {message_boldened}
+        </div>
       </div>{/* activity_content */}
     </div>
   );
