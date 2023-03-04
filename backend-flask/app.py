@@ -14,7 +14,7 @@ from services.messages import *
 from services.create_message import *
 from services.show_activity import *
 
-
+a
 ####################### HONEYCOMB #######################
 # OTEL packages  --------------------------
 from opentelemetry import trace
@@ -23,10 +23,10 @@ from opentelemetry.instrumentation.requests import RequestsInstrumentor
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.sdk.trace.export import ConsoleSpanProcessor, SimpleSpanProcessor
+from opentelemetry.sdk.trace.export import ConsoleSpanExporter, SimpleSpanProcessor
 
 ####################### HONEYCOMB #######################
-# Initialize HONEYCOMB tracing and an exporter that can send data to Honeycomb
+# Initialize HONEYCOMB tracing and an exporter that can send dta to Honeycomb
 provider = TracerProvider()
 
 processor = BatchSpanProcessor(OTLPSpanExporter()) # Reads the env variables for the configuration of where to send the spans.
@@ -56,6 +56,24 @@ cors = CORS(
   allow_headers="content-type,if-modified-since",
   methods="OPTIONS,GET,HEAD,POST"
 )
+
+@app.route("/api/activities/home", methods=['GET'])
+def data_home():
+  data = HomeActivities.run()
+  return data, 200
+
+@app.route("/api/activities/notifications", methods=['GET'])
+def data_nodifications():
+  data = NotificationsActivities.run()
+  return data, 200
+
+@app.route("/api/activities/@<string:handle>", methods=['GET'])
+def data_handle(handle):
+  model = UserActivities.run(handle)
+  if model['errors'] is not None:   # Error validation
+    return model['errors'], 422
+  else:
+    return model['data'], 200
 
 @app.route("/api/message_groups", methods=['GET'])
 def data_message_groups():
@@ -91,24 +109,6 @@ def data_create_message():
   else:
     return model['data'], 200
   return
-
-@app.route("/api/activities/home", methods=['GET'])
-def data_home():
-  data = HomeActivities.run()
-  return data, 200
-
-@app.route("/api/activities/@<string:handle>", methods=['GET'])
-def data_handle(handle):
-  model = UserActivities.run(handle)
-  if model['errors'] is not None:   # Error validation
-    return model['errors'], 422
-  else:
-    return model['data'], 200
-
-@app.route("/api/activities/notifications", methods=['GET'])
-def data_nodifications():
-  data = NotificationsActivities.run()
-  return data, 200
 
 @app.route("/api/activities/search", methods=['GET'])
 def data_search():
