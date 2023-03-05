@@ -27,7 +27,7 @@ class HomeActivities:
               'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeh',
               'profile_picture': '/logo_mariachi_in_a_jar_white.png',
               'handle':  'Mariachi in a Jar',
-              'message': 'Homework report placeholder',
+              'message': '[0200-0400, Feb 08 Sunday] Watched week 03 livestream and followed along the authentication process',
               'likes_count': 0,
               'replies_count': 0,
               'reposts_count': 0,

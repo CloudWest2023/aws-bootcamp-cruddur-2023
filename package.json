@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "amazon-cognito-identity-js": "^6.1.2",
+    "aws-amplify": "^5.0.16",
     "react-markdown": "^8.0.5"
   }
 }
