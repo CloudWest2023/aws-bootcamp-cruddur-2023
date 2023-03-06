@@ -58,6 +58,8 @@ paths:
                   type: string
                 message:
                   type: string
+                image:
+                  type: object
                 ttl:
                   type: string
       responses:

@@ -56,7 +56,20 @@ class HomeActivities:
           'likes_count': 5,
           'replies_count': 2,
           'reposts_count': 0,
-          'replies': [{
+          'replies': [
+            {
+              'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea70',
+              'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeg',
+              'profile_picture': '/logo_mariachi_in_a_jar_white.png',
+              'handle':  'Mariachi in a Jar',
+              'message': 'Week 03 Monday - Working on Instrument Xray!',
+              'image': '',
+              'likes_count': 0,
+              'replies_count': 0,
+              'reposts_count': 0,
+              'created_at': (now - timedelta(days=2)).isoformat()
+            }, 
+            {
               'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea69',
               'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeg',
               'profile_picture': '/logo_mariachi_in_a_jar_white.png',
