@@ -14,16 +14,25 @@ from services.messages import *
 from services.create_message import *
 from services.show_activity import *
 
-
 ####################### HONEYCOMB #######################
 # OTEL packages  --------------------------
 from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
-from opentelemetry.instrumentation.requests import RequestsInstrumentor
+from opentelemetry.instrumentation.requests import RequestsInstrumentor   # this is middleware
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.sdk.trace.export import ConsoleSpanExporter, SimpleSpanProcessor
+
+####################### AWS X-ray #######################
+from aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+
+# --------------------------------- END OF LIBRARY --------------------------------- 
+
+
+
+
 
 ####################### HONEYCOMB #######################
 # Initialize HONEYCOMB tracing and an exporter that can send dta to Honeycomb
@@ -46,6 +55,11 @@ app = Flask(__name__)
 FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 
+####################### AWS X-RAY #######################
+xray_url = os.getenv("AWS_XRAY_URL")
+xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+XRayMiddleware(app, xray_recorder)
+ 
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
 origins = [frontend, backend]
