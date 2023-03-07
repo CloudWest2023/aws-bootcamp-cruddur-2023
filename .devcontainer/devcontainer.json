@@ -24,8 +24,8 @@
 				"dracula-theme.theme-dracula"
 			],
 			"settings": {
-				"terminal.integrated.fontSize": 18,
-				"editor.fontSize": 18
+				"terminal.integrated.fontSize": 15,
+				"editor.fontSize": 15
 			}
 		}
 	}
