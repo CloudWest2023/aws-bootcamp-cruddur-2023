@@ -85,8 +85,8 @@ export default function ActivityContent(props) {
           </div>{/* activity_times */}
         </div>{/* activity_meta */}
         <div className="message">
-          {props.activity.message}
-          {message_boldened}
+          {props.activity.message} <br className="msg-img-linebreak" />
+          <img className='user-attached-image' src={props.activity.image} alt="no space error message" />
         </div>
       </div>{/* activity_content */}
     </div>

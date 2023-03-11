@@ -63,7 +63,7 @@ class HomeActivities:
               'profile_picture': '/logo_mariachi_in_a_jar_white.png',
               'handle':  'Mariachi in a Jar',
               'message': 'Week 03 Tuesday - Migrating from Gitpod to Github Codespace. Open a workspace and reconfigured docker-compose file and devcontainer.json file following along Andrew\'s Codespace Crash Course.',
-              'image': '',
+              'image': '/week2-error-nospace.png',
               'likes_count': 0,
               'replies_count': 0,
               'reposts_count': 0,

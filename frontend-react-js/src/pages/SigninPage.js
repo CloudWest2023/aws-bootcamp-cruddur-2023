@@ -11,39 +11,39 @@ export default function SigninPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [errors, setErrors] = React.useState('');
-  // const [cognitoErrors, setCognitoErrors] = React.useState('');
-
-  // const onsubmit = async (event) => {
-  //   event.preventDefault();
-  //   setErrors('')
-  //   console.log('onsubmit')
-  //   if (Cookies.get('user.email') === email && Cookies.get('user.password') === password){
-  //     Cookies.set('user.logged_in', true)
-  //     window.location.href = "/"
-  //   } else {
-  //     setErrors("Email and password is incorrect or account doesn't exist")
-  //   }
-  //   return false
-  // }
+  const [cognitoErrors, setCognitoErrors] = React.useState('');
 
   const onsubmit = async (event) => {
-    setErrors('')  // set the errors to blank.
     event.preventDefault();
-    try {
-      Auth.signIn(email, password)
-        .then(user => { // access token
-          localStorage.setItem("access_token", user.signInUserSession.accessToken.jwtToken)
-          window.location.href = "/"
-        })
-        .catch(err => { console.log('Error!', err) });
-    } catch (error) {
-      if (error.code == 'UserNotConfirmedException') { // takes you to the confirmation page. 
-        window.location.href = "/confirm"
-      }
-      setErrors(error.message)
+    setErrors('')
+    console.log('onsubmit')
+    if (Cookies.get('user.email') === email && Cookies.get('user.password') === password){
+      Cookies.set('user.logged_in', true)
+      window.location.href = "/"
+    } else {
+      setErrors("Email and password is incorrect or account doesn't exist")
     }
     return false
   }
+
+  // const onsubmit = async (event) => {
+  //   setErrors('')  // set the errors to blank.
+  //   event.preventDefault();
+  //   try {
+  //     Auth.signIn(email, password)
+  //       .then(user => { // access token
+  //         localStorage.setItem("access_token", user.signInUserSession.accessToken.jwtToken)
+  //         window.location.href = "/"
+  //       })
+  //       .catch(err => { console.log('Error!', err) });
+  //   } catch (error) {
+  //     if (error.code == 'UserNotConfirmedException') { // takes you to the confirmation page. 
+  //       window.location.href = "/confirm"
+  //     }
+  //     setErrors(error.message)
+  //   }
+  //   return false
+  // }
   
 
   const email_onchange = (event) => {
