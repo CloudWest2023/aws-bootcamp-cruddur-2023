@@ -85,8 +85,9 @@ export default function ActivityContent(props) {
           </div>{/* activity_times */}
         </div>{/* activity_meta */}
         <div className="message">
-          {props.activity.message} <br className="msg-img-linebreak" />
-          <img className='user-attached-image' src={props.activity.image} alt="no space error message" />
+          {props.activity.message} <br className="msg-img-linebreak" />        
+          <span>Commit hash: </span><a href={props.activity.commit_url} target="_blank">{props.activity.commit_hash}</a>
+          <img className='user-attached-image' src={props.activity.image} />
         </div>
       </div>{/* activity_content */}
     </div>
