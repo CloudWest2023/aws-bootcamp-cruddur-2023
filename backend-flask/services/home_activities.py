@@ -5,6 +5,9 @@ tracer = trace.get_tracer("home.activities")
 
 class HomeActivities:
   def run():
+  # def run(logger):
+  #   logger.info("Logs from HomeActivities.py")
+    # LOGGER.info('Hello Cloudwatch! from  /api/activities/home')
     with tracer.start_as_current_span("mock-data-home-activities"): # This line creates spans
       span = trace.get_current_span()           # this and the next lines add attributes to spans
       now = datetime.now(timezone.utc).astimezone()
