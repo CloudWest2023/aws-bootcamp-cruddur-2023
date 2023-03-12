@@ -5,7 +5,6 @@ tracer = trace.get_tracer("home.activities")
 
 class HomeActivities:
   def run():
-    
     with tracer.start_as_current_span("mock-data-home-activities"): # This line creates spans
       span = trace.get_current_span()           # this and the next lines add attributes to spans
       now = datetime.now(timezone.utc).astimezone()
@@ -74,8 +73,8 @@ class HomeActivities:
               'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeg',
               'profile_picture': '/logo_mariachi_in_a_jar_white.png',
               'handle':  'Mariachi in a Jar',
-              'message': 'Week 03 Monday - Working on Instrument Xray!',
-              'image': '',
+              'message': 'Week 03 Monday - Week04 Sunday - Working on Instrument Xray!',
+              'image': '/week2-xray-daemon-working.png',
               'likes_count': 0,
               'replies_count': 0,
               'reposts_count': 0,
