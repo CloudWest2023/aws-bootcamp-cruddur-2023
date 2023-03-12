@@ -66,6 +66,13 @@ export default function ActivityContent(props) {
     }
   }
 
+  let commit_hash
+  if (props.activity.commit_hash) {
+    commit_hash = <span className='commit'>commit hash: <a href={props.activity.commit_url} target="_blank">{props.activity.commit_hash}</a></span>
+  } else {
+    commit_hash = ""
+  }
+
   return (
     <div className='activity_content_wrap'>
       <div className='activity_avatar'>
@@ -86,7 +93,7 @@ export default function ActivityContent(props) {
         </div>{/* activity_meta */}
         <div className="message">
           {props.activity.message} <br className="msg-img-linebreak" />        
-          <span>Commit hash: </span><a href={props.activity.commit_url} target="_blank">{props.activity.commit_hash}</a>
+          {commit_hash}
           <img className='user-attached-image' src={props.activity.image} />
         </div>
       </div>{/* activity_content */}

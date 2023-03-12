@@ -79,11 +79,14 @@ export default function ReplyForm(props) {
             >
               <textarea
                 type="text"
-                placeholder="what is your reply?"
+                placeholder="what is your replyyyyyyyyyyyyyyyyy???????????"
                 value={message}
                 onChange={textarea_onchange} 
               />
               <div className='submit'>
+                <div>
+                  <button><img src="/close.png" /></button>
+                </div>
                 <div className={classes.join(' ')}>{240-count}</div>
                 <button type='submit'>Reply</button>
               </div>

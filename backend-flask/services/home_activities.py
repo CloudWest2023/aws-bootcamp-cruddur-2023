@@ -59,12 +59,14 @@ class HomeActivities:
           'replies_count': 2,
           'reposts_count': 0,
           'replies': [
-            {
+                        {
               'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea71',
               'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeg',
               'profile_picture': '/logo_mariachi_in_a_jar_white.png',
               'handle':  'Mariachi in a Jar',
               'message': 'Week 03 Tuesday - Migrating from Gitpod to Github Codespace. Open a workspace and reconfigured docker-compose file and devcontainer.json file following along Andrew\'s Codespace Crash Course.',
+              'commit_hash': '28f3332',
+              'commit_url': 'https://github.com/CloudWest2023/aws-bootcamp-cruddur-2023/commit/28f33323f7e117506aa6aebc62364218559e33bd',
               'image': '/week2-error-nospace.png',
               'likes_count': 0,
               'replies_count': 0,
@@ -72,12 +74,24 @@ class HomeActivities:
               'created_at': (now - timedelta(days=2)).isoformat()
             }, 
             {
-              'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea70',
+              'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea72',
               'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeg',
               'profile_picture': '/logo_mariachi_in_a_jar_white.png',
               'handle':  'Mariachi in a Jar',
-              'message': 'Week 03 Monday - Week04 Sunday - Working on Instrument Xray!',
+              'message': 'Week 03 Monday - Week04 Sunday - Finished instrumenting Xray!',
               'image': '/week2-xray-daemon-working.png',
+              'likes_count': 0,
+              'replies_count': 0,
+              'reposts_count': 0,
+              'created_at': (now - timedelta(days=2)).isoformat()
+            }, 
+            {
+              'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea73',
+              'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeg',
+              'profile_picture': '/logo_mariachi_in_a_jar_white.png',
+              'handle':  'Mariachi in a Jar',
+              'message': 'Week04 Sunday - Implemented CloudWatch log, SUCCESS!',
+              'image': '/week02-hw-cloudwatch-logs.png',
               'likes_count': 0,
               'replies_count': 0,
               'reposts_count': 0,

@@ -81,3 +81,15 @@
   border-radius: 15px; 
   width: 100%;
 }
+
+.commit {
+  color:#9500ff;
+  margin-top: 3px;
+  margin-bottom: 5px;
+  padding-left: 4px;
+  padding-right: 4px;
+  background-color:#393939;
+  border-radius: 2px;
+  font-family: consolas;
+  font-size: 85%;
+}
