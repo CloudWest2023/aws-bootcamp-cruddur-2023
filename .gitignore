@@ -2,3 +2,6 @@
 docker/dynamodb/*
 pickup.txt
 node_modules
+
+frontend-react-js/.env
+backend-flask/.env

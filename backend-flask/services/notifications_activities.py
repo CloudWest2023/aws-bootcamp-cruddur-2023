@@ -5,7 +5,7 @@ class NotificationsActivities:
     results = [
       {
         'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109aaa',
-        'profile_picture': '/bubble w03.png',
+        'profile_picture': '/bubble_w03.png',
         'handle':  'Cruddur Campbot 03',
         'message': '*Week 03 — Decentralized Authentication*',
         'created_at': (now - timedelta(days=2)).isoformat(),
@@ -51,7 +51,7 @@ class NotificationsActivities:
       },
       {
         'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109bbb',
-        'profile_picture': '/bubble w02.png',
+        'profile_picture': '/bubble_w02.png',
         'handle':  'Cruddur Campbot 02',
         'message': 'Week 02 — Observability',
         'created_at': (now - timedelta(days=2)).isoformat(),
@@ -75,7 +75,7 @@ class NotificationsActivities:
       },
       {
         'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109ccc',
-        'profile_picture': '/bubble w01.png',
+        'profile_picture': '/bubble_w01.png',
         'handle':  'Cruddur Campbot 01',
         'message': 'Week 01',
         'created_at': (now - timedelta(days=2)).isoformat(),
@@ -99,7 +99,7 @@ class NotificationsActivities:
       },
       {
         'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109ddd',
-        'profile_picture': '/bubble w00.png',
+        'profile_picture': '/bubble_w00.png',
         'handle':  'Cruddur Campbot 00',
         'message': 'Week 00',
         'created_at': (now - timedelta(days=2)).isoformat(),
