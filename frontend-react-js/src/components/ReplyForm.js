@@ -15,6 +15,10 @@ export default function ReplyForm(props) {
     classes.push('err')
   }
 
+  const onClose = (event) => {
+    props.setPopped(false)
+  }
+
   const onsubmit = async (event) => {
     event.preventDefault();
     try {
@@ -79,13 +83,18 @@ export default function ReplyForm(props) {
             >
               <textarea
                 type="text"
-                placeholder="what is your replyyyyyyyyyyyyyyyyy???????????"
+                placeholder="Enter your reply here."
                 value={message}
                 onChange={textarea_onchange} 
               />
               <div className='submit'>
-                <div>
-                  <button><img src="/close.png" /></button>
+                <div className='close-container'>
+                  <button className='close-button' onClick={onClose}>
+                    close
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#fff" viewBox="0 0 24 24" stroke-width="1.5" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
                 </div>
                 <div className={classes.join(' ')}>{240-count}</div>
                 <button type='submit'>Reply</button>

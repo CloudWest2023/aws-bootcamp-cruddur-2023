@@ -30,7 +30,7 @@ import watchtower
 import logging
 from time import strftime
 
-####################### AWS X-ray #######################
+###################### AWS X-ray #######################
 from aws_xray_sdk.core import xray_recorder
 from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
@@ -53,7 +53,6 @@ trace.set_tracer_provider(provider)
 tracer = trace.get_tracer(__name__)
 
 app = Flask(__name__)
-
 
 ####################### HONEYCOMB #######################
 # Initialize automatic instrumentation with Flask
@@ -79,10 +78,13 @@ XRayMiddleware(app, xray_recorder)
 
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
+# frontend = "http://localhost:3000"
+# backend = "http://localhost:4567"
 origins = [frontend, backend]
 cors = CORS(
   app, 
-  resources={r"/api/*": {"origins": origins}},
+  # resources={r"/api/*": {"origins": origins}},
+  resources={r"*": {"origins": origins}},
   expose_headers="location,link",
   allow_headers="content-type,if-modified-since",
   methods="OPTIONS,GET,HEAD,POST"
@@ -91,6 +93,7 @@ cors = CORS(
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
   data = HomeActivities.run() # logger=LOGGER
+  print("Home requestesd.")
   return data, 200
 
 @app.route("/api/activities/notifications", methods=['GET'])
@@ -180,6 +183,11 @@ def data_activities_reply(activity_uuid):
   else:
     return model['data'], 200
   return
+
+# @app.get('/shuwdown')
+# def shutdown():
+#   shutdown_server()
+#   return 'Server shutting down...'
 
 # @app.after_request
 # def after_request(response):

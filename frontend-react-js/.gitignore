@@ -1,3 +1,9 @@
+# Personal
+env.bat
+
+# AWS
+aws-xray-daemon-windows-process-3.x/*
+
 # Logs
 logs
 *.log
