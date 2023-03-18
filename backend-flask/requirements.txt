@@ -10,5 +10,10 @@ opentelemetry-instrumentation-requests
 watchtower
 aws-xray-sdk
 
+blinker
+rollbar
+
 psycopg[binary]
 psycopg[pool]
+
+python-dotenv
