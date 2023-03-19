@@ -52,6 +52,10 @@ export default function ReplyForm(props) {
     }
   }
 
+  const closeReply = (event) => {
+    props.setPopped(false)
+  }
+
   const textarea_onchange = (event) => {
     setCount(event.target.value.length);
     setMessage(event.target.value);
@@ -84,10 +88,10 @@ export default function ReplyForm(props) {
                 onChange={textarea_onchange} 
               />
               <div className='submit'>
-                <div>
-                  <button><img src="/close.png" /></button>
+                <div className='close-button-container'>
+                  <button onClick={closeReply} className='close-button'><img className='close-image' src="/close.png" /></button>
                 </div>
-                <div className={classes.join(' ')}>{240-count}</div>
+                <div className={classes.join(' ')}>{240 - count}</div>
                 <button type='submit'>Reply</button>
               </div>
             </form>

@@ -98,3 +98,17 @@ form.replies_form .expires_at_field .icon {
   height: 14px;
   z-index: 2;
 }
+
+.close-button-container {
+  width: 100%;
+  display: flex;
+}
+
+.close-button {
+  cursor: pointer;
+}
+
+.close-image {
+  width: 10px;
+  height: 10px;
+}

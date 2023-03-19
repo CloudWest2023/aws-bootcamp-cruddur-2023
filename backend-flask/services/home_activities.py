@@ -14,9 +14,101 @@ class HomeActivities:
       span.set_attribute("app.now", now.isoformat())
       span.set_attribute("app.env", "local machine")
       results = [
+            # Reply template
+            # {
+            #   'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea--',
+            #   'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109e--',
+            #   'profile_picture': '/logo_mariachi_in_a_jar_white.png',
+            #   'handle':  'Mariachi in a Jar',
+            #   'message': 'placeholder',
+            #   'commit_hash': '---',
+            #   'commit_url': 'https://github.com/---',
+            #   'image': '/image_path.png',
+            #   'likes_count': 0,
+            #   'replies_count': 0,
+            #   'reposts_count': 0,
+            #   'created_at': (now - timedelta(days=2)).isoformat()
+            # },
+        {  
+          'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eha',
+          'profile_picture': '/bubble_w05.png',
+          'handle': 'Cruddur Campbot 05',
+          'message': 'Week 05 - NoSQL & Caching',
+          'created_at': (now - timedelta(days=2)).isoformat(),
+          'expires_at': (now + timedelta(days=5)).isoformat(),
+          'image': '/week05-livestream.png',
+          'likes_count': 5,
+          'replies_count': 2,
+          'reposts_count': 0,
+          'replies': [
+            {
+              'uuid': '26e12864-1c26-5c3a-9658-abc10f8fea71',
+              'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eha',
+              'profile_picture': '/logo_mariachi_in_a_jar_white.png',
+              'handle':  'Mariachi in a Jar',
+              'message': 'place holder',
+              'image': '',
+              'commit_hash': '',
+              'commit_url': '',
+              'likes_count': 0,
+              'replies_count': 0,
+              'reposts_count': 0,
+              'created_at': (now - timedelta(days=2)).isoformat()
+            },
+            {
+              'uuid': '26e12864-1c26-5c3a-9658-def10f8fea69',
+              'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eha',
+              'profile_picture': '/logo_mariachi_in_a_jar_white.png',
+              'handle':  'Mariachi in a Jar',
+              'message': 'place holder',
+              'likes_count': 0,
+              'replies_count': 0,
+              'reposts_count': 0,
+              'created_at': (now - timedelta(days=2)).isoformat()
+            }
+          ],
+        },
+        {  
+          'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eja',
+          'profile_picture': '/bubble_w04.png',
+          'handle': 'Cruddur Campbot 04',
+          'message': 'Week 04 - Postgres and RDS',
+          'created_at': (now - timedelta(days=2)).isoformat(),
+          'expires_at': (now + timedelta(days=5)).isoformat(),
+          'likes_count': 5,
+          'replies_count': 2,
+          'reposts_count': 0,
+          'replies': [
+            {
+              'uuid': '26e12864-1c26-5c3a-9658-abc10f8fea71',
+              'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eha',
+              'profile_picture': '/logo_mariachi_in_a_jar_white.png',
+              'handle':  'Mariachi in a Jar',
+              'message': 'place holder',
+              'image': '',
+              'commit_hash': '',
+              'commit_url': '',
+              'likes_count': 0,
+              'replies_count': 0,
+              'reposts_count': 0,
+              'created_at': (now - timedelta(days=2)).isoformat()
+            },
+            {
+              'uuid': '26e12864-1c26-5c3a-9658-def10f8fea69',
+              'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eha',
+              'profile_picture': '/logo_mariachi_in_a_jar_white.png',
+              'handle':  'Mariachi in a Jar',
+              'message': 'place holder',
+              'likes_count': 0,
+              'replies_count': 0,
+              'reposts_count': 0,
+              'created_at': (now - timedelta(days=2)).isoformat()
+            }
+          ],
+        },
         {  
           'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeh',
-          'profile_picture': '/bubble w03.png',
+          'profile_picture': '/bubble_w03.png',
           'handle': 'Cruddur Campbot 03',
           'message': 'Week 03 - Decentralized Authentication',
           'created_at': (now - timedelta(days=2)).isoformat(),
@@ -25,6 +117,20 @@ class HomeActivities:
           'replies_count': 2,
           'reposts_count': 0,
           'replies': [
+            {
+              'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea71',
+              'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeh',
+              'profile_picture': '/logo_mariachi_in_a_jar_white.png',
+              'handle':  'Mariachi in a Jar',
+              'message': 'Week 05 Saturday - Rewatched through the livestream👀, completed the follow-along.✍️',
+              'commit_hash': '---',
+              'commit_url': 'https://github.com/---',
+              'image': '/week03-error-cognito03-accesstoken.png',
+              'likes_count': 0,
+              'replies_count': 0,
+              'reposts_count': 0,
+              'created_at': (now - timedelta(days=2)).isoformat()
+            },  
             {
               'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea69',
               'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeh',
@@ -35,32 +141,34 @@ class HomeActivities:
               'replies_count': 0,
               'reposts_count': 0,
               'created_at': (now - timedelta(days=2)).isoformat()
-            },
-            {
-              'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea70',
-              'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeh',
-              'profile_picture': '/logo_mariachi_in_a_jar_white.png',
-              'handle':  'Mariachi in a Jar',
-              'message': 'Homework report placeholder',
-              'likes_count': 0,
-              'replies_count': 0,
-              'reposts_count': 0,
-              'created_at': (now - timedelta(days=2)).isoformat()
             }
           ],
         },
         {  
           'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeg',
-          'profile_picture': '/bubble w02.png',
+          'profile_picture': '/bubble_w02.png',
           'handle': 'Cruddur Campbot 02',
           'message': 'Week 02 - Distributed Tracing with Honeycomb',
           'created_at': (now - timedelta(days=2)).isoformat(),
           'expires_at': (now + timedelta(days=5)).isoformat(),
-          'likes_count': 5,
-          'replies_count': 2,
+          'likes_count': 4567,
+          'replies_count': 6,
           'reposts_count': 0,
           'replies': [
-        
+              {
+                'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea75',
+                'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeg',
+                'profile_picture': '/logo_mariachi_in_a_jar_white.png',
+                'handle':  'Mariachi in a Jar',
+                'message': 'Week 04 Saturday - Implemented Rollbar successfully.',
+                'commit_hash': '1bad7cc',
+                'commit_url': 'https://github.com/CloudWest2023/aws-bootcamp-cruddur-2023/commit/1bad7cc1f691c5b92432417643f690ec1694ba8b',
+                'image': '/week02-rollbar.png',
+                'likes_count': 0,
+                'replies_count': 0,
+                'reposts_count': 0,
+                'created_at': (now - timedelta(days=2)).isoformat()
+              }, 
              {
               'uuid': '26e12864-1c26-5c3a-9658-97a10f8fea74',
               'reply_to_activity_uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eeg',
@@ -139,7 +247,7 @@ class HomeActivities:
         },
         {
           'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eef',
-          'profile_picture': '/bubble w01.png',
+          'profile_picture': '/bubble_w01.png',
           'handle': 'Cruddur Campbot 01',
           'message': 'Week 01 - Create the notification feature (Backend and Front)',
           'created_at': (now - timedelta(days=2)).isoformat(),
@@ -184,7 +292,7 @@ class HomeActivities:
         },
         {
           'uuid': '68f126b0-1ceb-4a33-88be-d90fa7109eea',
-          'profile_picture': '/bubble w00.png',
+          'profile_picture': '/bubble_w00.png',
           'handle': 'Cruddur Campbot 00',
           'message': 'Week 00 - Architecture and Billing',
           'created_at': (now - timedelta(days=2)).isoformat(),

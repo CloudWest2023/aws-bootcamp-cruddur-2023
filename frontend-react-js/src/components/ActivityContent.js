@@ -94,7 +94,9 @@ export default function ActivityContent(props) {
         <div className="message">
           {props.activity.message} <br className="msg-img-linebreak" />        
           {commit_hash}
-          <img className='user-attached-image' src={props.activity.image} />
+          <div className='user-attached-image-container'>
+            <img className='user-attached-image' src={props.activity.image} />
+          </div>
         </div>
       </div>{/* activity_content */}
     </div>

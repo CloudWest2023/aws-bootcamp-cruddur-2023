@@ -25,7 +25,7 @@ export default function DesktopNavigation(props) {
       handle="messages" 
       active={props.active} />
     profileLink = <DesktopNavigationLink 
-      url="/@andrewbrown" 
+      url="/@Mariachi in a Jar" 
       name="Profile"
       handle="profile"
       active={props.active} />
@@ -39,7 +39,7 @@ export default function DesktopNavigation(props) {
         name="Home"
         handle="home"
         active={props.active} />
-      <DesktopNavigationLink 
+      {/* <DesktopNavigationLink 
         url="/notifications" 
         name="Notifications"
         handle="notifications"
@@ -53,10 +53,14 @@ export default function DesktopNavigation(props) {
         url="/profile" 
         name="Profile"
         handle="profile"
-        active={props.active} />
-      {/* {notificationsLink}
+        active={props.active} /> */}
+
+      {/* In comparison to the above approach, 
+      coding this way makes sure that the following three pages are
+      not shown to a not-logged-in user  */}
+      {notificationsLink}  
       {messagesLink}
-      {profileLink} */}
+      {profileLink}
       <DesktopNavigationLink 
         url="/more" 
         name="More" 
