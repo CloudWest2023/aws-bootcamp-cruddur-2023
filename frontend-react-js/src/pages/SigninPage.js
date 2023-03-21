@@ -31,7 +31,7 @@ export default function SigninPage() {
     
       Auth.signIn(email, password)
         .then(user => {
-          localStorage.setItem("access_token", user.signInUserSession.accessToken.jwtToken)
+          localStorage.setItem("access_token", user.signInUserSession.accessToken.jwtToken) // jwtToken was the source of error cause we didn't have one. 
           window.location.href = "/"
         })
         .catch(error => { 
