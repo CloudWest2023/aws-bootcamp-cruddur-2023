@@ -12,3 +12,4 @@ VALUES
         'This was imported as seed data!',
         current_timestamp + interval '10 day'
     )
+    

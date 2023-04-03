@@ -14,8 +14,8 @@ else
     URL=$CONNECTION_URL_POSTGRES
 fi
 
-NO_DB_CONNECTION_URL=$(sed 's/\/cruddur_ubuntu//g' <<< "$CONNECTION_URL_POSTGRES")
-psql $NO_DB_CONNECTION_URL -c "select pid as process_id, \
+# NO_DB_CONNECTION_URL=$(sed 's/\/cruddur_ubuntu//g' <<< "$CONNECTION_URL_POSTGRES")
+psql $PROD_CONNECTION_URL_POSTGRES -c "select pid as process_id, \
        usename as user,  \
        datname as db, \
        client_addr, \

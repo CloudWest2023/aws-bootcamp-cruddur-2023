@@ -23,6 +23,7 @@ export default function HomeFeedPage() {
 
   const loadData = async () => {
     try {
+      console.log(`${process.env.REACT_APP_BACKEND_URL}`)
       const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/home`
       const res = await fetch(backend_url, {
         method: "GET"

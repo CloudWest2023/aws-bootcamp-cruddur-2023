@@ -73,12 +73,14 @@ RequestsInstrumentor().instrument()
 
 
 ####################### ROLLBAR #######################
+rollbar_access_token = os.getenv("ROLLBAR_ACCESS_TOKEN")
+
 @app.before_first_request
 def init_rollbar():
     """init rollbar module"""
     rollbar.init(
         # access token
-        'bf2394e893c74fabbe285725135de66f',
+        rollbar_access_token,
         # environment name
         'production',
         # server root directory, makes tracebacks prettier

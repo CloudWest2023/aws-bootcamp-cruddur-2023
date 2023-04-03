@@ -17,3 +17,6 @@ psycopg[binary]
 psycopg[pool]
 
 python-dotenv
+
+psycopg[binary]
+psycopg[pool]
