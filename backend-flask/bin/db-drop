@@ -9,7 +9,9 @@ LABEL="db-drop"
 printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
 # NO_DB_CONNECTION_URL=$(sed 's/\/your_db_name//g' <<<"$CONNECTION_URL_POSTGRES")
-NO_DB_CONNECTION_URL=$(sed 's/\/cruddur_ubuntu//g' <<<"$CONNECTION_URL_POSTGRES")
-echo $NO_DB_CONNECTION_URL
-# echo $CONNECTION_URL_POSTGRES
-psql $NO_DB_CONNECTION_URL -c "DROP DATABASE cruddur_ubuntu;"
+NO_DB_CONNECTION_URL=$(sed 's/\/sample_cruddur//g' <<<"$CONNECTION_URL")
+# echo $NO_DB_CONNECTION_URL
+# psql $NO_DB_CONNECTION_URL -c "DROP DATABASE sample_cruddur;"
+
+# psql $CONNECTION_URL -c "DROP DATABASE sample_cruddur;"
+psql $NO_DB_CONNECTION_URL -c "DROP DATABASE sample_cruddur;"

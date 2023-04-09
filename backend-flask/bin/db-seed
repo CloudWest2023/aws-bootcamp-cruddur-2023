@@ -11,9 +11,9 @@ echo $SEED_PATH
 if [ "$1" == "prod" ];
 then
     echo "Running in production mode"
-    URL=$PROD_CONNECTION_URL_POSTGRES
+    URL=$PROD_CONNECTION_URL
 else
-    URL=$CONNECTION_URL_POSTGRES
+    URL=$CONNECTION_URL
 fi
 
 psql $URL cruddur_ubuntu < $SEED_PATH
