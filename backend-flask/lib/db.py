@@ -6,6 +6,8 @@ def query_wrap_object(template):
         (SELECT COALESCE(row_to_json(object_row), '{{}}'::json) 
             FROM ({template}) object_row);
         """
+    print(f"template: {template}")
+    print(f"sql: {sql}")
     return sql
 
 def query_wrap_array(template):
@@ -13,7 +15,9 @@ def query_wrap_array(template):
         (SELECT COALESCE(array_to_json(array_agg(row_to_json(array_row))), '[]'::json) 
              FROM ({template}) array_row);
         """
+    print(f"template: {template}")
+    print(f"sql: {sql}")
     return sql
 
-connection_url = os.getenv("CONNECTION_URL_POSTGRES")
+connection_url = os.getenv("CONNECTION_URL")
 pool = ConnectionPool(connection_url)

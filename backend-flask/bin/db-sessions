@@ -9,13 +9,13 @@ printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 if [ "$1" = "prod" ]; 
 then
     echo "Running in production mode"
-    URL=$PROD_CONNECTION_URL_POSTGRES
+    URL=$PROD_CONNECTION_URL
 else 
-    URL=$CONNECTION_URL_POSTGRES
+    URL=$CONNECTION_URL
 fi
 
-# NO_DB_CONNECTION_URL=$(sed 's/\/cruddur_ubuntu//g' <<< "$CONNECTION_URL_POSTGRES")
-psql $PROD_CONNECTION_URL_POSTGRES -c "select pid as process_id, \
+# NO_DB_CONNECTION_URL=$(sed 's/\/cruddur_ubuntu//g' <<< "$CONNECTION_URL")
+psql $URL -c "select pid as process_id, \
        usename as user,  \
        datname as db, \
        client_addr, \

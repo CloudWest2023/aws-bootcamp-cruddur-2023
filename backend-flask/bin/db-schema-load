@@ -20,6 +20,3 @@ else
 fi
 
 psql $URL sample_cruddur < $SCHEMA_PATH
-
-
-# Vars not configured": $PROD_CONNECTION_URL_POSTGRES, $1
