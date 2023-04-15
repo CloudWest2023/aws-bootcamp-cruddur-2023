@@ -2,24 +2,11 @@ version: "3.8"
 services:
   backend-flask:
     environment:
-    # LOCAL
-    # FRONTEND_URL: "http://localhost:3000"
-    # BACKEND_URL: "http://localhost:4567"
-    # AWS_XRAY_URL: "*localhost:4567*"
-
-    # GITPOD
       FRONTEND_URL: "https://3000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
       BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
       AWS_XRAY_URL: "*4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*"
    
-    # CODESPACE
-    # FRONTEND_URL: "https://${CODESPACE_NAME}-3000.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
-    # BACKEND_URL: "https://${CODESPACE_NAME}-4567.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
-    # AWS_XRAY_URL: "https://${CODESPACE_NAME}-4567.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
-
-    # COMMON
-      # CONNECTION_URL: ${CONNECTION_URL}
-      CONNECTION_URL: "postgresql://postgres:password@db:5432/sample_cruddur"
+      CONNECTION_URL: ${CONNECTION_URL}
       HONEYCOMB_API_KEY: "${HONEYCOMB_API_KEY}"
       HONEYCOMB_SERVICE_NAME: "cruddur"
 
@@ -43,36 +30,21 @@ services:
     environment:
       REACT_APP_PROJECT_REGION: "${AWS_DEFAULT_REGION}"
       REACT_APP_AWS_COGNITO_REGION: "${AWS_DEFAULT_REGION}"
-      REACT_APP_AWS_USER_POOL_ID: "us-east-1_zffpRiM6k"
-      REACT_APP_CLIENT_ID: "355rdqr906g9hfje726edhqug4"
+      REACT_APP_AWS_USER_POOL_ID: "${AWS_USER_POOL_ID}"
+      REACT_APP_CLIENT_ID: "${COGNITO_CLIENT_ID}"
       REACT_APP_BACKEND_URL: "${BACKEND_URL}"
-    # REACT_APP_BACKEND_URL: "https://${CODESPACE_NAME}-4567.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
-    # REACT_APP_BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
     build: ./frontend-react-js
     ports:
       - "3000:3000"
     volumes:
       - ./frontend-react-js:/frontend-react-js
 
-  # dynamodb-local:
-  #   # https://stackoverflow.com/questions/67533058/persist-local-dynamodb-data-in-volumes-lack-permission-unable-to-open-databa
-  #   # We needed to add user:root to get this working.
-  #   user: root
-  #   command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
-  #   image: "amazon/dynamodb-local:latest"
-  #   container_name: dynamodb-local
-  #   ports:
-  #     - "8000:8000"
-  #   volumes:
-  #     - "./docker/dynamodb:/home/dynamodblocal/data"
-  #   working_dir: /home/dynamodblocal
-
   db:
     image: postgres:13-alpine
     restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER="${POSTGRES_USER}"
+      - POSTGRES_PASSWORD="${POSTGRES_PASSWORD}"
     ports:
       - '5432:5432'
     volumes: 
@@ -81,16 +53,14 @@ services:
   xray-daemon:
     image: "amazon/aws-xray-daemon"
     environment:
-      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
-      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_ACCESS_KEY_ID: "postgres"
+      AWS_SECRET_ACCESS_KEY: "password"
       AWS_REGION: "us-east-1"
     command:
       - "xray -o -b xray-daemon:2000"
     ports:
       - 2000:2000/udp
 
-# the name flag is a hack to change the default prepend folder
-# name when outputting the image names
 networks: 
   internal-network:
     driver: bridge
