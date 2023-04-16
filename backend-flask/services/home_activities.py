@@ -1,12 +1,13 @@
 from datetime import datetime, timedelta, timezone
 from opentelemetry import trace # uses only opentelemetry-api in requirements.txt
 
-from lib.db import pool, query_wrap_array
+# from lib.db import pool, query_wrap_array
+from lib.db import db
 
 # tracer = trace.get_tracer("home.activities")
 
 class HomeActivities:
-  def run():
+  def run(cognito_user_id=None):
   # def run(logger):
   #   logger.info("Logs from HomeActivities.py")
   # LOGGER.info('Hello Cloudwatch! from  /api/activities/home')
@@ -17,7 +18,7 @@ class HomeActivities:
   #   span.set_attribute("app.env", "local machine")
     # span.set_attribute("app.result_length", len(results))
     
-    sql = query_wrap_array(""" 
+    sql = """ 
             SELECT
               activities.uuid,
               users.display_name,
@@ -32,19 +33,8 @@ class HomeActivities:
             FROM public.activities
             LEFT JOIN public.users ON users.uuid = activities.user_uuid
             ORDER BY activities.created_at DESC
-          """)
-    print("======================PRINT SQL=======================")
-    print(sql)
-    print("\n")
-    with pool.connection() as conn:
-      with conn.cursor() as cur:
-        cur.execute(sql)
-        # this will return a tuple 
-        # the first field being the data
-        json = cur.fetchone()
-        print("=101010====================PRINT ROW======================")
-        for dictionary in json[0]:
-          for key, value in dictionary.items():
-            print(f"{key}: {value}")
-        print("\n\n")
-    return json[0]
+          """
+    results = db.query_json_array(sql)
+    print(f"sql statement: {sql}\n")
+
+    return results
