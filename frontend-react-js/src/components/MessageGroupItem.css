@@ -1,6 +1,7 @@
 .message_group_item {
   display: flex;
-  align-items: start;
+  /* Maybe flex-start, maybe not */
+  align-items: flex-start;
   overflow: hidden;
   padding: 16px;
   cursor: pointer;

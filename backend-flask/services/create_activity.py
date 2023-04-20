@@ -1,8 +1,12 @@
 import uuid
 from datetime import datetime, timedelta, timezone
+
+# from lib.db import query_commit, print_err
+from lib.db import db
+
 class CreateActivity:
   def run(message, user_handle, ttl):
-    model = {
+    model = { 
       'errors': None,
       'data': None
     }
@@ -26,6 +30,44 @@ class CreateActivity:
     else:
       model['errors'] = ['ttl_blank']
 
+    if model['errors']:
+      model['data'] = {
+        'handle':  user_handle,
+        'message': message
+      }   
+    else:
+      expires_at = (now + ttl_offset)
+      CreateActivity.create_activity(user_handle, message, expires_at)
+      model['data'] = {
+        'uuid': uuid.uuid4(),
+        'display_name': 'Mariachi in a Jar',
+        'handle':  user_handle,
+        'message': message,
+        'created_at': now.isoformat(),
+        'expires_at': (now + ttl_offset).isoformat()
+      }
+    return model
+
+
+  def create_activity(handle, message, expires_at):
+    sql = db.template('create_activity')
+    uuid = db.query_commit(sql, {
+        'handle': handle,
+        'message': message,
+        'expires_at': expires_at
+      }
+    )
+    db.query_commit(sql)
+
+
+  def query_object_activity(uuid):
+    sql = db.template("activities", "create_activity")
+    return db.query_commit(sql, {
+      'uuid': uuid
+    })
+
+
+  def validations():
     if user_handle == None or len(user_handle) < 1:
       model['errors'] = ['user_handle_blank']
 
@@ -34,18 +76,5 @@ class CreateActivity:
     elif len(message) > 280:
       model['errors'] = ['message_exceed_max_chars'] 
 
-    if model['errors']:
-      model['data'] = {
-        'handle':  user_handle,
-        'message': message
-      }   
-    else:
-      model['data'] = {
-        'uuid': uuid.uuid4(),
-        'display_name': 'Andrew Brown',
-        'handle':  user_handle,
-        'message': message,
-        'created_at': now.isoformat(),
-        'expires_at': (now + ttl_offset).isoformat()
-      }
-    return model
+
+

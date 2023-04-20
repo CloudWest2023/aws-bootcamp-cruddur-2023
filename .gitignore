@@ -6,3 +6,8 @@ node_modules
 frontend-react-js/.env
 backend-flask/.env
 backend-flask/.rds.txt
+
+onstart
+test/*
+/docker/*
+.env

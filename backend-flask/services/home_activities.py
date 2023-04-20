@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta, timezone
 from opentelemetry import trace # uses only opentelemetry-api in requirements.txt
 
-# from lib.db import pool, query_wrap_array
 from lib.db import db
 
 # tracer = trace.get_tracer("home.activities")
@@ -18,22 +17,8 @@ class HomeActivities:
   #   span.set_attribute("app.env", "local machine")
     # span.set_attribute("app.result_length", len(results))
     
-    sql = """ 
-            SELECT
-              activities.uuid,
-              users.display_name,
-              users.handle,
-              activities.message,
-              activities.replies_count,
-              activities.reposts_count,
-              activities.likes_count,
-              activities.reply_to_activity_uuid,
-              activities.expires_at,
-              activities.created_at
-            FROM public.activities
-            LEFT JOIN public.users ON users.uuid = activities.user_uuid
-            ORDER BY activities.created_at DESC
-          """
+    sql = db.template('activities', 'home')
+
     results = db.query_json_array(sql)
     print(f"sql statement: {sql}\n")
 

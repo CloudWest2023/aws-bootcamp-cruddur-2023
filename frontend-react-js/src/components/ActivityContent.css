@@ -1,7 +1,8 @@
 .activity_content_wrap {
   display: flex;
   flex-direction: row;
-  align-items: start;
+  /* Maybe flex-start, maybe not */
+  align-items: flex-start;
 }
 
 .activity_content {
