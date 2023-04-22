@@ -17,3 +17,5 @@ psycopg[binary]
 psycopg[pool]
 
 python-dotenv
+
+boto3

@@ -5,7 +5,7 @@ services:
       FRONTEND_URL: "https://3000-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
       BACKEND_URL: "https://4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}"
       AWS_XRAY_URL: "*4567-${GITPOD_WORKSPACE_ID}.${GITPOD_WORKSPACE_CLUSTER_HOST}*"
-   
+
       CONNECTION_URL: ${CONNECTION_URL}
       HONEYCOMB_API_KEY: "${HONEYCOMB_API_KEY}"
       HONEYCOMB_SERVICE_NAME: "cruddur"
@@ -61,6 +61,19 @@ services:
     ports:
       - 2000:2000/udp
 
+  dynamodb-local:
+    # https://stackoverflow.com/questions/67533058/persist-local-dynamodb-data-in-volumes-lack-permission-unable-to-open-databa
+    # We needed to add user:root to get this working.
+    user: root
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    image: "amazon/dynamodb-local:latest"
+    container_name: dynamodb-local
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./docker/dynamodb:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
+
 networks: 
   internal-network:
     driver: bridge
@@ -69,3 +82,5 @@ networks:
 volumes:
   db:
     driver: local
+
+    

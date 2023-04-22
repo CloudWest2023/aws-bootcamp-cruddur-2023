@@ -6,8 +6,10 @@ node_modules
 frontend-react-js/.env
 backend-flask/.env
 backend-flask/.rds.txt
+backend-flask/bin/ddb/thepath
 
 onstart
 test/*
 /docker/*
 .env
+

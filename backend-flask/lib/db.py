@@ -32,7 +32,7 @@ class DB:
     # File opener. 
     # Reads in the file and returns the content. 
     def template(self, *args):
-        PATH = list((app.root_path, 'db', 'sql', "activities") + args)
+        PATH = list((app.root_path, 'db', 'sql') + args)
         PATH[-1] = f"{PATH[-1]}.sql"
         print(f"PATH: {PATH}")
 
