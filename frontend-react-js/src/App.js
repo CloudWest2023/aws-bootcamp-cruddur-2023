@@ -21,6 +21,7 @@ import {
 
 import { Amplify } from 'aws-amplify';
 
+
 Amplify.configure({
   "AWS_PROJECT_REGION": process.env.REACT_AWS_PROJECT_REGION,
   // "aws_cognito_identity_pool_id": process.env.REACT_APP_AWS_COGNITO_IDENTITY_POOL_ID,

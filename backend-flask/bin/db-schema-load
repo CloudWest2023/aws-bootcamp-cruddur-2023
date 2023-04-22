@@ -14,12 +14,9 @@ echo "== db-schema-load"
 if [ "$1" = "prod" ]; 
 then
     echo "Running in production mode"
-    URL=$PROD_CONNECTION_URL_POSTGRES
+    URL=$PROD_CONNECTION_URL
 else 
-    URL=$CONNECTION_URL_POSTGRES
+    URL=$CONNECTION_URL
 fi
 
-psql $URL cruddur_ubuntu < $SCHEMA_PATH
-
-
-# Vars not configured": $PROD_CONNECTION_URL_POSTGRES, $1
+psql $URL sample_cruddur < $SCHEMA_PATH

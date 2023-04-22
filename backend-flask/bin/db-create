@@ -5,9 +5,9 @@ NO_COLOR='\033[0m'
 LABEL="db-create"
 printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
-NO_DB_CONNECTION_URL=$(sed 's/\/cruddur_ubuntu//g' <<< "$CONNECTION_URL_POSTGRES")
+NO_DB_CONNECTION_URL=$(sed 's/\/sample_cruddur//g' <<< "$CONNECTION_URL")
 echo $NO_DB_CONNECTION_URL
 
-psql $NO_DB_CONNECTION_URL -c "CREATE DATABASE cruddur_ubuntu;"
+psql $NO_DB_CONNECTION_URL -c 'CREATE DATABASE sample_cruddur;'
 
 

@@ -3,10 +3,6 @@ from flask import request
 from flask_cors import CORS, cross_origin
 import os
 
-# .env should be in the same directory as app.py
-from dotenv import load_dotenv 
-load_dotenv()
-
 from services.home_activities import *
 from services.notifications_activities import *
 from services.user_activities import *
@@ -33,7 +29,7 @@ from opentelemetry.sdk.trace.export import ConsoleSpanExporter, SimpleSpanProces
 import rollbar
 import rollbar.contrib.flask
 from flask import got_request_exception
- 
+
 
 ####################### AWS CloudWatch #######################
 import watchtower
@@ -76,7 +72,7 @@ RequestsInstrumentor().instrument()
 rollbar_access_token = os.getenv("ROLLBAR_ACCESS_TOKEN")
 
 @app.before_first_request
-def init_rollbar():
+def init_rollbar() -> None:
     """init rollbar module"""
     rollbar.init(
         # access token
@@ -90,7 +86,7 @@ def init_rollbar():
 
     # send exceptions from `app` to rollbar, using flask's signal system.
     got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
-    return "Not using DOTENV"
+
 
 @app.route('/rollbar/test_local')
 def rollbar_test():
@@ -108,20 +104,23 @@ def rollbar_test():
 
 
 ####################### AWS X-RAY #######################
-xray_url = os.getenv("AWS_XRAY_URL")
-xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
-XRayMiddleware(app, xray_recorder)
+# xray_url = os.getenv("AWS_XRAY_URL")
+# xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+# XRayMiddleware(app, xray_recorder)
  
 
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
+
 origins = [frontend, backend]
 cors = CORS(
   app, 
   resources={r"/api/*": {"origins": origins}},
-  expose_headers="location,link",
-  allow_headers="content-type,if-modified-since",
+  headers=['Content-Type', 'Authorization'],
+  expose_headers='Authorization',
   methods="OPTIONS,GET,HEAD,POST"
+  # expose_headers="location,link",
+  # allow_headers="content-type,if-modified-since",
 )
 
 @app.route("/api/activities/home", methods=['GET'])

@@ -18,7 +18,8 @@ export default function ActivityForm(props) {
     event.preventDefault();
     try {
       const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities`
-      console.log('onsubmit payload', message)
+      console.log("Backend URL: " +  backend_url)
+      console.log('onsubmit payload: ', message)
       const res = await fetch(backend_url, {
         method: "POST",
         headers: {
@@ -33,6 +34,8 @@ export default function ActivityForm(props) {
       let data = await res.json();
       if (res.status === 200) {
         // add activity to the feed
+        console.log("Response Type: " + typeof res)
+        console.log("Response: " + res)
         props.setActivities(current => [data,...current]);
         // reset and close the form
         setCount(0)
@@ -43,7 +46,7 @@ export default function ActivityForm(props) {
         console.log(res)
       }
     } catch (err) {
-      console.log(err);
+      console.log("Error: " +  err);
     }
   }
 
