@@ -1,0 +1,19 @@
+#! /usr/bin/bash
+
+# Install AWS-CLI
+# cd /workspace
+# source $THEIA_WORKSPACE_ROOT/aws/install
+
+# Install PSQL
+curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
+sudo apt update
+sudo apt install -y postgresql-client-13 libpq-dev
+
+# Update GITPOD_IP var
+export GITPOD_IP=$(curl ifconfig.me)
+gp env GITPOD_IP=$(curl ifconfig.me)
+source $THEIA_WORKSPACE_ROOT/backend-flask/bin/rds/update-sg-rule
+
+sleep 3; 
+docker compose -f "docker-compose.yaml" up -d --build
