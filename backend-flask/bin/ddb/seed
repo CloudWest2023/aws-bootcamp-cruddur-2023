@@ -84,7 +84,7 @@ def get_user_uuids():
 
     results = {
         'current_user': current_user,
-        'other_user': other_user
+        'other_user': other_usr
     }
 
     print('get_user_uuids----------------------------------')
