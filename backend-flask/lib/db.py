@@ -55,10 +55,12 @@ class DB:
 
 
     # Print SQL statement in color. 
-    def print_sql(self, title, sql):
+    def print_sql(self, title, sql, params={}):
         CYAN = '\033[96m'
         ENDC = '\033[0m'
         print(f"{CYAN}SQL STATEMENT-[{title}]---------{ENDC}\n")
+        print(sql, params)
+    
     
     # Print string in color.
     def print_in_colors(self, string):
@@ -69,7 +71,7 @@ class DB:
     # Commit data such as an insert
     # Be sure to check for 'RETURNING' in all uppercases. 
     def query_commit(self, sql, params={}):
-        self.print_sql("commit with returning id", sql)
+        self.print_sql("commit with re turning id", sql)
 
         pattern = r"\bRETURNING\b"
         is_returning_id = re.search(pattern, sql)
@@ -92,6 +94,16 @@ class DB:
 
         except Exception as err:
             self.print_err(err)
+
+
+    # Simple query
+    def query_value(self, sql, params={}):
+        self.print_sql('value', sql, params)
+        with self.pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(sql, params)
+                json = cur.fetchone()
+                return json[0]
 
 
     # Return a json object

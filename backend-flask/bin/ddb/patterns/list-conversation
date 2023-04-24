@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+
+import boto3
+import os, sys, json
+
+current_path = os.path.dirname(os.path.abspath(__file__))
+parent_path = os.path.abspath(os.path.join(current_path, '..', '..', '..'))
+sys.path.append(parent_path)
+from lib.db import db
+
+
+def get_user_uuids(handle):
+
+    # Look up users uding the user handles entered.
+    sql = """
+        SELECT
+            users.uuid
+        FROM users
+        WHERE
+            users.handle=%(handle)s
+    """
+    uuid = db.query_value(sql, {
+        'handle': handle
+    })
+
+    return uuid
+
+
+attrs = {
+    'endpoint_url': 'http://localhost:8000'
+}
+
+
+if len(sys.argv) == 2:
+    if "prod" in sys.argv[1]:
+        attrs = {}
+
+dynamodb = boto3.client('dynamodb', **attrs)
+table_name = 'cruddur-messages'
+
+# uuid values need updated in the future.
+# user_uuid_pinata = "4cd6fba4-deb4-4c52-87e0-e163e775924e"
+# user_uuid_vihuela = "e551d9c0-2305-4e6e-9b4d-604fb21d9787"
+user_uuid_pinata = get_user_uuids('coding.pinata')
+user_uuid_vihuela = get_user_uuids('coding.vihuela')
+print(f"user_uuid_pinata: {user_uuid_pinata}")
+print(f"user_uuid_vihuela: {user_uuid_vihuela}")
+
+
+# Define query parameters
+query_params = {
+    'TableName': table_name,
+    'KeyConditionExpression': 'pk = :pk',
+    'ExpressionAttributeValues': {
+        ':pk': { 'S': f"{user_uuid_pinata}" }
+    },
+    'ReturnConsumedCapacity': 'TOTAL'
+}
+
+# Query the table
+response = dynamodb.query(**query_params)
+
+# Print the items returned by the query
+print(json.dumps(response, sort_keys=True, indent=2))
