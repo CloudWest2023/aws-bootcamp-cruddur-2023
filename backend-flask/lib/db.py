@@ -21,9 +21,18 @@ class DB:
     # Create a PostgreSQL pool connection
     def init_pool(self):
         self.print_in_colors(string="INIT_POOL")
-        connection_url = os.getenv("CONNECTION_URL")
-        if "cruddur_pinata" in connection_url:
-            print(f"    {bcolors.OKGREEN}Connecting to: AWS RDS production db{bcolors.ENDC}")
+
+        psql_url = os.getenv("URL_PROD")
+        print(psql_url)
+        db_name = os.getenv("DB_NAME_PROD")
+        print(db_name)
+
+        connection_url = str(f"{psql_url}{db_name}")
+        print(type(connection_url))
+        print(connection_url)
+
+        if db_name in connection_url:
+            print(f"    {bcolors.OKGREEN}Connecting to: AWS RDS production db - {db_name}{bcolors.ENDC}")
         self.pool = ConnectionPool(connection_url)
         print(f"    {self.pool}")
         print(f"    {bcolors.OKGREEN}Connection pool successful{bcolors.ENDC}\n")
@@ -71,7 +80,7 @@ class DB:
     # Commit data such as an insert
     # Be sure to check for 'RETURNING' in all uppercases. 
     def query_commit(self, sql, params={}):
-        self.print_sql("commit with re turning id", sql)
+        self.print_sql("commit with returning id", sql, params)
 
         pattern = r"\bRETURNING\b"
         is_returning_id = re.search(pattern, sql)
@@ -79,7 +88,7 @@ class DB:
         try:
             with self.pool.connection() as conn:
                 cur = conn.cursor()
-                cur.execute(sql, *args)
+                cur.execute(sql, params)
 
             if is_returning_id:
                 returning_id = cur.fetchone()[0]
@@ -93,6 +102,7 @@ class DB:
                 return returning_id
 
         except Exception as err:
+            print("Error handling in action------------")
             self.print_err(err)
 
 

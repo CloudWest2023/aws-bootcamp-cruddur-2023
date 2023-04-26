@@ -1,7 +1,8 @@
 from flask import Flask
 from flask import request
 from flask_cors import CORS, cross_origin
-import os
+import os, sys
+from utils.bcolors import *
 
 from services.home_activities import *
 from services.notifications_activities import *
@@ -71,21 +72,21 @@ RequestsInstrumentor().instrument()
 ####################### ROLLBAR #######################
 rollbar_access_token = os.getenv("ROLLBAR_ACCESS_TOKEN")
 
-@app.before_first_request
-def init_rollbar() -> None:
-    """init rollbar module"""
-    rollbar.init(
-        # access token
-        rollbar_access_token,
-        # environment name
-        'production',
-        # server root directory, makes tracebacks prettier
-        root=os.path.dirname(os.path.realpath(__file__)),
-        # flask already sets up logging
-        allow_logging_basic_config=False)
+with app.app_context():
+  def init_rollbar() -> None:
+      """init rollbar module"""
+      rollbar.init(
+          # access token
+          rollbar_access_token,
+          # environment name
+          'production',
+          # server root directory, makes tracebacks prettier
+          root=os.path.dirname(os.path.realpath(__file__)),
+          # flask already sets up logging
+          allow_logging_basic_config=False)
 
-    # send exceptions from `app` to rollbar, using flask's signal system.
-    got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
+      # send exceptions from `app` to rollbar, using flask's signal system.
+      got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
 
 
 @app.route('/rollbar/test_local')
@@ -119,12 +120,13 @@ cors = CORS(
   headers=['Content-Type', 'Authorization'],
   expose_headers='Authorization',
   methods="OPTIONS,GET,HEAD,POST"
-  # expose_headers="location,link",
-  # allow_headers="content-type,if-modified-since",
 )
 
 @app.route("/api/activities/home", methods=['GET'])
 def data_home():
+  print(f'{bcolors.OKGREEN}AUTH HEADER-------------------{bcolors.ENDC}', file=sys.stdout)
+  app.logger.debug(f"{bcolors.OKGREEN}AUTH HEADER{bcolors.ENDC}")
+  app.logger.debug(f"{bcolors.OKGREEN}{request.headers.get('Authorization')}{bcolors.ENDC}")
   data = HomeActivities.run() # logger=LOGGER
   return data, 200
 

@@ -19,3 +19,5 @@ psycopg[pool]
 python-dotenv
 
 boto3
+
+Flask-AWSCognito
