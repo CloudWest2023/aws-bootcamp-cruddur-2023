@@ -15,26 +15,15 @@ export default function SignupPage() {
   const [password, setPassword] = React.useState('');
   const [errors, setErrors] = React.useState('');
 
-  // const onsubmit = async (event) => {
-  //   event.preventDefault();
-  //   console.log('SignupPage.onsubmit')
-  //   // [TODO] Authenication
-  //   Cookies.set('user.name', name)
-  //   Cookies.set('user.username', username)
-  //   Cookies.set('user.email', email)
-  //   Cookies.set('user.password', password)
-  //   Cookies.set('user.confirmation_code',1234)
-  //   window.location.href = `/confirm?email=${email}`
-  //   return false
-  // }
-
   const onsubmit = async (event) => {
     event.preventDefault();
     setErrors('')
-    console.log(username, email, name)
+    console.log("username: ", username)
+    console.log("name: ", name)
+    console.log("email: ", email)
     try {
         const { user } = await Auth.signUp({
-          username: email,
+          username: email,    // Username is Eamil
           password: password,
           attributes: {
               name: name,

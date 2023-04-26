@@ -12,19 +12,7 @@ export default function SigninPage() {
   const [password, setPassword] = React.useState('');
   const [errors, setErrors] = React.useState('');
 
-  // const onsubmit = async (event) => {
-  //   event.preventDefault();
-  //   setErrors('')
-  //   console.log('onsubmit')
-  //   if (Cookies.get('user.email') === email && Cookies.get('user.password') === password){
-  //     Cookies.set('user.logged_in', true)
-  //     window.location.href = "/"
-  //   } else {
-  //     setErrors("Email and password is incorrect or account doesn't exist")
-  //   }
-  //   return false
-  // }
-
+  
   const onsubmit = async (event) => {
     setErrors('')             // set the errors to blank so we don't see the errors.
     event.preventDefault();   // makes it not submit the form.
