@@ -21,6 +21,7 @@ export default function RecoverPage() {
     Auth.forgotPassword(username)
     .then((data) => setFormState('confirm_code') )
     .catch((err) => setErrors(err.message) );
+    console.log("Error: ", err.message);
     return false
   }
 
@@ -32,6 +33,7 @@ export default function RecoverPage() {
       Auth.forgotPasswordSubmit(username, code, password)
       .then((data) => setFormState('success'))
       .catch((err) => setErrors(err.message) );
+      console.log("Error: ", err.message);
   } else {
     setErrors('Passwords do not match')
   }
