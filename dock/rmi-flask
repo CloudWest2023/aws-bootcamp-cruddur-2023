@@ -1,0 +1,9 @@
+#! /usr/bin/bash
+
+docker system prune
+sleep 10;
+
+docker rmi aws-bootcamp-cruddur-2023-backend-flask
+sleep 20;
+
+docker images
