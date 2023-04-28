@@ -15,6 +15,21 @@ from services.messages import *
 from services.create_message import *
 from services.show_activity import *
 
+####################### AWS Cognito #######################
+# from flask_awscognito import AWSCognitoAuthentication
+from lib.jwt_token_verifier import JWTTokenVerifier
+from flask_awscognito.exceptions import TokenVerifyError
+# FlaskAWSCognitoError
+
+####################### AWS CloudWatch #######################
+import watchtower
+import logging
+from time import strftime
+
+####################### AWS X-ray #######################
+from aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+
 ####################### HONEYCOMB #######################
 # OTEL packages  --------------------------
 from opentelemetry import trace
@@ -25,21 +40,10 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.sdk.trace.export import ConsoleSpanExporter, SimpleSpanProcessor
 
-
 ####################### ROLLBAR #######################
 import rollbar
 import rollbar.contrib.flask
 from flask import got_request_exception
-
-
-####################### AWS CloudWatch #######################
-import watchtower
-import logging
-from time import strftime
-
-####################### AWS X-ray #######################
-from aws_xray_sdk.core import xray_recorder
-from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 # --------------------------------- END OF LIBRARY --------------------------------- 
 
@@ -60,6 +64,16 @@ trace.set_tracer_provider(provider)
 tracer = trace.get_tracer(__name__)
 
 app = Flask(__name__)
+jwttv = JWTTokenVerifier(
+  user_pool_id = os.getenv("AWS_COGNITO_USER_POOL_ID"),
+  user_pool_client_id = os.getenv("AWS_COGNITO_USER_POOL_CLIENT_ID"),
+  region = os.getenv("AWS_DEFAULT_REGION")
+)
+
+app.config['AWS_COGNITO_USER_POOL_CLIENT_ID'] = os.getenv('AWS_COGNITO_USER_POOL_CLIENT_ID')
+app.config['AWS_COGNITO_USER_POOL_ID'] = os.getenv('AWS_COGNITO_USER_POOL_ID')
+
+# aws_auth = AWSCognitoAuthentication(app)
 
 
 ####################### HONEYCOMB #######################
@@ -123,11 +137,38 @@ cors = CORS(
 )
 
 @app.route("/api/activities/home", methods=['GET'])
+# @aws_auth.authentication_required
 def data_home():
+  print(f"{bcolors.OKGREEN}App Logger - REQUEST HEADERS ----------------{bcolors.ENDC}\n")
+  print(f"{bcolors.OKGREEN}{app.logger.debug(request.headers)}{bcolors.ENDC}\n")
+  
+  access_token = jwttv.extract_access_token(request.headers)
+
+  try:
+    claims = jwttv.verify(access_token)
+    # authenticated request
+    app.logger.debug('authenticated')
+    app.logger.debug(claims)
+
+    # self.claims = self.token_service.claims
+    # g.cognito_claims = self.claims
+
+  except TokenVerifyError as e:
+    print("Error: TokenVerifyError")
+    # unauthenticated request
+    app.logger.debug("unauthenticated")
+
+    # _ = request.data
+    # abort(make_response(jsonify(message=str(e)), 401))
+
+  data = HomeActivities.run() # logger=LOGGER
+  # claims = aws_auth.claims
+
+  # DEBUG
   print(f'{bcolors.OKGREEN}AUTH HEADER-------------------{bcolors.ENDC}', file=sys.stdout)
   app.logger.debug(f"{bcolors.OKGREEN}AUTH HEADER{bcolors.ENDC}")
   app.logger.debug(f"{bcolors.OKGREEN}{request.headers.get('Authorization')}{bcolors.ENDC}")
-  data = HomeActivities.run() # logger=LOGGER
+  
   return data, 200
 
 @app.route("/api/activities/notifications", methods=['GET'])

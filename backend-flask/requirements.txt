@@ -21,3 +21,5 @@ python-dotenv
 boto3
 
 Flask-AWSCognito
+python-jose
+urllib3
