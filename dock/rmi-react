@@ -1,0 +1,20 @@
+#! /usr/bin/bash
+
+FRONTEND_CONTAINER_ID=$(docker ps -aqf "name=react")
+echo $FRONTEND_CONTAINER_ID
+sleep 3;
+if [ $FRONTEND_CONTAINER_ID != "" ];
+then 
+    docker stop $FRONTEND_CONTAINER_ID
+    sleep 3;
+fi
+docker ps
+sleep 3;
+
+docker system prune
+sleep 10;
+
+docker rmi aws-bootcamp-cruddur-2023-frontend-react-js 
+sleep 20;
+
+docker images
