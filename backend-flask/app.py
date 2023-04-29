@@ -148,12 +148,13 @@ def data_home():
   try:
     printc(f"/api/activities/home - JWT Token Verifier's verify in action .... with access_token: {access_token}")
     claims = jwttv.verify(access_token)
-    printc(f"claims: {claims}")
+    printc(f"/api/activities/home - claims: {claims}")
 
     # authenticated request
     app.logger.debug(f"authenticated")
     app.logger.debug(claims)
-    data = HomeActivities.run()
+    app.logger.debug(claims['username'])
+    data = HomeActivities.run(cognito_user_id=claims['username'])
 
   except TokenVerifyError as e:
     printc("Error: TokenVerifyError")

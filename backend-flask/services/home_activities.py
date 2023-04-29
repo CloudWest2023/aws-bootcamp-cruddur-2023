@@ -18,7 +18,6 @@ class HomeActivities:
     # span.set_attribute("app.result_length", len(results))
     
     sql = db.template('activities', 'home')
-
     results = db.query_json_array(sql)
     print(f"sql statement: {sql}\n")
 
