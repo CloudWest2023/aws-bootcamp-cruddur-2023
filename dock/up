@@ -1,3 +1,8 @@
 #! /usr/bin/bash
 
-docker compose -f "docker-compose.yaml" up -d --build
+CYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+LABEL="docker/up -- process starting..."
+printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
+
+docker compose -f "$THEIA_WORKSPACE_ROOT/docker-compose.yaml" up -d --build

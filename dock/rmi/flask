@@ -1,0 +1,27 @@
+#! /usr/bin/bash
+
+CYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+LABEL="rmi-flaks --- removing FLASK image, process starting..."
+printf "${CYAN}=== ${LABEL}${NO_COLOR}\n"
+
+FRONTEND_CONTAINER_ID=$(docker ps -aqf "name=flask")
+printf "${CYAN}$FRONTEND_CONTAINER_ID${NO_COLOR}\n"
+sleep 3;
+
+if [ $FRONTEND_CONTAINER_ID != "" ];
+then
+    printf "${CYAN}========= docker stopping container ID $FRONTEND_CONTAINER_ID${NO_COLOR}\n"
+    docker stop $FRONTEND_CONTAINER_ID
+    sleep 3;
+fi
+
+printf "${CYAN}========= docker system pruning${NO_COLOR}\n"
+docker system prune --force
+sleep 10;
+
+printf "${CYAN}========= docker remove flask image${NO_COLOR}\n"
+docker rmi --force aws-bootcamp-cruddur-2023-backend-flask
+sleep 20;
+
+docker images

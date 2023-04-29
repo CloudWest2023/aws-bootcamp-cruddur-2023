@@ -8,3 +8,6 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
+def printc(string):
+    print(f"{bcolors.OKGREEN}{string}{bcolors.ENDC}\n")

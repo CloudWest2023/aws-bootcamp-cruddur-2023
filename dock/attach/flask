@@ -1,0 +1,7 @@
+#! /usr/bin/bash
+
+docker container ls --all --quiet --filter "name=flask"
+
+CONTAINER_ID=$(docker container ls --all --quiet --filter "name=flask")
+
+docker attach $CONTAINER_ID

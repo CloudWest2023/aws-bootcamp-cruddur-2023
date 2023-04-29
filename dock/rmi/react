@@ -1,0 +1,23 @@
+#! /usr/bin/bash
+
+FRONTEND_CONTAINER_ID=$(docker ps -aqf "name=react")
+echo $FRONTEND_CONTAINER_ID
+sleep 3;
+if [ $FRONTEND_CONTAINER_ID != "" ];
+then 
+    printf "${CYAN}========= docker stopping container ID $FRONTEND_CONTAINER_ID${NO_COLOR}\n"
+    docker stop $FRONTEND_CONTAINER_ID
+    sleep 3;
+fi
+docker ps
+sleep 3;
+
+printf "${CYAN}========= docker system pruning${NO_COLOR}\n"
+docker system prune --force
+sleep 10;
+
+printf "${CYAN}========= docker remove flask image${NO_COLOR}\n"
+docker rmi --force aws-bootcamp-cruddur-2023-frontend-react-js 
+sleep 20;
+
+docker images
