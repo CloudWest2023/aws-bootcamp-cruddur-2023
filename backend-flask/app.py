@@ -17,7 +17,7 @@ from services.show_activity import *
 
 ####################### AWS Cognito #######################
 # from flask_awscognito import AWSCognitoAuthentication
-from lib.jwt_token_verifier import JWTTokenVerifier
+from lib.cognito.jwt_token_verifier import JWTTokenVerifier
 from flask_awscognito.exceptions import TokenVerifyError
 # FlaskAWSCognitoError
 
@@ -139,23 +139,24 @@ cors = CORS(
 @app.route("/api/activities/home", methods=['GET'])
 # @aws_auth.authentication_required
 def data_home():
-  print(f"{bcolors.OKGREEN}App Logger - REQUEST HEADERS ----------------{bcolors.ENDC}\n")
-  print(f"{bcolors.OKGREEN}{app.logger.debug(request.headers)}{bcolors.ENDC}\n")
+  printc(f"App Logger - REQUEST HEADERS ----------------")
+  printc(f"request.headers: {app.logger.debug(request.headers)}")
   
   access_token = jwttv.extract_access_token(request.headers)
+  print(f"{app.logger.debug(f'access token: {access_token}')}")
 
   try:
     claims = jwttv.verify(access_token)
     # authenticated request
-    app.logger.debug('authenticated')
-    app.logger.debug(claims)
+    printc(app.logger.debug(f"authenticated"))
+    printc(app.logger.debug(claims))
     data = HomeActivities.run()
 
   except TokenVerifyError as e:
     print("Error: TokenVerifyError")
     # unauthenticated request
     app.logger.debug(e)
-    app.logger.debug("unauthenticated")
+    app.logger.debug(f"{bcolors.OKGREEN}NOT authenticated{bcolors.ENDC}")
     data = HomeActivities.run()
 
   # DEBUG
