@@ -10,3 +10,6 @@ aws ec2 modify-security-group-rules \
     --group-id $DB_SG_ID \
     --security-group-rules "SecurityGroupRuleId=$DB_SG_RULE_ID,SecurityGroupRule={IpProtocol=tcp,FromPort=5432,ToPort=5432,CidrIpv4=$GITPOD_IP/32,Description='GITPOD IP - Repo Pinata updated at $(TZ=UTC-9 date -R)'}"
  
+printf "${CYAN}GITPOD_IP updated to: $GITPOD_IP{NO_COLOR}\n" 
+
+source $THEIA_WORKSPACE_ROOT/aws/rds/list-sg

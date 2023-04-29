@@ -149,20 +149,14 @@ def data_home():
     # authenticated request
     app.logger.debug('authenticated')
     app.logger.debug(claims)
-
-    # self.claims = self.token_service.claims
-    # g.cognito_claims = self.claims
+    data = HomeActivities.run()
 
   except TokenVerifyError as e:
     print("Error: TokenVerifyError")
     # unauthenticated request
+    app.logger.debug(e)
     app.logger.debug("unauthenticated")
-
-    # _ = request.data
-    # abort(make_response(jsonify(message=str(e)), 401))
-
-  data = HomeActivities.run() # logger=LOGGER
-  # claims = aws_auth.claims
+    data = HomeActivities.run()
 
   # DEBUG
   print(f'{bcolors.OKGREEN}AUTH HEADER-------------------{bcolors.ENDC}', file=sys.stdout)
