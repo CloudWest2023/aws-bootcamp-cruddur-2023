@@ -140,31 +140,35 @@ cors = CORS(
 # @aws_auth.authentication_required
 def data_home():
   printc(f"App Logger - REQUEST HEADERS ----------------")
-  printc(f"request.headers: {app.logger.debug(request.headers)}")
+  app.logger.debug(request.headers)
   
   access_token = jwttv.extract_access_token(request.headers)
-  print(f"{app.logger.debug(f'access token: {access_token}')}")
+  app.logger.debug(f'access token: {access_token}')
 
   try:
+    printc(f"/api/activities/home - JWT Token Verifier's verify in action .... with access_token: {access_token}")
     claims = jwttv.verify(access_token)
+    printc(f"claims: {claims}")
+
     # authenticated request
-    printc(app.logger.debug(f"authenticated"))
-    printc(app.logger.debug(claims))
+    app.logger.debug(f"authenticated")
+    app.logger.debug(claims)
     data = HomeActivities.run()
 
   except TokenVerifyError as e:
-    print("Error: TokenVerifyError")
+    printc("Error: TokenVerifyError")
     # unauthenticated request
     app.logger.debug(e)
-    app.logger.debug(f"{bcolors.OKGREEN}NOT authenticated{bcolors.ENDC}")
+    app.logger.debug("NOT authenticated")
     data = HomeActivities.run()
 
   # DEBUG
-  print(f'{bcolors.OKGREEN}AUTH HEADER-------------------{bcolors.ENDC}', file=sys.stdout)
-  app.logger.debug(f"{bcolors.OKGREEN}AUTH HEADER{bcolors.ENDC}")
-  app.logger.debug(f"{bcolors.OKGREEN}{request.headers.get('Authorization')}{bcolors.ENDC}")
+  print("AUTH HEADER-------------------", file=sys.stdout)
+  app.logger.debug("AUTH HEADER")
+  app.logger.debug(request.headers.get('Authorization'))
   
   return data, 200
+
 
 @app.route("/api/activities/notifications", methods=['GET'])
 def data_nodifications():

@@ -3,6 +3,13 @@ import requests, json
 # Web response handler
 import urllib3
 
+# DEBUG log utils
+import os, sys
+current_path = os.path.dirname(os.path.abspath(__file__))
+parent_path = os.path.abspath(os.path.join(current_path, '..', '..'))
+sys.path.append(parent_path)
+from utils.bcolors import *
+
 # JWT Library
 from jose import jwk, jwt
 from jose.exceptions import JOSEError
@@ -21,19 +28,19 @@ ENDC = '\033[0m'
 class JWTTokenVerifier:
     def __init__(self, user_pool_id, user_pool_client_id, region, request_client=None):
         
-        print(f"{CYAN}JWTTokenVerifier initialising...{ENDC}\n")
+        printc("JWTTokenVerifier initialising...")
         
         self.region = region
         if not self.region:
-            print("FlaskAWSCognitoError --- No AWS region provided")
+            printc("FlaskAWSCognitoError --- No AWS region provided")
             # raise FlaskAWSCognitoError("No AWS region provided")
-        print(f"{CYAN}self.region: {self.region}{ENDC}\n")
+        printc(f"   JWTTV.region: {self.region}")
 
         self.user_pool_id = user_pool_id
-        print(f"{CYAN}self.user_pool_id: {self.user_pool_id}{ENDC}\n")
+        printc(f"   JWTTV.user_pool_id: {self.user_pool_id}")
         
         self.user_pool_client_id = user_pool_client_id
-        print(f"{CYAN}self.user_pool_client_id: {self.user_pool_client_id}{ENDC}\n")
+        printc(f"   JWTTV.user_pool_client_id: {self.user_pool_client_id}")
         self.claims = None
 
         if not request_client:
@@ -47,65 +54,82 @@ class JWTTokenVerifier:
     @classmethod
     def extract_access_token(self, request_headers):
 
-        print(f"{CYAN}extract_access_token in action{ENDC}\n")
+        printc(f"extract_access_token in action ...")
         
         access_token = None
         auth_header = request_headers.get("Authorization")
+        printc(f"   extract_access_token.auth_header: {auth_header}")
         
         if auth_header and " " in auth_header:
             _, access_token = auth_header.split()
-            print(f"{CYAN}access_token: {access_token}{ENDC}\n")
+            printc(f"   access_token: {access_token}")
             return access_token
 
 
     # AttributeError: 'JWTTokenVerifier' object has no attribute 'request_client'
     def get_client_keys(self, keys_url):
-        
+        printc(f"get_client_key in action ...")
+
         http = urllib3.PoolManager()
         response = http.request('GET', keys_url)
         response = json.loads(response.data.decode('utf-8'))
 
-        print(f"{CYAN}Response from keys_url: {response}{ENDC}")
-        print(f"{CYAN}Response type: {type(response)}{ENDC}")
+        printc(f"   get_client_keys - Response from keys_url: {response}")
+        printc(f"   get_client_keys - Response type: {type(response)}")
         # client_keys = response["keys"]
         # print(f"response keys:\n{client_keys}\n\n\n")
         return response
 
 
     def _load_jwk_keys(self):
+        printc(f"_load_jwk_keys in action ...")
+
         keys_url = f"https://cognito-idp.{self.region}.amazonaws.com/{self.user_pool_id}/.well-known/jwks.json"
-        print()
+        print(f"    _load_jwk_keys - keys_url: {keys_url}")
+
         try:
             self.jwk_keys = self.get_client_keys(keys_url)  # AttributeError
+            printc(f"   _load_jwk_keys - jwk_keys: {self.jwk_keys}")
+            printc(f"   _load_jwk_keys - jwk_keys['keys'].len: {len(self.jwk_keys['keys'])}")
         except requests.exceptions.RequestException as e:
-            print("FlaskAWSCognitoError --- No AWS region provided")
+            printc("    _load_jwk_keys - FlaskAWSCognitoError --- No AWS region provided")
             # raise FlaskAWSCognitoError(str(e)) from e
 
 
     @staticmethod
     def _extract_headers(token):
+        printc("JWTTokenVerifier._extract_headers in action ...")
         try:
             headers = jwt.get_unverified_headers(token)
+            printc(f"   _extract_headers - headers: {headers}")
             return headers
         except JOSEError as e:
             raise TokenVerifyError(str(e)) from e
 
 
     def _find_pkey(self, headers):
-        kid = headers["kid"]
+        printc("JWTTokenVerifier._find_pkey in action ...")
+
+        headers_kid = headers["kid"]
+        printc(f"   headers_kid: {headers['kid']}")
+
         # search for the kid in the downloaded public keys
         key_index = -1
-        for i in range(len(self.jwk_keys)):
-            if kid == self.jwk_keys[i]["kid"]:
+
+        printc(f"   jwk_keys['keys'] length: {len(self.jwk_keys['keys'])}")
+        for i in range(len(self.jwk_keys['keys'])):
+            printc(f"   jwk_keys['keys'][{i}]: {self.jwk_keys['keys'][i]}")
+            if headers_kid == self.jwk_keys["keys"][i]["kid"]:
                 key_index = i
                 break
         if key_index == -1:
             raise TokenVerifyError("Public key not found in jwks.json")
-        return self.jwk_keys[key_index]
+        return self.jwk_keys['keys'][key_index]
 
 
     @staticmethod
     def _verify_signature(token, pkey_data):
+        printc("JWTTokenVerifier._verify_signature in action ...")
         try:
             # construct the public key
             public_key = jwk.construct(pkey_data)
@@ -150,8 +174,12 @@ class JWTTokenVerifier:
         if not token:
             raise TokenVerifyError("No token provided")
 
+        printc("JWTTokenVerifier.verify in action ...")
+
         headers = self._extract_headers(token)
+        printc(f"   JWTTokenVerifier.verify.headers: {headers}") 
         pkey_data = self._find_pkey(headers)
+        printc(f"   JWTTokenVerifier.verify.pkey_data: {pkey_data}") 
         self._verify_signature(token, pkey_data)
 
         claims = self._extract_claims(token)
