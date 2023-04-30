@@ -5,15 +5,7 @@ NO_COLOR='\033[0m'
 LABEL="db-seed"
 printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
-SEED_PATH="$(realpath .)/db/seed.sql"
+SEED_PATH="$(realpath ../..)/db/seed.sql"
 echo $SEED_PATH
 
-if [ "$1" == "prod" ];
-then
-    echo "Running in production mode"
-    URL=$PROD_CONNECTION_URL
-else
-    URL=$CONNECTION_URL
-fi
-
-psql $URL cruddur_ubuntu < $SEED_PATH
+psql $CONNECTION_URL$DB_NAME_PROD < $SEED_PATH
