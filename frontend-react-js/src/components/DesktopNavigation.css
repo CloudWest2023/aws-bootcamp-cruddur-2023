@@ -34,7 +34,7 @@ nav a.primary:hover .icon {
 }
 
 nav a.primary.active {
-  color: rgb(149,0,255) !important;
+  color: var(--primary-color) !important;
   font-weight: 600;
 }
 nav a.primary.active svg {

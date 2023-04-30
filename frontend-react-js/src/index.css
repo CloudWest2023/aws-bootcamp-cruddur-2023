@@ -1,8 +1,17 @@
+:root {
+  --primary-color: #b957ff;
+  --bg-color: #131212;
+
+  --field-border: rgba(192, 192, 192, 0.6);;
+  --field-border-focus: #fff;
+  --field-bg: rgba(149,0,255,0.1);
+}
+
 * { box-sizing: border-box; }
 html,body { 
   height: 100%; 
   width: 100%; 
-  background: rgb(14,3,28);
+  background: #390b71;
 }
 
 body {
