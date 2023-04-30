@@ -5,5 +5,6 @@ NO_COLOR='\033[0m'
 LABEL="docker/reset -- process starting..."
 printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
-source $THEIA_WORKSPACE_ROOT/dock/compose-down
-source $THEIA_WORKSPACE_ROOT/dock/rmi
+source $THEIA_WORKSPACE_ROOT/dock/down
+sleep 20;
+source $THEIA_WORKSPACE_ROOT/dock/rmi/all

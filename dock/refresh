@@ -1,0 +1,13 @@
+#! /usr/bin/bash
+
+CYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+LABEL="docker/refresh -- process starting..."
+printf "${CYAN}=== ${LABEL}${NO_COLOR}\n"
+
+printf "${CYAN}========= docker/down${NO_COLOR}\n"
+./dock/down; 
+sleep 15;
+
+printf "${CYAN}========= docker/up${NO_COLOR}\n"
+./dock/up;

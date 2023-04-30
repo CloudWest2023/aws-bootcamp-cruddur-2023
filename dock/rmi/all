@@ -2,15 +2,15 @@
 
 CYAN='\033[1;36m'
 NO_COLOR='\033[0m'
-LABEL="docker - system prune"
+LABEL="docker/rmi/all -- process starting..."
 printf "${CYAN}=== ${LABEL}${NO_COLOR}\n"
 
-docker system prune
+
+printf "${CYAN}=== docker - system prune${NO_COLOR}\n"
+docker system prune --force
 sleep 30;
 
-LABEL="docker - remove all images"
-printf "${CYAN}========= ${LABEL}${NO_COLOR}\n"
-
+printf "${CYAN}=== docker - remove all images${NO_COLOR}\n"
 docker rmi --force $(docker images -aq)
 sleep 30; 
 
