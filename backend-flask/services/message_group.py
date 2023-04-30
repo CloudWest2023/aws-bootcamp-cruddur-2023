@@ -19,8 +19,8 @@ class MessageGroup:
 
     print(f"UUID: {current_user_uuid}")
 
-    ddb = ddb.client()
-    data = ddb.list_message_groups(ddb, current_user_uuid)
+    dynamodb = ddb.client()
+    data = ddb.list_message_groups(dynamodb, current_user_uuid)
     print(f"list_message_groups: {data}")
 
     model['data'] = data

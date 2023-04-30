@@ -8,18 +8,13 @@ VALUES
     -- ('Mariachi in a Jar', 'mariachiinajar', 'MOCK'),
     -- ('Matryoshka in the Cloud', 'matryo', 'MOCK');
 
-    ('Billy Paigh', 'billypaigh', 'billypaigh@gmail.com', 'MOCK');
+    ('Mariachi in a Jar', 'mariachiinajar', 'mariachiinajar@gmail.com', 'MOCK');
 
 INSERT INTO public.activities (user_uuid, message, expires_at)
 VALUES
     (
-        (SELECT uuid FROM public.users WHERE users.handle = 'coding.vihuela' LIMIT 1),
+        (SELECT uuid FROM public.users WHERE users.handle = 'mariachiinajar' LIMIT 1),
         'Currently fighting through Week 5!',
         current_timestamp + interval '10 day'
-    ),
-    (
-        (SELECT uuid FROM public.users WHERE users.handle = 'coding.pinata' LIMIT 1),
-        'I came along way to fight "Week 5 Implement Conversations with DynamoDB"!!',
-        current_timestamp + interval '10 day'
-    )
+    );
     

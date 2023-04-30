@@ -14,7 +14,7 @@ class ddb:
     dynamodb = boto3.client('dynamodb',**attrs)
     return dynamodb
 
-  def list_message_groups(client,my_user_uuid):
+  def list_message_groups(client, my_user_uuid):
     table_name = 'cruddur-messages'
     query_params = {
       'TableName': table_name,

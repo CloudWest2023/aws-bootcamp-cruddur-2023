@@ -1,6 +1,6 @@
 from psycopg_pool import ConnectionPool
 import os, sys, re
-from utils.bcolors import bcolors
+from utils.bcolors import *
 from flask import current_app as app
 
 
@@ -21,46 +21,35 @@ class db:
 
     # Create a PostgreSQL pool connection
     def init_pool(self):
-        self.print_in_colors(string="INIT_POOL")
+        printc("INIT_POOL in action ...")
 
         psql_url = os.getenv("URL_PROD")
-        print(psql_url)
+        printc(f"   psql_url: {psql_url}")
         db_name = os.getenv("DB_NAME_PROD")
-        print(db_name)
+        printc(f"   db_name: {db_name}")
 
         connection_url = str(f"{psql_url}{db_name}")
-        print(type(connection_url))
-        print(connection_url)
+        printc(f"   connection_url: {connection_url}")
 
         if db_name in connection_url:
-            print(f"    {bcolors.OKGREEN}Connecting to: AWS RDS production db - {db_name}{bcolors.ENDC}")
+            printc(f"    Connecting to: AWS RDS production db - {db_name}")
         self.pool = ConnectionPool(connection_url)
-        print(f"    {self.pool}")
-        print(f"    {bcolors.OKGREEN}Connection pool successful{bcolors.ENDC}\n")
+        printc(f"    {self.pool}")
+        printc(f"    Connection pool successful\n")
 
     
     # File opener. 
     # Reads in the file and returns the content. 
     def template(self, *args):
-        print(f"DB.template in action ....")
+        printc(f"DB.template in action ....")
 
-        print(f"app.root_path: {app.root_path}")
-        print(app.root_path + 'db' + 'sql')
+        printc(f"   app.root_path: {app.root_path}")
         PATH = list((app.root_path, 'db', 'sql') + args)
-        print(PATH)
         PATH[-1] = f"{PATH[-1]}.sql"
-
-        print(f"PATH: {PATH}")
-
-        OKCYAN = '\033[96m'
-        OKGREEN = '\033[92m'
-        WARNING = '\033[93m'
-        FAIL = '\033[91m'
-        ENDC = '\033[0m'
+        printc(f"   PATH: {PATH}")
 
         TEMPLATE_PATH = os.path.join(*PATH)
-        print(f"TEMPLATE_PATH: {TEMPLATE_PATH}")
-        print(f"    \n{OKCYAN}SQL TEMPLATE-[{TEMPLATE_PATH}]-------{ENDC}\n")
+        printc(f"    SQL TEMPLATE-[{TEMPLATE_PATH}]\n")
 
         with open(TEMPLATE_PATH, 'r') as f:
             template_content = f.read()
@@ -117,7 +106,7 @@ class db:
 
     # Simple query
     def query_value(self, sql, params={}):
-        self.print_sql(title='value', sql=sql, params=params)
+        self.print_sql('value', sql=sql, params=params)
         with self.pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(sql, params)
