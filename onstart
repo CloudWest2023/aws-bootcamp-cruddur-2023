@@ -19,13 +19,16 @@ printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 # 2. Start RDS
 # 3. Docker up 
 
+export GITPOD_IP=$(curl ifconfig.me)
+gp env GITPOD_IP=$(curl ifconfig.me)
+
 printf "    ${CYAN}== GITPOD_IP: ${GITPOD_IP}${NO_COLOR}\n"
 source $THEIA_WORKSPACE_ROOT/backend-flask/bin/rds/update-sg-rule
 sleep 5; 
 aws ec2 describe-security-groups --group-ids sg-0a731c4980fb963ef --query 'SecurityGroups[*].IpPermissions[*]'
 sleep 5;
 
-source ./aws/rds/start
+./aws/rds/start
 sleep 30;
 
 # Docker compose up 
