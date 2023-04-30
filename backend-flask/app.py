@@ -10,7 +10,7 @@ from services.user_activities import *
 from services.create_activity import *
 from services.create_reply import *
 from services.search_activities import *
-from services.message_groups import *
+from services.message_group import *
 from services.messages import *
 from services.create_message import *
 from services.show_activity import *
@@ -176,6 +176,7 @@ def data_nodifications():
   data = NotificationsActivities.run()
   return data, 200
 
+
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
 def data_handle(handle):
   model = UserActivities.run(handle)
@@ -184,14 +185,47 @@ def data_handle(handle):
   else:
     return model['data'], 200
 
+
 @app.route("/api/message_groups", methods=['GET'])
 def data_message_groups():
+
+  printc(f"App Logger - REQUEST HEADERS ----------------")
+  app.logger.debug(request.headers)
+  
+  access_token = jwttv.extract_access_token(request.headers)
+  app.logger.debug(f'access token: {access_token}')
+
+  try:
+    printc(f"/api/activities/message_groups - JWT Token Verifier's verify in action .... with access_token: {access_token}")
+    claims = jwttv.verify(access_token)
+    printc(f"/api/activities/message_groups - claims: {claims}")
+
+    # authenticated request
+    app.logger.debug(f"authenticated")
+    app.logger.debug(claims)
+    app.logger.debug(claims['sub'])
+
+    cognito_user_id = claims['sub']
+    model = MessageGroup.run(cognito_user_id=cognito_user_id)
+    if model['errors'] is not None:
+      return model['errors'], 422
+    else:
+      return model['data'], 200
+
+  except TokenVerifyError as e:
+    printc("Error: TokenVerifyError")
+    # unauthenticated request
+    app.logger.debug(e)
+    app.logger.debug("NOT authenticated")
+    claims = jwttv.verify(access_token)
+    app.logger.debug(claims['sub'])
+    cognito_user_id = claims['sub']
+    data = MessageGroup.run(cognito_user_id=cognito_user_id)
+    
+    return {}, 401  # This occurs when an unauthorised user tries to access something accessible only by authenticated user. 
+
   user_handle  = 'mariachiinajar'
-  model = MessageGroups.run(user_handle=user_handle)
-  if model['errors'] is not None:
-    return model['errors'], 422
-  else:
-    return model['data'], 200
+
 
 @app.route("/api/messages/@<string:handle>", methods=['GET'])
 def data_messages(handle): 
@@ -204,6 +238,7 @@ def data_messages(handle):
   else:
     return model['data'], 200
   return
+
 
 @app.route("/api/messages", methods=['POST','OPTIONS'])
 @cross_origin()
@@ -218,6 +253,7 @@ def data_create_message():
   else:
     return model['data'], 200
   return
+
 
 @app.route("/api/activities/search", methods=['GET'])
 def data_search():
@@ -242,10 +278,12 @@ def data_activities():
     return model['data'], 200
   return
 
+
 @app.route("/api/activities/<string:activity_uuid>", methods=['GET'])
 def data_show_activity(activity_uuid):
   data = ShowActivity.run(activity_uuid=activity_uuid)
   return data, 200
+
 
 @app.route("/api/activities/<string:activity_uuid>/reply", methods=['POST','OPTIONS'])
 @cross_origin()
@@ -258,6 +296,7 @@ def data_activities_reply(activity_uuid):
   else:
     return model['data'], 200
   return
+
 
 # @app.after_request
 # def after_request(response):

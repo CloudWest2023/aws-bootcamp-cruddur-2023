@@ -3,6 +3,7 @@ import os, sys, re
 from utils.bcolors import bcolors
 from flask import current_app as app
 
+
 class DB:
 
     HEADER = '\033[95m'
@@ -41,8 +42,14 @@ class DB:
     # File opener. 
     # Reads in the file and returns the content. 
     def template(self, *args):
+        print(f"DB.template in action ....")
+
+        print(f"app.root_path: {app.root_path}")
+        print(app.root_path + 'db' + 'sql')
         PATH = list((app.root_path, 'db', 'sql') + args)
+        print(PATH)
         PATH[-1] = f"{PATH[-1]}.sql"
+
         print(f"PATH: {PATH}")
 
         OKCYAN = '\033[96m'
@@ -52,10 +59,12 @@ class DB:
         ENDC = '\033[0m'
 
         TEMPLATE_PATH = os.path.join(*PATH)
+        print(f"TEMPLATE_PATH: {TEMPLATE_PATH}")
         print(f"    \n{OKCYAN}SQL TEMPLATE-[{TEMPLATE_PATH}]-------{ENDC}\n")
 
         with open(TEMPLATE_PATH, 'r') as f:
             template_content = f.read()
+            
         return template_content
 
 
@@ -108,7 +117,7 @@ class DB:
 
     # Simple query
     def query_value(self, sql, params={}):
-        self.print_sql('value', sql, params)
+        self.print_sql(title='value', sql=sql, params=params)
         with self.pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(sql, params)
