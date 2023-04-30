@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 import uuid
 
 
-class DDB:
+class ddb:
   def client():
     endpoint_url = os.getenv("AWS_ENDPOINT_URL")
     if endpoint_url:

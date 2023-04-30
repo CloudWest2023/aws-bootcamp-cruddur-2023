@@ -4,7 +4,7 @@ from utils.bcolors import bcolors
 from flask import current_app as app
 
 
-class DB:
+class db:
 
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -198,4 +198,4 @@ class DB:
         # print(f"pgerror: {err.pgerror}")
         # print(f"pgcode: {err.pgcode}\n")
 
-db = DB()
+db = db()

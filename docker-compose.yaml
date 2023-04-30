@@ -49,16 +49,16 @@ services:
     volumes:
       - ./frontend-react-js:/frontend-react-js
 
-  db:
-    image: postgres:13-alpine
-    restart: always
-    environment:
-      POSTGRES_USER:     "${POSTGRES_USER}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-    ports:
-      - '5432:5432'
-    volumes: 
-      - db:/var/lib/postgresql/data
+  # db:
+  #   image: postgres:13-alpine
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER:     "${POSTGRES_USER}"
+  #     POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+  #   ports:
+  #     - '5432:5432'
+  #   volumes: 
+  #     - db:/var/lib/postgresql/data
 
   xray-daemon:
     image: "amazon/aws-xray-daemon"

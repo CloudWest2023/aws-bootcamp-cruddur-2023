@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
-from lib.db import DB # this is necessary to find the handle from the uuid.
-from lib.ddb import DDB
+from lib.db import db # this is necessary to find the handle from the uuid.
+from lib.ddb import ddb
 
 class MessageGroup:
   def run(cognito_user_id):
@@ -10,8 +10,8 @@ class MessageGroup:
       'data': None
     }
 
-    sql = DB.template("", "users", "uuid_from_cognito_user_id")
-    current_user_uuid = DB.query_value(
+    sql = db.template("users", "uuid_from_cognito_user_id")
+    current_user_uuid = db.query_value(
       sql = sql, 
       params= {
       'cognito_user_id': cognito_user_id
@@ -19,8 +19,8 @@ class MessageGroup:
 
     print(f"UUID: {current_user_uuid}")
 
-    DDB = DDB.client()
-    data = DDB.list_message_groups(DDB, current_user_uuid)
+    ddb = ddb.client()
+    data = ddb.list_message_groups(ddb, current_user_uuid)
     print(f"list_message_groups: {data}")
 
     model['data'] = data
