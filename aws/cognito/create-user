@@ -1,0 +1,6 @@
+#! /usr/bin/bash
+
+aws cognito-idp admin-create-user \
+    --user-pool-id $AWS_COGNITO_USER_POOL_ID \
+    --username "$1" \
+    --user-attributes Name=email,Value="$1" Name=name,Value="$2" Name=preferred_username,Value="$3" \
