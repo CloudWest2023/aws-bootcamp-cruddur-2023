@@ -6,9 +6,7 @@ import DesktopSidebar     from '../components/DesktopSidebar';
 import ActivityFeed from '../components/ActivityFeed';
 import ActivityForm from '../components/ActivityForm';
 import ReplyForm from '../components/ReplyForm';
-
-// Amplify
-import { Auth } from 'aws-amplify';
+import checkAuth from '../lib/checkAuth';
 
 // [TODO] Authenication
 // import Cookies from 'js-cookie'
@@ -44,46 +42,13 @@ export default function HomeFeedPage() {
     }
   };
 
-
-  // check if we are authenicated
-  const checkAuth = async () => {
-    Auth.currentAuthenticatedUser({ // Checking to see if the user is authenticated
-      // Optional, By default is false. 
-      // If set to true, this call will send a 
-      // request to Cognito to get the latest user data
-      bypassCache: false 
-    })
-    .then((user) => {           // these bits are changed together. 
-      console.log('user',user);
-      return Auth.currentAuthenticatedUser() // return authenticated user
-    }).then((cognito_user) => {   // if user is authenticated,  
-        setUser({                 // set the user with the following authentication.
-          display_name: cognito_user.attributes.name,
-          handle: cognito_user.attributes.preferred_username
-        })
-    })
-    .catch((err) => console.log(err));
-  };
-
-  // const checkAuth = async () => {
-  //   console.log('checkAuth')
-  //   // [TODO] Authenication
-  //   if (Cookies.get('user.logged_in')) {
-  //     setUser({
-  //       display_name: Cookies.get('user.name'),
-  //       handle: Cookies.get('user.username')
-  //     })
-  //   }
-  // };
-
-
   React.useEffect(()=>{
     //prevents double call
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
 
     loadData();
-    checkAuth();
+    checkAuth(setUser);
   }, [])
 
   return (
