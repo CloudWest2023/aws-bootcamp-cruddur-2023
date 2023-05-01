@@ -24,6 +24,7 @@ class MessageGroup:
     print(f"list_message_groups: {data}")
 
     model['data'] = data
+    
     return model
 
 

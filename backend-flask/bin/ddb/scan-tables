@@ -1,5 +1,11 @@
 #! /usr/bin/bash
 
+set -e # stop if it fails at any point.
+
+ENDPOINT_URL="http://localhost:8000"
+TABLE_NAME="cruddur-messages"
+
+# List records committed in a table queryed with the given TABLE_NAME.
 aws dynamodb scan \
-    --endpoint-url "http://localhost:8000" \
-    --table-name "cruddur-messages"
+    --endpoint-url "$ENDPOINT_URL" \
+    --table-name "$TABLE_NAME"

@@ -39,12 +39,10 @@ dynamodb = boto3.client('dynamodb', **attrs)
 table_name = 'cruddur-messages'
 
 # uuid values need updated in the future.
-# user_uuid_pinata = "4cd6fba4-deb4-4c52-87e0-e163e775924e"
-# user_uuid_vihuela = "e551d9c0-2305-4e6e-9b4d-604fb21d9787"
-user_uuid_pinata = get_user_uuids('coding.pinata')
-user_uuid_vihuela = get_user_uuids('coding.vihuela')
-print(f"user_uuid_pinata: {user_uuid_pinata}")
-print(f"user_uuid_vihuela: {user_uuid_vihuela}")
+user_uuid_in_a_jar = get_user_uuids('mariachiinajar')
+user_uuid_in_a_team = get_user_uuids('mariachiinateam')
+print(f"user_uuid_in_a_jar: {user_uuid_in_a_jar}")
+print(f"user_uuid_in_a_team: {user_uuid_in_a_team}")
 
 
 # Define query parameters
@@ -52,7 +50,7 @@ query_params = {
     'TableName': table_name,
     'KeyConditionExpression': 'pk = :pk',
     'ExpressionAttributeValues': {
-        ':pk': { 'S': f"{user_uuid_pinata}" }
+        ':pk': { 'S': f"{user_uuid_in_a_jar}" }
     },
     'ReturnConsumedCapacity': 'TOTAL'
 }

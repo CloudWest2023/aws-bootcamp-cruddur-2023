@@ -25,14 +25,14 @@ message_group_uuid = "5ae290ed-55d1-47a0-bc6d-fe2bc2700399"
 query_params = {
     'TableName': table_name,
     # 'KeyConditionExpression': 'pk = :pk AND begins_with(sk,:year)',
-    'KeyConditionExpression': 'pk = :pk AND sk between :start_date AND :end_date',
+    'KeyConditionExpression': 'pk = :pk', # AND sk between :start_date AND :end_date
     'ScanIndexForward': False,
     'Limit': 20,
     'ExpressionAttributeValues': {
         ':pk': { 'S': f"GRP#{message_group_uuid}" },
         # ':year': { 'S': '2023' },
-        ':start_date': { 'S': "2023-04-24T00:00:00.000000+00:00" },
-        ':end_date': { 'S': "2023-04-24T20:20:00.000000+00:00" }
+        # ':start_date': { 'S': "2023-04-24T00:00:00.000000+00:00" },
+        # ':end_date': { 'S': "2023-04-24T20:20:00.000000+00:00" }
     },
     'ReturnConsumedCapacity': 'TOTAL'
 }

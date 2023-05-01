@@ -7,13 +7,9 @@ NO_COLOR="\033[0m"
 LABEL="dynamodb-list-table"
 printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
-if [ "$1" = "prod" ];
-then
-    ENDPOINT_URL=""
-else
-    ENDPOINT_URL="--endpoint-url=http://localhost:8000"
-fi
+ENDPOINT_URL="--endpoint-url=http://localhost:8000"
 
+# Lists the names of existing tables
 aws dynamodb list-tables $ENDPOINT_URL \
     --query TableNames \
     --output table
