@@ -121,7 +121,7 @@ create_message_group(
     other_user_handle=users['other_user']['handle'],
     other_user_display_name=users['other_user']['display_name'],
     last_message_at=now.isoformat(),
-    message="this is a filler message."
+    message="Fighting with DynamoDB thru Week 5."
 )
 
 create_message_group(
@@ -133,7 +133,7 @@ create_message_group(
     other_user_handle=users['current_user']['handle'],
     other_user_display_name=users['current_user']['display_name'],
     last_message_at=now.isoformat(),
-    message="this is a filler message."
+    message="Looks like you are winning the battle if you can see this message."
 )
 
 

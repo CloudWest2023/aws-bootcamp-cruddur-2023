@@ -3,16 +3,23 @@ import sys, os
 from datetime import datetime, timedelta, timezone
 import uuid
 
+current_path = os.path.dirname(os.path.abspath(__file__))
+parent_path = os.path.abspath(os.path.join(current_path, '..', '..', '..'))
+sys.path.append(parent_path)
+from utils.bcolors import *
+
 
 class ddb:
   def client():
     endpoint_url = os.getenv("AWS_ENDPOINT_URL")
+    printc("ddb.client() ... creating client ...")
     if endpoint_url:
       attrs = { 'endpoint_url': endpoint_url }
+      printc(f"   attrs: {attrs}")
     else:
       attrs = {}
-    dynamodb = boto3.client('dynamodb',**attrs)
-    return dynamodb
+    client = boto3.client('dynamodb',**attrs)
+    return client
 
   def list_message_groups(client, my_user_uuid):
     table_name = 'cruddur-messages'
