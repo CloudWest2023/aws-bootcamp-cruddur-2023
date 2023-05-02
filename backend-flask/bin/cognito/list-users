@@ -20,7 +20,8 @@ print(json.dumps(users, sort_keys=True, indent=2, default=str))
 dict_users = {}
 for user in users:
 	attrs = user['Attributes']
-	sub = next((a for a in attrs if a["Name"] == 'sub'), None)
-	sub = next((a for a in attrs if a["Name"] == 'sub'), None)
+	sub	   = next((a for a in attrs if a["Name"] == 'sub'), None)
+	handle = next((a for a in attrs if a["Name"] == 'preferred_username'), None)
+	dict_users[handle['Value']] = sub['Value']
 
-print(json.dumps(users, sort_keys=True, indent=2, default=str))
+print(json.dumps(dict_users, sort_keys=True, indent=2, default=str))
