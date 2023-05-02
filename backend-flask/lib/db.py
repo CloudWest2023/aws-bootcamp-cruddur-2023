@@ -44,7 +44,7 @@ class db:
         printc(f"DB.template in action ....")
 
         printc(f"   app.root_path: {app.root_path}")
-        PATH = list((app.root_path, 'db', 'sql') + args)
+        PATH = list((app.root_path, 'bin', 'rds', 'sql') + args)
         PATH[-1] = f"{PATH[-1]}.sql"
         printc(f"   PATH: {PATH}")
 
