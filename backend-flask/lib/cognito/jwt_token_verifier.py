@@ -22,13 +22,11 @@ from flask_awscognito.exceptions import FlaskAWSCognitoError, TokenVerifyError
 # class TokenVerifyError(Exception):
 #     pass
 
-CYAN = '\033[96m'
-ENDC = '\033[0m'
 
 class JWTTokenVerifier:
     def __init__(self, user_pool_id, user_pool_client_id, region, request_client=None):
         
-        printc("JWTTokenVerifier initialising...")
+        printh("JWTTokenVerifier initialising...")
         
         self.region = region
         if not self.region:
@@ -50,6 +48,9 @@ class JWTTokenVerifier:
 
         self._load_jwk_keys()
 
+        printh("    ... JWTTokenVerifier initialised.")
+
+
 
     @classmethod
     def extract_access_token(self, request_headers):
@@ -68,7 +69,7 @@ class JWTTokenVerifier:
 
     # AttributeError: 'JWTTokenVerifier' object has no attribute 'request_client'
     def get_client_keys(self, keys_url):
-        printc(f"get_client_key in action ...")
+        printh(f"get_client_key() in action ...")
 
         http = urllib3.PoolManager()
         response = http.request('GET', keys_url)
@@ -78,11 +79,12 @@ class JWTTokenVerifier:
         printc(f"   get_client_keys - Response type: {type(response)}")
         # client_keys = response["keys"]
         # print(f"response keys:\n{client_keys}\n\n\n")
+        printh(f"   ... get_client_key() completed.")
         return response
 
 
     def _load_jwk_keys(self):
-        printc(f"_load_jwk_keys in action ...")
+        printh(f"_load_jwk_keys() in action ...")
 
         keys_url = f"https://cognito-idp.{self.region}.amazonaws.com/{self.user_pool_id}/.well-known/jwks.json"
         print(f"    _load_jwk_keys - keys_url: {keys_url}")
@@ -94,21 +96,25 @@ class JWTTokenVerifier:
         except requests.exceptions.RequestException as e:
             printc("    _load_jwk_keys - FlaskAWSCognitoError --- No AWS region provided")
             # raise FlaskAWSCognitoError(str(e)) from e
+        
+        printh(f"   ... _load_jwk_keys() completed.")
 
 
     @staticmethod
     def _extract_headers(token):
-        printc("JWTTokenVerifier._extract_headers in action ...")
+        printh("JWTTokenVerifier._extract_headers() in action ...")
         try:
             headers = jwt.get_unverified_headers(token)
             printc(f"   _extract_headers - headers: {headers}")
             return headers
         except JOSEError as e:
             raise TokenVerifyError(str(e)) from e
+        
+        printh("    ... JWTTokenVerifier._extract_headers() completed.")
 
 
     def _find_pkey(self, headers):
-        printc("JWTTokenVerifier._find_pkey in action ...")
+        printh("JWTTokenVerifier._find_pkey() in action ...")
 
         headers_kid = headers["kid"]
         printc(f"   headers_kid: {headers['kid']}")
@@ -124,12 +130,15 @@ class JWTTokenVerifier:
                 break
         if key_index == -1:
             raise TokenVerifyError("Public key not found in jwks.json")
+
+        printh("    ... JWTTokenVerifier._find_pkey() completed.")
+
         return self.jwk_keys['keys'][key_index]
 
 
     @staticmethod
     def _verify_signature(token, pkey_data):
-        printc("JWTTokenVerifier._verify_signature in action ...")
+        printh("JWTTokenVerifier._verify_signature in action ...")
         try:
             # construct the public key
             public_key = jwk.construct(pkey_data)
@@ -143,6 +152,8 @@ class JWTTokenVerifier:
         # verify the signature
         if not public_key.verify(message.encode("utf8"), decoded_signature):
             raise TokenVerifyError("Signature verification failed")
+        
+        printh("    ... JWTTokenVerifier._verify_signature() completed.")
 
 
     @staticmethod
@@ -174,12 +185,12 @@ class JWTTokenVerifier:
         if not token:
             raise TokenVerifyError("No token provided")
 
-        printc("JWTTokenVerifier.verify in action ...")
+        printh("JWTTokenVerifier.verify in action ...")
 
         headers = self._extract_headers(token)
-        printc(f"   JWTTokenVerifier.verify.headers: {headers}") 
+        printh(f"   JWTTokenVerifier.verify.headers: {headers}") 
         pkey_data = self._find_pkey(headers)
-        printc(f"   JWTTokenVerifier.verify.pkey_data: {pkey_data}") 
+        printh(f"   JWTTokenVerifier.verify.pkey_data: {pkey_data}") 
         self._verify_signature(token, pkey_data)
 
         claims = self._extract_claims(token)
