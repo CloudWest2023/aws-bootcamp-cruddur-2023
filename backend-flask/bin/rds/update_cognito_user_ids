@@ -7,14 +7,13 @@ current_path = os.path.dirname(os.path.abspath(__file__))
 parent_path = os.path.abspath(os.path.join(current_path, '..', '..'))
 sys.path.append(parent_path)
 from lib.db import db
-
-
-CYAN = '\033[96m'
-ENDC = '\033[0m'
-print(f"{CYAN}---db-update-cognito-user-ids---------{ENDC}\n")
+from utils.bcolors import *
 
 
 def update_users_with_cognito_user_id(handle, sub):
+
+    printh("[update_users_with_cognito_user_id] in action ...")
+
     sql = """
         UPDATE public.users
         SET cognito_user_id = %(sub)s
@@ -27,6 +26,9 @@ def update_users_with_cognito_user_id(handle, sub):
     })
 
 def get_cognito_user_ids():
+
+    printh("[get_cognito_user_ids] in action ...")
+
     userpool_id = os.getenv("AWS_COGNITO_USER_POOL_ID")
     client = boto3.client('cognito-idp')
     params = {
