@@ -188,9 +188,9 @@ class JWTTokenVerifier:
         printh("JWTTokenVerifier.verify in action ...")
 
         headers = self._extract_headers(token)
-        printh(f"   JWTTokenVerifier.verify.headers: {headers}") 
+        printc(f"   JWTTokenVerifier.verify.headers: {headers}") 
         pkey_data = self._find_pkey(headers)
-        printh(f"   JWTTokenVerifier.verify.pkey_data: {pkey_data}") 
+        printc(f"   JWTTokenVerifier.verify.pkey_data: {pkey_data}") 
         self._verify_signature(token, pkey_data)
 
         claims = self._extract_claims(token)

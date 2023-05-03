@@ -60,7 +60,7 @@ class db:
     # Commit data such as an insert
     # Be sure to check for 'RETURNING' in all uppercases. 
     def query_commit(self, sql, params={}):
-        printh("QUERY_COMMIT() with returning id ...", sql, params)
+        printh("QUERY_COMMIT() with returning id ...")
 
         pattern = r"\bRETURNING\b"
         is_returning_id = re.search(pattern, sql)
@@ -72,9 +72,9 @@ class db:
 
             if is_returning_id:
                 returning_id = cur.fetchone()[0]
-                printc("returning_id: ")
+                printc("    returning_id: ")
             else: 
-                printc("No match found.")
+                printe("    No match found.")
 
             conn.commit()
 
@@ -82,7 +82,7 @@ class db:
                 return returning_id
 
         except Exception as err:
-            print("Error handling in action------------")
+            printe("    query_commit().Exception in action...")
             self.print_err(err)
         
         printh("    ... QUERY_COMMIT() complete\n")
@@ -115,6 +115,7 @@ class db:
 
     # Return an array of json object
     def query_json_array(self, sql, params={}):
+        printh("query_json_array() in action ...")
         print_sql(title="Array", sql=sql)
 
         wrapped_sql = self.query_wrap_json_array(sql)
@@ -131,18 +132,26 @@ class db:
                         print(f"{key}: {value}")
                 print("\n\n")
 
+                printh("    ... query_json_array() complete.")
+
                 return json[0]
 
 
     def query_wrap_json_object(self, template):
+
+        printh("query_wrap_json_object() in action ...")
+
         print_sql("Object", sql)
 
         sql = f"""
             (SELECT COALESCE(row_to_json(object_row), '{{}}'::json) 
                 FROM ({template}) object_row);
             """
-        print(f"template: {template}")
-        print(f"sql: {sql}")
+        print(f"    template: {template}")
+        print(f"    sql: {sql}")
+
+        printh("    ... query_wrap_json_object() complete.")
+
         return sql
 
 
@@ -154,6 +163,9 @@ class db:
             """
         print(f"template: {template}")
         print(f"sql: {sql}")
+        
+        printh("    ... query_wrap_json_array() complete.")
+        
         return sql
 
 

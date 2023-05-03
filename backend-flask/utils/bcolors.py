@@ -12,13 +12,19 @@ class bcolors:
 
 # Print header
 def printh(string):
-    print(f"{bcolors.HEADER}{string}{bcolors.ENDC}\n")
+    print(f"{bcolors.HEADER}{bcolors.BOLD}{string}{bcolors.ENDC}\n")
 
 # Print content
 def printc(string):
     print(f"{bcolors.OKGREEN}{string}{bcolors.ENDC}\n")
 
+def printe(string):
+    print(f"{bcolors.FAIL}{string}{bcolors.ENDC}\n")
+
 # Print SQL
 def print_sql(title, sql, params={}):
     print(f"{bcolors.OKCYAN}SQL STATEMENT-[{title}]---------{bcolors.ENDC}\n")
     print(sql, params)
+
+def printb(string):
+    print(f"{bcolors.HEADER}{bcolors.BOLD}{string}{bcolors.ENDC}")
