@@ -1,25 +1,37 @@
 from datetime import datetime, timedelta, timezone
+
+import os, sys
+current_path = os.path.dirname(os.path.abspath(__file__))
+parent_path = os.path.abspath(os.path.join(current_path, '..', '..'))
+sys.path.append(parent_path)
+from lib.db import db
+from lib.ddb import ddb
+from utils.bcolors import *
+
+
 class MessageGroups:
-  def run(user_handle):
+  def run(cognito_user_id):
+
+    printh("MessageGroups.run ...")
+
     model = {
       'errors': None,
       'data': None
     }
 
-    now = datetime.now(timezone.utc).astimezone()
-    results = [
-      {
-        'uuid': '24b95582-9e7b-4e0a-9ad1-639773ab7552',
-        'display_name': 'Cruddur Campbot',
-        'handle':  'campbot',
-        'created_at': now.isoformat()
-      },
-      {
-        'uuid': '417c360e-c4e6-4fce-873b-d2d71469b4ac',
-        'profile_picture': '/logo_matryoshka_in_the_cloud.png',
-        'display_name': 'Matryoshka in the Cloud',
-        'handle':  'Matryoshka in the Cloud',
-        'created_at': now.isoformat()
-    }]
-    model['data'] = results
+    sql = db.template('users', 'uuid_from_cognito_user_id')
+    current_user_uuid = db.query_value(sql, { 
+        'cognito_user_id': cognito_user_id 
+    })
+
+    print(f"UUID: {current_user_uuid}")
+
+    ddb_client = ddb.client()
+    data = ddb.list_message_groups(ddb_client, current_user_uuid)
+    printc(f"   list_message_groups: {data}")
+
+    model['data'] = data
+
+    printh("   ... MessageGroups.run")
+
     return model

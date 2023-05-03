@@ -11,6 +11,7 @@ from services.create_activity import *
 from services.create_reply import *
 from services.search_activities import *
 from services.message_group import *
+from services.message_groups import *
 from services.messages import *
 from services.create_message import *
 from services.show_activity import *
@@ -122,7 +123,7 @@ def rollbar_test():
 # xray_url = os.getenv("AWS_XRAY_URL")
 # xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 # XRayMiddleware(app, xray_recorder)
- 
+
 
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')
@@ -190,12 +191,7 @@ def data_handle(handle):
 def data_message_groups():
 
   user_handle  = 'mariachiinajar'
-
-  printc(f"App Logger - REQUEST HEADERS ----------------")
-  app.logger.debug(request.headers)
-  
   access_token = jwttv.extract_access_token(request.headers)
-  app.logger.debug(f'access token: {access_token}')
 
   try:
     printc(f"/api/activities/message_groups - JWT Token Verifier's verify in action .... with access_token: {access_token}")
@@ -208,7 +204,9 @@ def data_message_groups():
     app.logger.debug(claims['sub'])
 
     cognito_user_id = claims['sub']
-    model = MessageGroup.run(cognito_user_id=cognito_user_id)
+
+    model = MessageGroups.run(cognito_user_id=cognito_user_id)
+
     if model['errors'] is not None:
       return model['errors'], 422
     else:
@@ -217,19 +215,19 @@ def data_message_groups():
   except TokenVerifyError as e:
     printc("Error: TokenVerifyError")
     # unauthenticated request
-    app.logger.debug(e)
     app.logger.debug("NOT authenticated")
+    app.logger.debug(e)
     claims = jwttv.verify(access_token)
     app.logger.debug(claims['sub'])
     cognito_user_id = claims['sub']
-    data = MessageGroup.run(cognito_user_id=cognito_user_id)
+    data = MessageGroups.run(cognito_user_id=cognito_user_id)
     
     return {}, 401  # This occurs when an unauthorised user tries to access something accessible only by authenticated user. 
 
 
 @app.route("/api/messages/@<string:handle>", methods=['GET'])
 def data_messages(handle): 
-  user_sender_handle = 'mariachiinajar'
+  user_sender_handle = 'mariachiinateam'
   user_receiver_handle = request.args.get('user_reciever_handle')
 
   model = Messages.run(user_sender_handle=user_sender_handle, user_receiver_handle=user_receiver_handle)

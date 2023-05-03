@@ -12,7 +12,7 @@ from utils.bcolors import *
 
 def update_users_with_cognito_user_id(handle, sub):
 
-    printh("[update_users_with_cognito_user_id] in action ...")
+    printh("update_users_with_cognito_user_id() in action ...")
 
     sql = """
         UPDATE public.users
@@ -25,9 +25,12 @@ def update_users_with_cognito_user_id(handle, sub):
         'sub': sub
     })
 
+    printh("    ... update_users_with_cognito_user_id() complete.")
+
+
 def get_cognito_user_ids():
 
-    printh("[get_cognito_user_ids] in action ...")
+    printh("get_cognito_user_ids() in action ...")
 
     userpool_id = os.getenv("AWS_COGNITO_USER_POOL_ID")
     client = boto3.client('cognito-idp')
@@ -47,7 +50,7 @@ def get_cognito_user_ids():
         handle = next((a for a in attrs if a["Name"] == 'preferred_username'), None)
         dict_users[handle['Value']] = sub['Value']
 
-    printh("    ... [get_cognito_user_ids] complete")
+    printh("    ... get_cognito_user_ids()")
 
     return dict_users
 
@@ -55,7 +58,7 @@ def get_cognito_user_ids():
 users = get_cognito_user_ids()
 
 for handle, sub in users.items():
-    print(f'------{handle} --- {sub}')
+    printh(f'------{handle} --- {sub}')
     update_users_with_cognito_user_id(
         handle=handle, 
         sub=sub
