@@ -11,8 +11,10 @@ from utils.bcolors import *
 
 class ddb:
   def client():
-    endpoint_url = os.getenv("AWS_ENDPOINT_URL")
     printc("ddb.client() ... creating client ...")
+
+    endpoint_url = os.getenv("AWS_ENDPOINT_URL")
+    
     if endpoint_url:
       attrs = { 'endpoint_url': endpoint_url }
       printc(f"   attrs: {attrs}")
@@ -22,15 +24,16 @@ class ddb:
     return client
 
   def list_message_groups(client, my_user_uuid):
-    table_name = 'cruddur-messages'
+    table_name = 'cruddur-messages'  # Ideally, we could prefix the table_name with `--stage` or `--prod` in more real dev process.
     query_params = {
       'TableName': table_name,
-      'KeyConditionExpression': 'pk = :pkey',
+      'KeyConditionExpression': 'pk = :pk',
       'ScanIndexForward': False,
       'Limit': 20,
       'ExpressionAttributeValues': {
-        ':pkey': {'S': f"GRP#{my_user_uuid}"}
+        ':pk': {'S': f"GRP#{my_user_uuid}"}
       }
+      'ReturnConsumedCapacity': 'TOTAL'
     }
 
     print('query-params')

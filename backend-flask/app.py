@@ -189,6 +189,8 @@ def data_handle(handle):
 @app.route("/api/message_groups", methods=['GET'])
 def data_message_groups():
 
+  user_handle  = 'mariachiinajar'
+
   printc(f"App Logger - REQUEST HEADERS ----------------")
   app.logger.debug(request.headers)
   
@@ -223,8 +225,6 @@ def data_message_groups():
     data = MessageGroup.run(cognito_user_id=cognito_user_id)
     
     return {}, 401  # This occurs when an unauthorised user tries to access something accessible only by authenticated user. 
-
-  user_handle  = 'mariachiinajar'
 
 
 @app.route("/api/messages/@<string:handle>", methods=['GET'])
