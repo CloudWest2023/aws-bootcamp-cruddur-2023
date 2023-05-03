@@ -1,7 +1,11 @@
- from psycopg_pool import ConnectionPool
+from psycopg_pool import ConnectionPool
 import os, sys, re
-from utils.bcolors import *
 from flask import current_app as app
+
+current_path = os.path.dirname(os.path.abspath(__file__))
+parent_path = os.path.abspath(os.path.join(current_path, '..', '..'))
+sys.path.append(parent_path)
+from utils.bcolors import *
 
 
 class db:
@@ -11,7 +15,7 @@ class db:
 
     # Create a PostgreSQL pool connection
     def init_pool(self):
-        printc("INIT_POOL in action ...")
+        printh("INIT_POOL() in action ...")
 
         psql_url = os.getenv("URL_PROD")
         printc(f"   psql_url: {psql_url}")
@@ -25,13 +29,13 @@ class db:
             printc(f"    Connecting to: AWS RDS production db - {db_name}")
         self.pool = ConnectionPool(connection_url)
         printc(f"    {self.pool}")
-        printc(f"    Connection pool successful\n")
+        printh(f"    ... INIT_POOL() complete\n")
 
     
     # File opener. 
     # Reads in the file and returns the content. 
     def template(self, *args):
-        printc(f"DB.template in action ....")
+        printh(f"DB.TEMPALTE() in action ....")
 
         printc(f"   app.root_path: {app.root_path}")
         PATH = list((app.root_path, 'bin', 'rds', 'sql') + args)
@@ -43,6 +47,8 @@ class db:
 
         with open(TEMPLATE_PATH, 'r') as f:
             template_content = f.read()
+
+        printh(f"    ... DB.TEMPALTE() complete\n")    
             
         return template_content
 
@@ -50,25 +56,11 @@ class db:
     def load_sql(self):
         pass
 
-
-    # Print SQL statement in color. 
-    def print_sql(self, title, sql, params={}):
-        CYAN = '\033[96m'
-        ENDC = '\033[0m'
-        print(f"{CYAN}SQL STATEMENT-[{title}]---------{ENDC}\n")
-        print(sql, params)
     
-    
-    # Print string in color.
-    def print_in_colors(self, string):
-
-        print(f"{bcolors.OKCYAN}{string}{bcolors.ENDC}\n")        
-
-
     # Commit data such as an insert
     # Be sure to check for 'RETURNING' in all uppercases. 
     def query_commit(self, sql, params={}):
-        self.print_sql("commit with returning id", sql, params)
+        printh("QUERY_COMMIT() with returning id ...", sql, params)
 
         pattern = r"\bRETURNING\b"
         is_returning_id = re.search(pattern, sql)
@@ -80,9 +72,9 @@ class db:
 
             if is_returning_id:
                 returning_id = cur.fetchone()[0]
-                self.print_in_colors("returning_id: ")
+                printc("returning_id: ")
             else: 
-                self.print_in_colors("No match found.")
+                printc("No match found.")
 
             conn.commit()
 
@@ -92,21 +84,26 @@ class db:
         except Exception as err:
             print("Error handling in action------------")
             self.print_err(err)
+        
+        printh("    ... QUERY_COMMIT() complete\n")
 
 
     # Simple query
     def query_value(self, sql, params={}):
-        self.print_sql('value', sql=sql, params=params)
+        printh("QUERY_VALUE() in action ...")
+        print_sql('value', sql=sql, params=params)
         with self.pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(sql, params)
                 json = cur.fetchone()
                 return json[0]
+        
+        printh("    ... QUERY_VALUE() complete\n")
 
 
     # Return a json object
     def query_json_object(self, sql, params={}):
-        self.print_sql('json', sql)
+        print_sql('json', sql)
         wrapped_sql = self.query_wrap_object(sql)
         
         with self.pool.connection() as conn:
@@ -115,9 +112,10 @@ class db:
                 json = cur.fetchone()
                 return json[0]
     
+
     # Return an array of json object
     def query_json_array(self, sql, params={}):
-        self.print_sql("Array", sql)
+        print_sql(title="Array", sql=sql)
 
         wrapped_sql = self.query_wrap_json_array(sql)
         with self.pool.connection() as conn:
@@ -137,7 +135,7 @@ class db:
 
 
     def query_wrap_json_object(self, template):
-        self.print_sql("Object", sql)
+        print_sql("Object", sql)
 
         sql = f"""
             (SELECT COALESCE(row_to_json(object_row), '{{}}'::json) 
@@ -149,7 +147,7 @@ class db:
 
 
     def query_wrap_json_array(self, template):
-        self.print_in_colors(string="QUERY_WRAP_JSON_ARRAY")
+        printh("QUERY_WRAP_JSON_ARRAY() in action ...")
         sql = f"""
             (SELECT COALESCE(array_to_json(array_agg(row_to_json(array_row))), '[]'::json) 
                 FROM ({template}) array_row);

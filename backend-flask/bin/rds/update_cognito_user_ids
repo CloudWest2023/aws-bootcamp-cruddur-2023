@@ -46,6 +46,9 @@ def get_cognito_user_ids():
         sub    = next((a for a in attrs if a["Name"] == 'sub'), None)
         handle = next((a for a in attrs if a["Name"] == 'preferred_username'), None)
         dict_users[handle['Value']] = sub['Value']
+
+    printh("    ... [get_cognito_user_ids] complete")
+
     return dict_users
 
 

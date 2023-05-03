@@ -32,7 +32,7 @@ class ddb:
       'Limit': 20,
       'ExpressionAttributeValues': {
         ':pk': {'S': f"GRP#{my_user_uuid}"}
-      }
+      },
       'ReturnConsumedCapacity': 'TOTAL'
     }
 
@@ -55,6 +55,7 @@ class ddb:
         'message': item['message']['S'],
         'created_at': last_sent_at
       })
+
     return results
 
   def list_messages(client,message_group_uuid):
