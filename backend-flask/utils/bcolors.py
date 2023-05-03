@@ -9,5 +9,16 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+
+# Print header
+def printh(string):
+    print(f"{bcolors.HEADER}{string}{bcolors.ENDC}\n")
+
+# Print content
 def printc(string):
     print(f"{bcolors.OKGREEN}{string}{bcolors.ENDC}\n")
+
+# Print SQL
+def print_sql(title, sql, params={}):
+    print(f"{bcolors.OKCYAN}SQL STATEMENT-[{title}]---------{bcolors.ENDC}\n")
+    print(sql, params)
