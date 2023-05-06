@@ -1,0 +1,31 @@
+#! /usr/bin/bash
+
+CYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+RED='\033[0;31m'
+LABEL="Check AWS RDS status..."
+printf "${CYAN}=== ${LABEL}${NO_COLOR}\n"
+
+
+DB_INSTANCE_STATUS=$(aws rds describe-db-instances --query 'DBInstances[*].[DBInstanceStatus]')
+declare -i COUNT=0
+
+
+while [[ $DB_INSTANCE_STATUS != "available" || $DB_INSTANCE_STATUS != "stopped" ]];:
+do
+    DB_INSTANCE_STATUS=$(aws rds describe-db-instances --query 'DBInstances[*].[DBInstanceStatus]'  | sed 's/[^a-zA-Z0-9]//g' )
+    COUNT=$(( $COUNT + 1 )) 
+    if [ $DB_INSTANCE_STATUS == "available" ]; then 
+        echo $DB_INSTANCE_STATUS \- \( $COUNT times \)
+        printf "${CYAN}... RDS Postgresql is now running on AWS\n${NO_COLOR}"
+        break
+    elif [ $DB_INSTANCE_STATUS == "stopped" ]; then
+        echo $DB_INSTANCE_STATUS \- \( $COUNT times \)
+        printf "${CYAN}... RDS Postgresql stopped on AWS.\nYou can now safely shutdown GITPOD.\n${NO_COLOR}" 
+        break
+    else
+        printf "${RED}$DB_INSTANCE_STATUS - ( $COUNT times )${NO_COLOR}"
+        sleep 15;
+    fi
+done
+    
