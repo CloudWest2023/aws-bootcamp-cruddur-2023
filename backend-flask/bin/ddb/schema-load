@@ -3,10 +3,10 @@
 import boto3
 import sys
 
+
 attrs = {
             'endpoint_url': 'http://localhost:8000'
         }
-
 
 if len(sys.argv) == 2:
     if "prod" in sys.argv[1]:

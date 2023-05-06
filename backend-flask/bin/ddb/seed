@@ -95,8 +95,9 @@ def get_user_uuids():
 ######################### OPERATION STARTS HERE #########################
 
 attrs = {
-    'endpoint_url': 'http://localhost:8000'
-}
+            'endpoint_url': 'http://localhost:8000'
+        }
+
 
 # unset endpoint url for use with production database. 
 if len(sys.argv) == 2:
@@ -104,36 +105,43 @@ if len(sys.argv) == 2:
         attrs = {}
 
 # VARIABLES
-dynamodb = boto3.client('dynamodb', **attrs)
-message_group_uuid = "5ae290ed-55d1-47a0-bc6d-fe2bc2700399" #str(uuid.uuid4())
+# dynamodb = boto3.client('dynamodb', **attrs)  // connection to local machine
+aws_default_region = os.getenv("AWS_DEFAULT_REGION")
+dynamodbConnection = boto3.resource("dynamodb", region_name=aws_default_region)
+
 table_name = "cruddur-messages"
 now = datetime.now(timezone.utc).astimezone()
 created_at = (now + timedelta(minutes=1)).isoformat()
 users = get_user_uuids()
+message_seed1 = "On the day of AWS Summit Seoul 2023."
 
+message_group_uuid_seed1 = "5ae290ed-55d1-47a0-bc6d-fe2bc2700399"
+message_group_uuid_seed2 = "5ae290ed-55d1-47a0-bc6d-fe2bc2700400"
+message_group_uuid_seed3 = "5ae290ed-55d1-47a0-bc6d-fe2bc2700401"
+message_group_uuid_variable = message_group_uuid_seed1
 
 create_message_group(
-    client=dynamodb,
+    client=dynamodbConnection,
     table_name=table_name,
-    message_group_uuid=message_group_uuid,
+    message_group_uuid=message_group_uuid_variable,
     current_user_uuid=users['current_user']['uuid'],
     other_user_uuid=users['other_user']['uuid'],
     other_user_handle=users['other_user']['handle'],
     other_user_display_name=users['other_user']['display_name'],
     last_message_at=now.isoformat(),
-    message="Fighting with DynamoDB thru Week 5."
+    message=message_seed1
 )
 
 create_message_group(
-    client=dynamodb,
+    client=dynamodbConnection,
     table_name=table_name,
-    message_group_uuid=message_group_uuid,
+    message_group_uuid=message_group_uuid_variable,
     current_user_uuid=users['other_user']['uuid'],
     other_user_uuid=users['current_user']['uuid'],
     other_user_handle=users['current_user']['handle'],
     other_user_display_name=users['current_user']['display_name'],
     last_message_at=now.isoformat(),
-    message="Looks like you are winning the battle if you can see this message."
+    message=message_seed1
 )
 
 
@@ -153,8 +161,8 @@ for i in range(len(lines)):
     created_at = (now + timedelta(minutes=i)).isoformat()
 
     create_message(
-        client=dynamodb,
-        message_group_uuid=message_group_uuid,
+        client=dynamodbConnection,
+        message_group_uuid=message_group_uuid_variable,
         created_at=created_at,
         message=message,
         current_user_uuid=users[key]['uuid'],
