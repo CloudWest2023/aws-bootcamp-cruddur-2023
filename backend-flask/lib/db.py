@@ -15,7 +15,7 @@ class db:
 
     # Create a PostgreSQL pool connection
     def init_pool(self):
-        printh("INIT_POOL() in action ...")
+        printh("db.init_pool() ...")
 
         psql_url = os.getenv("URL_PROD")
         printc(f"   psql_url: {psql_url}")
@@ -29,26 +29,26 @@ class db:
             printc(f"    Connecting to: AWS RDS production db - {db_name}")
         self.pool = ConnectionPool(connection_url)
         printc(f"    {self.pool}")
-        printh(f"    ... INIT_POOL() complete\n")
+        printh(f"    ... db.init_pool()\n")
 
     
     # File opener. 
     # Reads in the file and returns the content. 
     def template(self, *args):
-        printh(f"DB.TEMPALTE() in action ....")
+        printh(f"db.template() ...")
 
-        printc(f"   app.root_path: {app.root_path}")
+        printc(f"app.root_path: {app.root_path}")
         PATH = list((app.root_path, 'bin', 'rds', 'sql') + args)
         PATH[-1] = f"{PATH[-1]}.sql"
-        printc(f"   PATH: {PATH}")
+        printc(f"PATH: {PATH}")
 
         TEMPLATE_PATH = os.path.join(*PATH)
-        printc(f"    SQL TEMPLATE-[{TEMPLATE_PATH}]\n")
+        printc(f"SQL TEMPLATE-[{TEMPLATE_PATH}]\n")
 
         with open(TEMPLATE_PATH, 'r') as f:
             template_content = f.read()
 
-        printh(f"    ... DB.TEMPALTE() complete\n")    
+        printh(f"    ... db.template()\n")    
             
         return template_content
 
@@ -60,10 +60,10 @@ class db:
     # Commit data such as an insert
     # Be sure to check for 'RETURNING' in all uppercases. 
     def query_commit(self, sql, params={}):
-        printh("QUERY_COMMIT() with returning id ...")
+        printh("db.query_commit() ...")
 
         pattern = r"\bRETURNING\b"
-        is_returning_id = re.search(pattern, sql)
+        is_returning_id = re.search(pattern, sql, params)
 
         try:
             with self.pool.connection() as conn:
@@ -85,12 +85,12 @@ class db:
             printe("    query_commit().Exception in action...")
             self.print_err(err)
         
-        printh("    ... QUERY_COMMIT() complete\n")
+        printh("    ... db.query_commit()\n")
 
 
     # Simple query
     def query_value(self, sql, params={}):
-        printh("QUERY_VALUE() in action ...")
+        printh("db.query_value() ...")
         print_sql('value', sql=sql, params=params)
         with self.pool.connection() as conn:
             with conn.cursor() as cur:
@@ -98,11 +98,12 @@ class db:
                 json = cur.fetchone()
                 return json[0]
         
-        printh("    ... QUERY_VALUE() complete\n")
+        printh("    ... db.query_value()\n")
 
 
     # Return a json object
     def query_json_object(self, sql, params={}):
+        printh("db.query_json_object() ...")
         print_sql('json', sql)
         wrapped_sql = self.query_wrap_object(sql)
         
@@ -110,12 +111,15 @@ class db:
             with conn.cursor() as cur:
                 cur.execute(wrapped_sql, params)
                 json = cur.fetchone()
+
+                printh("    ... db.query_json_object()")
+
                 return json[0]
     
 
     # Return an array of json object
     def query_json_array(self, sql, params={}):
-        printh("query_json_array() in action ...")
+        printh("db.query_json_array() ...")
         print_sql(title="Array", sql=sql)
 
         wrapped_sql = self.query_wrap_json_array(sql)
@@ -132,14 +136,14 @@ class db:
                         print(f"{key}: {value}")
                 print("\n\n")
 
-                printh("    ... query_json_array() complete.")
+                printh("    ... db.query_json_array().")
 
                 return json[0]
 
 
     def query_wrap_json_object(self, template):
 
-        printh("query_wrap_json_object() in action ...")
+        printh("db.query_wrap_json_object() in action ...")
 
         print_sql("Object", sql)
 
@@ -150,13 +154,13 @@ class db:
         print(f"    template: {template}")
         print(f"    sql: {sql}")
 
-        printh("    ... query_wrap_json_object() complete.")
+        printh("    ... db.query_wrap_json_object() complete.")
 
         return sql
 
 
     def query_wrap_json_array(self, template):
-        printh("QUERY_WRAP_JSON_ARRAY() in action ...")
+        printh("db.query_wrap_json_array() in action ...")
         sql = f"""
             (SELECT COALESCE(array_to_json(array_agg(row_to_json(array_row))), '[]'::json) 
                 FROM ({template}) array_row);
@@ -164,12 +168,13 @@ class db:
         print(f"template: {template}")
         print(f"sql: {sql}")
         
-        printh("    ... query_wrap_json_array() complete.")
+        printh("    ... db.query_wrap_json_array() complete.")
         
         return sql
 
 
     def print_err(self, err):
+        printh("db.print_err() ...")
         # Get details about the exception.
         err_type, err_obj, traceback = sys.exc_info()
 
@@ -182,7 +187,8 @@ class db:
 
         # psycopg2 extensions.Diagnostics object attribute
         print(f"\nextensions.Diagnostics: {err}") # err.diag
-
+        printh("    ... db.print_err()")    
+        
         # Print the pgcode and pgerror exceptions
         # print(f"pgerror: {err.pgerror}")
         # print(f"pgcode: {err.pgcode}\n")

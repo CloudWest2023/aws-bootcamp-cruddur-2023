@@ -11,7 +11,7 @@ from utils.bcolors import *
 
 class ddb:
   def client():
-    printc("ddb.client() ... creating client ...")
+    printh("ddb.client() ... creating client ...")
 
     endpoint_url = os.getenv("AWS_ENDPOINT_URL")
     
@@ -21,29 +21,40 @@ class ddb:
     else:
       attrs = {}
     client = boto3.client('dynamodb',**attrs)
-    return client
 
-  def list_message_groups(client, my_user_uuid):
+    printh("    ... ddb.client() created.")
+    return client
+    
+
+  def list_message_groups(client, current_user_uuid):
+
+    printh("ddb.list_message_groups() ...")
+
+    current_year = datetime.now().year
     table_name = 'cruddur-messages'  # Ideally, we could prefix the table_name with `--stage` or `--prod` in more real dev process.
+
     query_params = {
       'TableName': table_name,
-      'KeyConditionExpression': 'pk = :pk',
+      'KeyConditionExpression': 'pk = :pk AND begins_with(sk,:year)',
       'ScanIndexForward': False,
       'Limit': 20,
       'ExpressionAttributeValues': {
-        ':pk': {'S': f"GRP#{my_user_uuid}"}
+        ':pk': { 'S': f'GRP#{current_user_uuid}' },
+        ':year': { 'S': str(current_year) }
       },
       'ReturnConsumedCapacity': 'TOTAL'
     }
 
-    print('query-params')
-    print(query_params)
-    print('client')
-    print(client)
+    printc('query-params')
+    printc(query_params)
+    printc('client')
+    printc(client)
 
     # query the table
     response = client.query(**query_params)
     items = response['Items']
+
+    printc(f"items:: {items}")
 
     results = []
     for item in items:
@@ -56,17 +67,23 @@ class ddb:
         'created_at': last_sent_at
       })
 
+    printh("    ... ddb.list_message_groups()")
+
     return results
 
-  def list_messages(client,message_group_uuid):
+
+  def list_messages(client, message_group_uuid):
+    printh("ddb.list_messages() ...")
+    year = str(datetime.now().year)
     table_name = 'cruddur-messages'
     query_params = {
       'TableName': table_name,
-      'KeyConditionExpression': 'pk = :pkey',
+      'KeyConditionExpression': 'pk = :pk',
       'ScanIndexForward': False,
       'Limit': 20,
       'ExpressionAttributeValues': {
-        ':pkey': {'S': f"MSG#{message_group_uuid}"}
+        ':pk': { 'S': f"MSG#{message_group_uuid}" },
+        'year': { 'S': year }
       }
     }
 
@@ -83,11 +100,16 @@ class ddb:
         'message': item['message']['S'],
         'created_at': created_at
       })
+
+    printh("    ... ddb.list_messages()")
+
     return results
 
 
   # creates message_group and message
   def create_message_group(client, message,my_user_uuid, my_user_display_name, my_user_handle, other_user_uuid, other_user_display_name, other_user_handle):
+    printh("ddb.create_message_group() ...")
+    
     table_name = 'cruddur-messages'
     
     message_group_uuid = str(uuid.uuid4())
@@ -122,6 +144,7 @@ class ddb:
         {'Put': {'Item': message}}
       ]
     }
+
     return {
       'message_group_uuid': message_group_uuid,
       'uuid': my_user_uuid,
@@ -143,7 +166,12 @@ class ddb:
       # Handle any errors
       print(e)
 
+    printh("    ... ddb.create_message_group()")
+
+
   def create_message(client,message_group_uuid, message, my_user_uuid, my_user_display_name, my_user_handle):
+    printh("ddb.create_message() ...")
+    
     now = datetime.now(timezone.utc).astimezone().isoformat()
     created_at = now
     message_uuid = str(uuid.uuid4())
@@ -173,3 +201,5 @@ class ddb:
       'message': message,
       'created_at': created_at
     }
+
+    printh("    ... ddb.create_message()")
