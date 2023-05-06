@@ -27,15 +27,18 @@ def get_user_uuids(handle):
 
 
 attrs = {
-    'endpoint_url': 'http://localhost:8000'
-}
+            'endpoint_url': 'http://localhost:8000'
+        }
 
 
 if len(sys.argv) == 2:
     if "prod" in sys.argv[1]:
         attrs = {}
 
-dynamodb = boto3.client('dynamodb', **attrs)
+# dynamodb = boto3.client('dynamodb', **attrs)  // connection to local machine
+aws_default_region = os.getenv("AWS_DEFAULT_REGION")
+dynamodbConnection = boto3.resource("dynamodb", region_name=aws_default_region)
+
 table_name = 'cruddur-messages'
 
 # uuid values need updated in the future.
