@@ -24,14 +24,14 @@ export default function MessageGroupItem(props) {
 
   const classes = () => {
     let classes = ["message_group_item"];
-    if (params.handle == props.message_group.handle){
+    if (params.handle == props.message_group.uuid){
       classes.push('active')
     }
     return classes.join(' ');
   }
 
   return (
-    <Link className={classes()} to={`/messages/@`+props.message_group.handle}>
+    <Link className={classes()} to={`/messages/`+props.message_group.uuid}>
       <div className='message_group_avatar'>
         <img className='user-profile-picture' src={props.message_group.profile_picture} />
       </div>
