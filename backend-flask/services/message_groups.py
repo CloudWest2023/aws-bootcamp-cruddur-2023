@@ -4,8 +4,10 @@ import os, sys
 current_path = os.path.dirname(os.path.abspath(__file__))
 parent_path = os.path.abspath(os.path.join(current_path, '..', '..'))
 sys.path.append(parent_path)
-from lib.db import db
+# from lib.db import db
+# from lib.ddb_aws import ddbAWS as ddb
 from lib.ddb import ddb
+from lib.db import db
 from utils.bcolors import *
 
 
@@ -24,6 +26,7 @@ class MessageGroups:
         'cognito_user_id': cognito_user_id 
     })
 
+    printh(f"uuid data type: {type(current_user_uuid)}")
     print(f"UUID: {current_user_uuid}")
 
     ddb_client = ddb.client()
