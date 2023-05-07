@@ -179,7 +179,7 @@ def data_nodifications():
   return data, 200
 
 
-@app.route("/api/activities/@<string:handle>", methods=['GET'])
+@app.route("/api/activities/<string:handle>", methods=['GET'])
 def data_handle(handle):
   model = UserActivities.run(handle)
   if model['errors'] is not None:   # Error validation

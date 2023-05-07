@@ -134,8 +134,8 @@ class db:
                 for dictionary in json[0]:
                     for key, value in dictionary.items():
                         print(f"{key}: {value}")
-                print("\n\n")
 
+                print("\n\n")
                 printh("    ... db.query_json_array().")
 
                 return json[0]
@@ -144,7 +144,6 @@ class db:
     def query_wrap_json_object(self, template):
 
         printh("db.query_wrap_json_object() in action ...")
-
         print_sql("Object", sql)
 
         sql = f"""
@@ -182,11 +181,11 @@ class db:
         line_num = traceback.tb_lineno
 
         # Print the connect() error
-        print(f"\npsycopg2 ERROR: {err} on line number: {line_num}")
-        print(f"psycopg2 traceback: {traceback} -- type: {err_type}")
+        print(f"db.print_err() psycopg2 ERROR: {err} on line number: {line_num}")
+        print(f"db.print_err() psycopg2 traceback: {traceback} -- type: {err_type}")
 
         # psycopg2 extensions.Diagnostics object attribute
-        print(f"\nextensions.Diagnostics: {err}") # err.diag
+        print(f"db.print_err() extensions.Diagnostics: {err}") # err.diag
         printh("    ... db.print_err()")    
         
         # Print the pgcode and pgerror exceptions
