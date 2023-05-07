@@ -232,7 +232,7 @@ def data_messages(message_group_uuid):
   access_token = jwttv.extract_access_token(request.headers)
 
   try:
-    claims = cognito_jwt_token.verify(access_token)
+    claims = jwttv.verify(access_token)
 
     # authenticated request
     app.logger.debug("authenticated")
