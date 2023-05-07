@@ -93,9 +93,10 @@ def get_user_uuids():
 
 
 ######################### OPERATION STARTS HERE #########################
-
+# VARIABLES
+aws_endpoint_url = os.getenv("AWS_ENDPOINT_URL")
 attrs = {
-            'endpoint_url': 'http://localhost:8000'
+            'endpoint_url': aws_endpoint_url
         }
 
 
