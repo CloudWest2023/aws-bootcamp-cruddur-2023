@@ -2,8 +2,7 @@
 
 set -e # stop if it fails at any point.
 
-// ENDPOINT_URL="--endpoint-url=http://localhost:8000"
-ENDPOINT_URL=$AWS_DYNAMODB_ENDPOINT_URL
+ENDPOINT_URL=$AWS_ENDPOINT_URL
 TABLE_NAME="cruddur-messages"
 
 # List records committed in a table queryed with the given TABLE_NAME.
