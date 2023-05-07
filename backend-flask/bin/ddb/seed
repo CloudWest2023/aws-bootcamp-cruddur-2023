@@ -105,9 +105,8 @@ if len(sys.argv) == 2:
         attrs = {}
 
 # VARIABLES
-# dynamodb = boto3.client('dynamodb', **attrs)  // connection to local machine
-aws_default_region = os.getenv("AWS_DEFAULT_REGION")
-dynamodbConnection = boto3.resource("dynamodb", region_name=aws_default_region)
+# aws_default_region = os.getenv("AWS_DEFAULT_REGION")
+ddb_client = boto3.client('dynamodb', **attrs)  # connection to local machine
 
 table_name = "cruddur-messages"
 now = datetime.now(timezone.utc).astimezone()
@@ -121,7 +120,7 @@ message_group_uuid_seed3 = "5ae290ed-55d1-47a0-bc6d-fe2bc2700401"
 message_group_uuid_variable = message_group_uuid_seed1
 
 create_message_group(
-    client=dynamodbConnection,
+    client=ddb_client,
     table_name=table_name,
     message_group_uuid=message_group_uuid_variable,
     current_user_uuid=users['current_user']['uuid'],
@@ -133,7 +132,7 @@ create_message_group(
 )
 
 create_message_group(
-    client=dynamodbConnection,
+    client=ddb_client,
     table_name=table_name,
     message_group_uuid=message_group_uuid_variable,
     current_user_uuid=users['other_user']['uuid'],
@@ -161,7 +160,7 @@ for i in range(len(lines)):
     created_at = (now + timedelta(minutes=i)).isoformat()
 
     create_message(
-        client=dynamodbConnection,
+        client=ddb_client,
         message_group_uuid=message_group_uuid_variable,
         created_at=created_at,
         message=message,

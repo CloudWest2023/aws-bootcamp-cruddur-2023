@@ -9,9 +9,24 @@ sys.path.append(parent_path)
 from lib.db import db
 
 
-def get_user_uuids(handle):
+# VARIABLES
+attrs = {
+            'endpoint_url': 'http://localhost:8000'
+        }
 
-    # Look up users uding the user handles entered.
+if len(sys.argv) == 2:
+    if "prod" in sys.argv[1]:
+        attrs = {}
+
+# Set up a DynamoDB local client
+table_name = 'cruddur-messages'
+ddb_client = boto3.client('dynamodb', **attrs)  # connection to local machine
+# aws_default_region = os.getenv("AWS_DEFAULT_REGION")
+# dynamodbConnection = boto3.resource("dynamodb", region_name=aws_default_region)
+
+
+def get_current_user_uuid(handle):
+
     sql = """
         SELECT
             users.uuid
@@ -26,40 +41,25 @@ def get_user_uuids(handle):
     return uuid
 
 
-attrs = {
-            'endpoint_url': 'http://localhost:8000'
-        }
-
-
-if len(sys.argv) == 2:
-    if "prod" in sys.argv[1]:
-        attrs = {}
-
-# dynamodb = boto3.client('dynamodb', **attrs)  // connection to local machine
-aws_default_region = os.getenv("AWS_DEFAULT_REGION")
-dynamodbConnection = boto3.resource("dynamodb", region_name=aws_default_region)
-
-table_name = 'cruddur-messages'
-
 # uuid values need updated in the future.
-user_uuid_in_a_jar = get_user_uuids('mariachiinajar')
-user_uuid_in_a_team = get_user_uuids('mariachiinateam')
-print(f"user_uuid_in_a_jar: {user_uuid_in_a_jar}")
-print(f"user_uuid_in_a_team: {user_uuid_in_a_team}")
-
+current_user_uuid = get_user_uuids('mariachiinajar')
+other_user_uuid = get_user_uuids('mariachiinateam')
+year = str(datetime.now().year)
 
 # Define query parameters
 query_params = {
     'TableName': table_name,
-    'KeyConditionExpression': 'pk = :pk',
+    'KeyConditionExpression': 'pk = :pk AND begins_with(sk,:year)',
+    'ScanIndexForward': False,
     'ExpressionAttributeValues': {
-        ':pk': { 'S': f"{user_uuid_in_a_jar}" }
+        'year': { 'S': year },
+        ':pk': { 'S': f"GRP#{current_user_uuid}" }
     },
     'ReturnConsumedCapacity': 'TOTAL'
 }
 
 # Query the table
-response = dynamodb.query(**query_params)
+response = ddb_client.query(**query_params)
 
 # Print the items returned by the query
 print(json.dumps(response, sort_keys=True, indent=2))

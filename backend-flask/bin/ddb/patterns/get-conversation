@@ -6,6 +6,7 @@ import json
 import datetime
 
 
+# VARIABLES
 attrs = {
             'endpoint_url': 'http://localhost:8000'
         }
@@ -14,35 +15,34 @@ if len(sys.argv) == 2:
     if "prod" in sys.argv[1]:
         attrs = {}
 
-# dynamodb = boto3.client('dynamodb', **attrs)  // connection to local machine
-aws_default_region = os.getenv("AWS_DEFAULT_REGION")
-dynamodbConnection = boto3.resource("dynamodb", region_name=aws_default_region)
-
 table_name = 'cruddur-messages'
 message_group_uuid = "5ae290ed-55d1-47a0-bc6d-fe2bc2700399"
 year = str(datetime.datetime.now().year)
+
+# Set up a DynamoDB client
+ddb_client = boto3.client('dynamodb', **attrs)  # connection to local machine
+# aws_default_region = os.getenv("AWS_DEFAULT_REGION")
+# dynamodbConnection = boto3.resource("dynamodb", region_name=aws_default_region)
 
 
 # IMPLEMENT ACCESS PATTERNS
 # define the query parameters
 query_params = {
     'TableName': table_name,
-    'KeyConditionExpression': 'pk = :pk', # AND begins_with(sk,:year)
     'ScanIndexForward': False,
     'Limit': 20,
+    'ReturnConsumedCapacity': 'TOTAL',
+    'KeyConditionExpression': 'pk = :pk AND begins_with(sk,:year)',
     'ExpressionAttributeValues': {
         ':pk': { 'S': f"GRP#{message_group_uuid}" },
-        # ':year': { 'S': year }
+        ':year': { 'S': year }
         # ':start_date': { 'S': "2023-04-24T00:00:00.000000+00:00" },
         # ':end_date': { 'S': "2023-04-24T20:20:00.000000+00:00" }
-    },
-    'ReturnConsumedCapacity': 'TOTAL'
+    }
 }
 
 # query the table
-response = dynamodb.query(**query_params)
-
-print(response)
+response = ddb_client.query(**query_params)
 
 # print the items returned by the query
 print(json.dumps(response, sort_keys=True, indent=2))
@@ -60,4 +60,4 @@ for item in reversed_items:
     timestamp     = item['sk']['S']
     dt_object = datetime.datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%f%z')
     formatted_datetime = dt_object.strftime('%Y-%m-%d %I:%M %p')
-    print(f'{sender_handle: <16}{formatted_datetime: <22}{message[:100]}...')
+    print(f'{sender_handle: <16}{formatted_datetime: <22}{message[:50]}...')
