@@ -244,6 +244,8 @@ def data_messages(message_group_uuid):
       message_group_uuid = message_group_uuid
     )
 
+    printc(f"=================== model\n{model}")
+
     if model['errors'] is not None:
       return model['errors'], 422
     else:

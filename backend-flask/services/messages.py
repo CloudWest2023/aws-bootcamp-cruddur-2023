@@ -4,6 +4,7 @@ import os, sys
 current_path = os.path.dirname(os.path.abspath(__file__))
 parent_path = os.path.abspath(os.path.join(current_path, '..'))
 sys.path.append(parent_path)
+from lib.db import db
 from lib.ddb import ddb
 from utils.bcolors import *
 
@@ -28,4 +29,4 @@ class Messages:
     print(f"data: {data}")
 
     model['data'] = data
-    return     
+    return model

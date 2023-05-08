@@ -13,7 +13,7 @@ from utils.bcolors import *
 class ddb:
   
   def client():
-    printh("ddb.client() ... creating client ...")
+    printh("ddb.client() ...")
 
     endpoint_url = os.getenv("AWS_ENDPOINT_URL") 
     
@@ -24,7 +24,7 @@ class ddb:
       attrs = {}
     client = boto3.client('dynamodb',**attrs)
 
-    printh("    ... ddb.client() created.")
+    printh("    ... ddb.client()")
     return client
     
 
@@ -37,23 +37,21 @@ class ddb:
 
     query_params = {
       'TableName': table_name,
-      'KeyConditionExpression': 'pk = :pk AND begins_with(sk,:year)',
+      'KeyConditionExpression': 'pk = :pk', # AND begins_with(sk,:year)
       'ScanIndexForward': False,
       'Limit': 20,
       'ExpressionAttributeValues': {
-        ':pk': { 'S': f'GRP#{current_user_uuid}' },
-        ':year': { 'S': str(current_year) }
+        ':pk': { 'S': f'GRP#{current_user_uuid}' }
+        # ':year': { 'S': str(current_year) }
       },
       'ReturnConsumedCapacity': 'TOTAL'
     }
-
-    printc(f'     query-params: {query_params}')
-    printc(f'     client: {client}')
 
     # query the table
     response = client.query(**query_params)
     items = response['Items']
 
+    printc(f"     response:: {response}")
     printc(f"     items:: {items}")
 
     results = []
@@ -82,13 +80,16 @@ class ddb:
       'ScanIndexForward': False,
       'Limit': 20,
       'ExpressionAttributeValues': {
-        ':pk': { 'S': f"MSG#{message_group_uuid}" },
-        'year': { 'S': year }
+        ':pk': { 'S': f"GRP#{message_group_uuid}" }
+        # 'year': { 'S': year }
       }
     }
 
     response = client.query(**query_params)
     items = response['Items']
+
+    printc(f"   response: {response}")
+    printc(f"   response['Items']: {response['Items']}")
     
     results = []
     for item in items:
@@ -100,6 +101,7 @@ class ddb:
         'message': item['message']['S'],
         'created_at': created_at
       })
+      printc(f"       results: {results}")
 
     printh("    ... ddb.list_messages()")
 

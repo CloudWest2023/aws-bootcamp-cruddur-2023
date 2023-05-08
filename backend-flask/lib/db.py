@@ -63,7 +63,7 @@ class db:
         printh("db.query_commit() ...")
 
         pattern = r"\bRETURNING\b"
-        is_returning_id = re.search(pattern, sql, params)
+        is_returning_id = re.search(pattern, sql) # params
 
         try:
             with self.pool.connection() as conn:
