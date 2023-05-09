@@ -91,6 +91,8 @@ class ddb:
     printc(f"   response: {response}")
     printc(f"   response['Items']: {response['Items']}")
     
+    items.reverse()
+
     results = []
     for item in items:
       created_at = item['sk']['S']
