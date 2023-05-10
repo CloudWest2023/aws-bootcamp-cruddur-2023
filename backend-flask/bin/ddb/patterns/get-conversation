@@ -17,8 +17,8 @@ if len(sys.argv) == 2:
     if "prod" in sys.argv[1]:
         attrs = {}
 
-table_name = 'cruddur-messages'
-message_group_uuid = "5ae290ed-55d1-47a0-bc6d-fe2bc2700399"
+table_name = 'cruddur-messages-on-cloud'
+message_group_uuid = "505290ed-55d1-47a0-bc6d-fe2bc2700505"
 year = str(datetime.datetime.now().year)
 
 # Set up a DynamoDB client
