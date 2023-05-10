@@ -4,6 +4,7 @@ from flask_cors import CORS, cross_origin
 import os, sys
 from utils.bcolors import *
 
+from services.users_short import *
 from services.home_activities import *
 from services.notifications_activities import *
 from services.user_activities import *
@@ -262,16 +263,43 @@ def data_messages(message_group_uuid):
 def data_create_message():
   message_group_uuid = request.json.get('message_group_uuid', None)
   user_receiver_handle = request.json.get('handle', None)
-  message = request.json['message']
+  message = request.json['message'] # This one is expected to be always there.
 
   access_token = jwttv.extract_access_token(request.headers)
 
-  model = CreateMessage.run(message=message,user_sender_handle=user_sender_handle,user_receiver_handle=user_receiver_handle)
-  if model['errors'] is not None:
-    return model['errors'], 422
-  else:
-    return model['data'], 200
-  return
+  try: 
+    claims = jwttv.verify(access_token)
+    # authenticated request:
+    app.logger.debug("authenticated")
+    app.logger.debug(claims)
+    cognito_user_id = claims['sub']
+
+    if message_group_uuid == None: # if uuid is none, explicitly declare to create a message group.
+      # Create conversation for the first time
+      model = CreateMessage.run(
+        mode="create",
+        message=message,
+        cognito_user_id=cognito_user_id,
+        user_receiver_handle =user_receiver_handle
+      )
+    else:
+      # Push onto existing Message Group
+      model = CreateMessage.run(
+        mode="update",
+        message=message,
+        message_group_uuid=message_group_uuid,
+        cognito_user_id=cognito_user_id
+      )
+
+    if model['errors'] is not None:
+      return model['errors'], 422
+    else:
+      return model['data'], 200
+
+  except TokenVerifyError as e:
+    # NOT authenticated request
+    app.logger.debug(e)
+    return {}, 401
 
 
 @app.route("/api/activities/search", methods=['GET'])
@@ -317,11 +345,12 @@ def data_activities_reply(activity_uuid):
   return
 
 
-# @app.after_request
-# def after_request(response):
-#     timestamp = strftime('[%Y-%b-%d %H:%M]')
-#     LOGGER.error('%s %s %s %s %s %s', timestamp, request.remote_addr, request.method, request.scheme, request.full_path, response.status)
-#     return response
+# Accessing publicly available information so no need to protect this endpoint.
+@app.route("/api/users/@<string:handle>/short", methods=['GET'])
+def data_users_short(handle):
+  data = UsersShort.run(handle)
+  return data, 200
+
 
 if __name__ == "__main__":
   app.run(debug=True)

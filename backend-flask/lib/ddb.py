@@ -204,9 +204,9 @@ class ddb:
     
     now = datetime.now(timezone.utc).astimezone().isoformat()
     created_at = now
-    message_uuid = str(uuid.uuid4())
+    message_uuid = str(uuid.uuid4()) # DynamoDB can't generate these for us. We have to do it ourselves.
 
-    record = {
+    record = { 
       'pk':   {'S': f"MSG#{message_group_uuid}"},
       'sk':   {'S': created_at },
       'message': {'S': message},
@@ -233,5 +233,68 @@ class ddb:
       'message': message,
       'created_at': created_at
     }
+
+  def create_message_group(client, message,current_user_uuid, current_user_display_name, current_user_handle, other_user_uuid, other_user_display_name, other_user_handle):
+    print('== create_message_group.1')
+    table_name = 'cruddur-messages'
+
+    message_group_uuid = str(uuid.uuid4())
+    message_uuid = str(uuid.uuid4())
+    now = datetime.now(timezone.utc).astimezone().isoformat()
+    last_message_at = now
+    created_at = now
+    print('== create_message_group.2')
+
+    current_message_group = {
+      'pk': {'S': f"GRP#{current_user_uuid}"},
+      'sk': {'S': last_message_at},
+      'message_group_uuid': {'S': message_group_uuid},
+      'message': {'S': message},
+      'user_uuid': {'S': other_user_uuid},
+      'user_display_name': {'S': other_user_display_name},
+      'user_handle':  {'S': other_user_handle}
+    }
+
+    print('== create_message_group.3')
+    other_message_group = {
+      'pk': {'S': f"GRP#{other_user_uuid}"},
+      'sk': {'S': last_message_at},
+      'message_group_uuid': {'S': message_group_uuid},
+      'message': {'S': message},
+      'user_uuid': {'S': current_user_uuid},
+      'user_display_name': {'S': current_user_display_name},
+      'user_handle':  {'S': current_user_handle}
+    }
+
+    print('== create_message_group.4')
+    message = {
+      'pk':   {'S': f"MSG#{message_group_uuid}"},
+      'sk':   {'S': created_at },
+      'message': {'S': message},
+      'message_uuid': {'S': message_uuid},
+      'user_uuid': {'S': current_user_uuid},
+      'user_display_name': {'S': current_user_display_name},
+      'user_handle': {'S': current_user_handle}
+    }
+
+    items = {
+      table_name: [
+        {'PutRequest': {'Item': current_message_group}},
+        {'PutRequest': {'Item': other_message_group}},
+        {'PutRequest': {'Item': message}}
+      ]
+    }
+
+    try:
+      print('== create_message_group.try')
+      # Begin the transaction
+      response = client.batch_write_item(RequestItems=items)
+      return {
+        'message_group_uuid': message_group_uuid
+      }
+    except botocore.exceptions.ClientError as e:
+      print('== create_message_group.error')
+      print(e)
+
 
     printh("    ... ddb.create_message()")
