@@ -28,13 +28,13 @@ class ddb:
     return client
     
 
-  def list_message_groups(client, current_user_uuid):
+  def list_message_groups(client, table_name, current_user_uuid):
 
     printh("ddb.list_message_groups() ...")
 
     current_year = datetime.now().year
-    table_name = 'cruddur-messages'  # Ideally, we could prefix the table_name with `--stage` or `--prod` in more real dev process.
-
+    
+    # Ideally, we could prefix the table_name with `--stage` or `--prod` in more real dev process.
     query_params = {
       'TableName': table_name,
       'KeyConditionExpression': 'pk = :pk', # AND begins_with(sk,:year)
@@ -70,10 +70,9 @@ class ddb:
     return results
 
 
-  def list_messages(client, message_group_uuid):
+  def list_messages(client, table_name, message_group_uuid):
     printh("ddb.list_messages() ...")
     year = str(datetime.now().year)
-    table_name = 'cruddur-messages'
     query_params = {
       'TableName': table_name,
       'KeyConditionExpression': 'pk = :pk',
@@ -111,10 +110,8 @@ class ddb:
 
 
   # creates message_group and message
-  def create_message_group(client, message, current_user_uuid, current_user_display_name, current_user_handle, other_user_uuid, other_user_display_name, other_user_handle):
+  def create_message_group(client, table_name, message, current_user_uuid, current_user_display_name, current_user_handle, other_user_uuid, other_user_display_name, other_user_handle):
     printh("ddb.create_message_group() ... ")
-    
-    table_name = 'cruddur-messages'
     
     message_group_uuid = str(uuid.uuid4())
     message_uuid = str(uuid.uuid4())
@@ -199,7 +196,7 @@ class ddb:
     #   print(e)
 
 
-  def create_message(client, message_group_uuid, message, current_user_uuid, current_user_display_name, current_user_handle):
+  def create_message(client, table_name, message_group_uuid, message, current_user_uuid, current_user_display_name, current_user_handle):
     printh("ddb.create_message() ...")
     
     now = datetime.now(timezone.utc).astimezone().isoformat()
@@ -217,7 +214,6 @@ class ddb:
     }
     
     # insert the record into the table
-    table_name = 'cruddur-messages'
     response = client.put_item(
       TableName=table_name,
       Item=record
@@ -234,18 +230,16 @@ class ddb:
       'created_at': created_at
     }
 
-  def create_message_group(client, message,current_user_uuid, current_user_display_name, current_user_handle, other_user_uuid, other_user_display_name, other_user_handle):
-    print('== create_message_group.1')
-    table_name = 'cruddur-messages'
+  # creates message_group and message
+  def create_message_group(client, table_name, message, current_user_uuid, current_user_display_name, current_user_handle, other_user_uuid, other_user_display_name, other_user_handle):
 
     message_group_uuid = str(uuid.uuid4())
     message_uuid = str(uuid.uuid4())
     now = datetime.now(timezone.utc).astimezone().isoformat()
     last_message_at = now
     created_at = now
-    print('== create_message_group.2')
-
-    current_message_group = {
+    
+    message_group = {
       'pk': {'S': f"GRP#{current_user_uuid}"},
       'sk': {'S': last_message_at},
       'message_group_uuid': {'S': message_group_uuid},
@@ -255,18 +249,6 @@ class ddb:
       'user_handle':  {'S': other_user_handle}
     }
 
-    print('== create_message_group.3')
-    other_message_group = {
-      'pk': {'S': f"GRP#{other_user_uuid}"},
-      'sk': {'S': last_message_at},
-      'message_group_uuid': {'S': message_group_uuid},
-      'message': {'S': message},
-      'user_uuid': {'S': current_user_uuid},
-      'user_display_name': {'S': current_user_display_name},
-      'user_handle':  {'S': current_user_handle}
-    }
-
-    print('== create_message_group.4')
     message = {
       'pk':   {'S': f"MSG#{message_group_uuid}"},
       'sk':   {'S': created_at },
@@ -280,21 +262,28 @@ class ddb:
     items = {
       table_name: [
         {'PutRequest': {'Item': current_message_group}},
-        {'PutRequest': {'Item': other_message_group}},
         {'PutRequest': {'Item': message}}
       ]
     }
 
-    try:
-      print('== create_message_group.try')
-      # Begin the transaction
-      response = client.batch_write_item(RequestItems=items)
-      return {
-        'message_group_uuid': message_group_uuid
-      }
-    except botocore.exceptions.ClientError as e:
-      print('== create_message_group.error')
-      print(e)
+    return {
+      'message_group_uuid': message_group_uuid,
+      'uuid': my_user_uuid,
+      'display_name': my_user_display_name,
+      'handle':  my_user_handle,
+      'message': message, 
+      'created_at': created_at
+    }
 
+    try:
+      # Begin the transaction
+      with dynamodb_resource.meta.client.transact_write_items(RequestItems=items) as transaction:
+        print('      Transaction started.')
+        response = transaction.commit()
+        printc('      Transaction committed.')
+        print(f'      {response}')
+    except ClientError as e:
+      # Handle any errors
+      print(e)
 
     printh("    ... ddb.create_message()")
