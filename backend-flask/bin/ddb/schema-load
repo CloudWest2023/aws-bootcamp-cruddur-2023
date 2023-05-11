@@ -16,7 +16,7 @@ if len(sys.argv) == 2:
 
 
 dynamodb = boto3.client('dynamodb', **attrs) 
-table_name = 'cruddur-messages'
+table_name = 'cruddur-messages-on-cloud'
 
 
 response = dynamodb.create_table(
@@ -24,6 +24,10 @@ response = dynamodb.create_table(
 
     # 'S'|'N'|'B'    # String | Number | Binary
     AttributeDefinitions = [
+        {
+            'AttributeName': 'message_group_uuid',
+            'AttributeType': 'S' 
+        },
         {
             'AttributeName': 'pk',
             'AttributeType': 'S' 
@@ -45,8 +49,23 @@ response = dynamodb.create_table(
             'KeyType': 'RANGE'
         },
     ],
-    # GlobalSecondaryIndexes = [
-    # ]
+    'GlobalSecondaryIndexes': [{
+        'IndexName': 'message-group-sk-index',
+        'KeySchema': [{
+            'AttributeName': 'message_group_uuid',
+            'KeyType': 'HASH'
+        }, {
+            'AttributeName': 'sk',
+            'KeyType': 'RANGE'                   
+        }],
+        'Projection': {
+            'ProjectionType': 'ALL'
+        },
+        'ProvisionedThroughput': {
+            'ReadCapacityUnits': 5,
+            'WriteCapacityUnits': 5
+        }
+    }], 
     BillingMode = 'PROVISIONED',
     ProvisionedThroughput = {
         'ReadCapacityUnits': 5,

@@ -1,17 +1,17 @@
 tasks:
-  - name: backend
-    command: |
-      cd $THEIA_WORKSPACE_ROOT/backend-flask
-      pip install -r requirements.txt
   - name: aws-cli
     env:
       AWS_CLI_AUTO_PROMPT: on-partial
-    command: |
+    init: |
       cd /workspace
       curl "https:/awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" - o "awscliv2.zip"
       unzip awsclip2.zip
       sudo ./aws/install
       cd $THEIA_WORKSPACE_ROOT
+  - name: backend
+    command: |
+      cd $THEIA_WORKSPACE_ROOT/backend-flask
+      pip install -r requirements.txt
   - name: react-js
     command: |
       cd frontend-react-js
