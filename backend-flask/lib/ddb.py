@@ -60,7 +60,7 @@ class ddb:
       results.append({
         'uuid': item['message_group_uuid']['S'],
         'display_name': item['user_display_name']['S'],
-        'handle': item['user_handle']['S'],
+      'handle': item['user_handle']['S'],
         'message': item['message']['S'],
         'created_at': last_sent_at
       })

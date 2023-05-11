@@ -25,6 +25,7 @@ services:
       AWS_SECRET_ACCESS_KEY:           "${AWS_SECRET_ACCESS_KEY}"
       AWS_COGNITO_USER_POOL_ID:        "${AWS_COGNITO_USER_POOL_ID}"
       AWS_COGNITO_USER_POOL_CLIENT_ID: "${AWS_COGNITO_USER_POOL_CLIENT_ID}"
+      AWS_DYNAMODB_TABLE:              "${AWS_DYNAMODB_TABLE}"
       # AWS_ENDPOINT_URL:                "http://dynamodb-local:8000/"
 
     build: ./backend-flask

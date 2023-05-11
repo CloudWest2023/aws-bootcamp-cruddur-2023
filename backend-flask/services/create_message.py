@@ -58,10 +58,12 @@ class CreateMessage:
       print(other_user)
 
       ddb_client = ddb.client()
+      table_name = os.getenv("AWS_DYNAMODB_TABLE")
 
       if (mode == "update"):
         data = ddb.create_message(
           client=ddb_client,
+          table_name=table_name,
           message_group_uuid=message_group_uuid,
           message=message,
           current_user_uuid=current_user['uuid'],
@@ -71,6 +73,7 @@ class CreateMessage:
       elif (mode == "create"):
         data = ddb.create_message(
           client=ddb_client,
+          table_name=table_name,
           message=message,
           current_user_uuid=current_user['uuid'],
           current_user_display_name=current_user['display_name'],
