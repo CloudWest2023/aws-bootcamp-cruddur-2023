@@ -17,7 +17,7 @@ def create_message_group(client, table_name, current_user_uuid, message_group_uu
     record = {
         'pk': {'S': f"GRP#{current_user_uuid}"},
         'sk': {'S': last_message_at},
-        'message_group_uuid': {'S': message_group_uuid},
+        'message_group_uuid': {'S': message_group_uuid},  
         'message': {'S': message},
         'user_uuid': {'S': other_user_uuid},
         'user_display_name': {'S': other_user_display_name},
@@ -36,7 +36,7 @@ def create_message_group(client, table_name, current_user_uuid, message_group_uu
         print("PUT_ITEM operation succesful.\n")
 
 
-def create_message(client, message_group_uuid, created_at, message, current_user_uuid, current_user_display_name, current_user_handle):
+def create_message(client, table_name, message_group_uuid, created_at, message, current_user_uuid, current_user_display_name, current_user_handle):
 
     record = {
         'pk': {'S': f"MSG#{message_group_uuid}"},
@@ -48,7 +48,6 @@ def create_message(client, message_group_uuid, created_at, message, current_user
         'user_handle': {'S': current_user_handle}
     }
 
-    table_name = 'cruddur-messages-on-cloud'
     response = client.put_item(
         TableName = table_name,
         Item = record
@@ -108,7 +107,7 @@ if len(sys.argv) == 2:
 # aws_default_region = os.getenv("AWS_DEFAULT_REGION")
 ddb_client = boto3.client('dynamodb', **attrs)  # connection to local machine
 
-table_name = "cruddur-messages-on-cloud"
+table_name = "cruddur-messages-on-cloud3"
 now = datetime.now(timezone.utc).astimezone()
 created_at = (now + timedelta(minutes=1)).isoformat()
 users = get_user_uuids()
@@ -145,7 +144,6 @@ create_message_group(
 )
 
 
-
 lines = conversation.lstrip('\n').rstrip('\n').split('\n')
 for i in range(len(lines)):
     if lines[i].startswith('Person 1: '):
@@ -162,6 +160,7 @@ for i in range(len(lines)):
 
     create_message(
         client=ddb_client,
+        table_name=table_name,
         message_group_uuid=message_group_uuid_variable,
         created_at=created_at,
         message=message,

@@ -1,29 +1,23 @@
 #!/usr/bin/env python3
 
 import boto3
-import sys
-import os
+import sys, os
 
-aws_endpoint_url = os.getenv("AWS_ENDPOINT_URL")
+
 attrs = {
-            'endpoint_url': aws_endpoint_url
+            'endpoint_url': os.getenv("AWS_ENDPOINT_URL")
         }
-
 
 if len(sys.argv) == 2:
     if "prod" in sys.argv[1]:
         attrs = {}
 
-
 dynamodb = boto3.client('dynamodb', **attrs) 
-table_name = 'cruddur-messages-on-cloud'
+table_name = 'cruddur-messages-on-cloud3'
 
-
-response = dynamodb.create_table(
-    TableName = table_name,
-
+table_schema = {
     # 'S'|'N'|'B'    # String | Number | Binary
-    AttributeDefinitions = [
+    'AttributeDefinitions': [
         {
             'AttributeName': 'message_group_uuid',
             'AttributeType': 'S' 
@@ -37,24 +31,25 @@ response = dynamodb.create_table(
             'AttributeType': 'S' 
         },
     ],
-
     # 'HASH'|'RANGE'
-    KeySchema = [
-        {
+    'KeySchema': [{
             'AttributeName': 'pk',
             'KeyType': 'HASH'
-        },
-        {
+        },{
             'AttributeName': 'sk',
             'KeyType': 'RANGE'
-        },
-    ],
+        }],
+    'BillingMode': 'PROVISIONED',
+    'ProvisionedThroughput': {
+        'ReadCapacityUnits': 5,
+        'WriteCapacityUnits': 5
+    },
     'GlobalSecondaryIndexes': [{
         'IndexName': 'message-group-sk-index',
         'KeySchema': [{
             'AttributeName': 'message_group_uuid',
             'KeyType': 'HASH'
-        }, {
+        },{
             'AttributeName': 'sk',
             'KeyType': 'RANGE'                   
         }],
@@ -65,12 +60,17 @@ response = dynamodb.create_table(
             'ReadCapacityUnits': 5,
             'WriteCapacityUnits': 5
         }
-    }], 
-    BillingMode = 'PROVISIONED',
-    ProvisionedThroughput = {
-        'ReadCapacityUnits': 5,
-        'WriteCapacityUnits': 5
-    },
+    }]
+}
+
+
+print(table_schema["KeySchema"][0])
+print(table_schema["KeySchema"][1])
+
+# Create the table 
+response = dynamodb.create_table(
+    TableName=table_name,
+    **table_schema
 )
 
 print(response)
