@@ -24,8 +24,12 @@ class Messages:
 
     print(f"UUID: {current_user_uuid}")
 
-    ddb_client = ddb.client()
-    data = ddb.list_messages(ddb_client, message_group_uuid)
+
+    data = ddb.list_messages(
+      client=ddb.client(), 
+      table_name=os.getenv("AWS_DYNAMODB_TABLE"),
+      message_group_uuid=message_group_uuid
+    )
     print(f"data: {data}")
 
     model['data'] = data
