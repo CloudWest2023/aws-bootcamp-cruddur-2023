@@ -2,6 +2,7 @@ import boto3
 from boto3.dynamodb.conditions import Key, Attr
 import json
 
+
 dynamodb = boto3.resource(
     'dynamodb', 
     region_name = 'us-east-1',
@@ -9,6 +10,13 @@ dynamodb = boto3.resource(
 )
 
 def lambda_handler(event, context):
+    print(f'cruddur-messaging-stream lambda\nevent-data: ', event)
+
+    eventName = event['Records'][0]['eventName']
+    if eventName == 'REMOVE':
+        printc('    skip REMOVE event: ')
+        return
+
     pk = event['Records'][0]['dynamodb']['Keys']['pk']['S']
     sk = event['Records'][0]['dynamodb']['Keys']['sk']['S']
     if pk.startswith('MSG#'):
