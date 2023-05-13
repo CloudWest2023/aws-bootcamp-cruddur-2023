@@ -5,6 +5,8 @@ NO_COLOR='\033[0m'
 LABEL="rds/postgres/update-sg-rule"
 printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
+export GITPOD_IP=$(curl ifconfig.me)
+gp env GITPOD_IP=$(curl ifconfig.me)
 
 aws ec2 modify-security-group-rules \
     --group-id $DB_SG_ID \
