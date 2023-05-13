@@ -1,0 +1,5 @@
+#! /usr/bin/bash
+
+aws ecr create-repository \
+    --repository-name "frontend-react-js" \
+    --image-tag-mutability MUTABLE

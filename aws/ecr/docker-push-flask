@@ -1,0 +1,9 @@
+#! /usr/bin/bash
+
+export AWS_ECR_BACKEND_FLASK_URL="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/backend-flask"
+echo $AWS_ECR_BACKEND_FLASK_URL
+
+cd $THEIA_WORKSPACE_ROOT/backend-flask
+docker build -t backend-flask -f Dockerfile .
+docker tag backend-flask:latest $AWS_ECR_BACKEND_FLASK_URL:latest
+docker push $AWS_ECR_BACKEND_FLASK_URL:latest

@@ -1,0 +1,5 @@
+#! /usr/bin/bash
+
+aws ecr create-repository \
+    --repository-name "backend-flask" \
+    --image-tag-mutability MUTABLE

@@ -1,4 +1,4 @@
-FROM python:3.10-slim-buster
+FROM <YOUR_AWS_ECR_URL>/cruddur-python:3.10-slim-buster
 
 WORKDIR /backend-flask
 
