@@ -10,8 +10,8 @@
                 "dynamodb:Query"
             ],
             "Resource": [
-                "arn:aws:dynamodb:us-east-1:501753804709:table/cruddur-messages-on-cloud",
-                "arn:aws:dynamodb:us-east-1:501753804709:table/cruddur-messages-on-cloud/index/message-group-sk-index"
+                "arn:aws:dynamodb:us-east-1:<ACCOUNT_ID>:table/cruddur-messages-on-cloud",
+                "arn:aws:dynamodb:us-east-1:<ACCOUNT_ID>:table/cruddur-messages-on-cloud/index/message-group-sk-index"
             ]
         }
     ]

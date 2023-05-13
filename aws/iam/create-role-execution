@@ -1,0 +1,5 @@
+#! /usr/bin/bash
+
+aws iam create-role \
+    --role-name CruddurServiceExecutionRole \
+    --assume-role-policy-document file://policy/service-execution-assume-role-policy.json

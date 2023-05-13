@@ -1,0 +1,6 @@
+#! /usr/bin/bash
+
+aws iam put-role-policy \
+    --policy-name CruddurServiceExecutionPolicy \
+    --role-name CruddurServiceExecutionRole \
+    --policy-document file://policy/service-execution-policy.json
