@@ -1,0 +1,5 @@
+#! /usr/bin/bash
+
+aws ecs create-cluster \
+    --cluster-name cruddur \
+    --service-connect-defaults namespace=cruddur
