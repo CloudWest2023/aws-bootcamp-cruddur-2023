@@ -1,0 +1,17 @@
+#! /usr/bin/env python3
+
+import psycopg
+import os, sys
+
+connection_url = os.getenv("CONNECTION_URL")
+connection_url += os.getenv("DB_NAME_PROD")
+
+conn = None
+try:
+  print('attempting connection')
+  conn = psycopg.connect(connection_url)
+  print("Connection successful!")
+except psycopg.Error as e:
+  print("Unable to connect to the database:", e)
+finally:
+  conn.close()

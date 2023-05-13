@@ -1,0 +1,4 @@
+#! /usr/bin/bash
+
+aws logs create-log-group --log-group-name "$1"
+aws logs put-retention-policy --log-group-name "$1" --retention-in-days "$2"
