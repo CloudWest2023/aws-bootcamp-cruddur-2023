@@ -5,14 +5,14 @@ NO_COLOR='\033[0m'
 LABEL="rmi-flaks --- removing FLASK image, process starting..."
 printf "${CYAN}=== ${LABEL}${NO_COLOR}\n"
 
-FRONTEND_CONTAINER_ID=$(docker ps -aqf "name=flask")
-printf "${CYAN}{$FRONTEND_CONTAINER_ID${NO_COLOR}\n"
+BACKEND_CONTAINER_ID=$(docker ps -aqf "name=flask")
+printf "${CYAN}{$BACKEND_CONTAINER_ID${NO_COLOR}\n"
 sleep 3;
 
-if [ $FRONTEND_CONTAINER_ID != "" ];
+if [ $BACKEND_CONTAINER_ID != "" ];
 then
-    printf "${CYAN}{=== docker stopping container ID $FRONTEND_CONTAINER_ID${NO_COLOR}\n"
-    docker stop $FRONTEND_CONTAINER_ID
+    printf "${CYAN}{=== docker stopping container ID $BACKEND_CONTAINER_ID${NO_COLOR}\n"
+    docker stop $BACKEND_CONTAINER_ID
     sleep 3;
 fi
 

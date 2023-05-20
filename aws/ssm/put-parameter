@@ -1,5 +1,12 @@
 #! /usr/bin/bash
 
+# aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/URL_PROD" --value $URL_PROD
+# aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/DB_NAME_PROD" --value $DB_NAME_PROD
+
+# aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_COGNITO_USER_POOL_ID" --value $AWS_COGNITO_USER_POOL_ID
+# aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_COGNITO_USER_POOL_CLIENT_ID" --value $AWS_COGNITO_USER_POOL_CLIENT_ID
+# aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_DEFAULT_REGION" --value $AWS_DEFAULT_REGION
+
 aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_ACCESS_KEY_ID" --value $AWS_ACCESS_KEY_ID
 aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_SECRET_ACCESS_KEY" --value $AWS_SECRET_ACCESS_KEY
 aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/CONNECTION_URL" --value $CONNECTION_URL$DB_NAME_PROD
