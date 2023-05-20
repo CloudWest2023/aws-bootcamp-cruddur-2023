@@ -1,0 +1,14 @@
+#! /usr/bin/bash
+
+aws ecs execute-command \
+    --region $AWS_DEFAULT_REGION \
+    --cluster cruddur-attempt-4 \
+    --task $1 \
+    --container backend-flask \
+    --command "/bin/bash" \
+    --interactive
+
+
+#  SessionManagerPlugin is not found. 
+# Please refer to SessionManager Documentation here: 
+# http://docs.aws.amazon.com/console/systems-manager/session-manager-plugin-not-found

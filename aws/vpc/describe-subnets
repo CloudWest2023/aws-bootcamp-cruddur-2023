@@ -1,0 +1,3 @@
+#! /usr/bin/bash
+
+echo $(aws ec2 describe-subnets --filters Name=vpc-id,Values=$AWS_DEFAULT_VPC_ID --query 'Subnets[*].SubnetId' --output json | jq -r 'join(",")')
