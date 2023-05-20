@@ -111,6 +111,10 @@ def rollbar_test():
     rollbar.report_message('Seeing if rollbar works locally. NOT using dotenv', 'warning')
     return "rollbar local test"
 
+@app.route('api/health-check')
+def health_check():
+  return {'success': True}, 200
+
 # Configuring Logger to Use CloudWatch
 # LOGGER = logging.getLogger(__name__)
 # LOGGER.setLevel(logging.DEBUG)
