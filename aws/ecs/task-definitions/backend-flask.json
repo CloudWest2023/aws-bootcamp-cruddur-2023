@@ -1,17 +1,27 @@
 {
     "family": "backend-flask",
-    "executionRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/CruddurServiceExecutionRole",
-    "taskRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/CruddurTaskRole",
+    "executionRoleArn": "YOUR_ARN/CruddurServiceExecutionRole",
+    "taskRoleArn": "YOUR_ARN/CruddurTaskRole",
     "networkMode": "awsvpc",
     "cpu": "256",
     "memory": "512",
-    "requiresCompatibilities": [ 
-      "FARGATE" 
-    ],
     "containerDefinitions": [
       {
+        "name": "xray",
+        "image": "public.ecr.aws/xray/aws-xray-daemon" ,
+        "essential": true,
+        "user": "1337",
+        "portMappings": [
+          {
+            "name": "xray",
+            "containerPort": 2000,
+            "protocol": "udp"
+          }
+        ]
+      },
+      {
         "name": "backend-flask",
-        "image": "<ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/backend-flask",
+        "image": "YOUR_AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/backend-flask:latest",
         "essential": true,
         "healthCheck": {
           "command": [
@@ -34,26 +44,26 @@
         "logConfiguration": {
           "logDriver": "awslogs",
           "options": {
-              "awslogs-group": "cruddur-week6-ecr",
-              "awslogs-region": "us-east-1",
+              "awslogs-group": "YOUR_LOG_GROUP_NAME",
+              "awslogs-region": "YOUR_AWS_REGION",
               "awslogs-stream-prefix": "backend-flask"
           }
         },
         "environment": [
           {"name": "OTEL_SERVICE_NAME", "value": "backend-flask"},
           {"name": "OTEL_EXPORTER_OTLP_ENDPOINT", "value": "https://api.honeycomb.io"},
-          {"name": "AWS_COGNITO_USER_POOL_ID", "value": "us-east-1_CQ4wDfnwc"},
-          {"name": "AWS_COGNITO_USER_POOL_CLIENT_ID", "value": "5b6ro31g97urk767adrbrdj1g5"},
+          {"name": "AWS_COGNITO_USER_POOL_ID", "value": "YOUR_POOL_ID"},
+          {"name": "AWS_COGNITO_USER_POOL_CLIENT_ID", "value": "YOUR_CLIENT_ID"},
           {"name": "FRONTEND_URL", "value": "*"},
           {"name": "BACKEND_URL", "value": "*"},
-          {"name": "AWS_DEFAULT_REGION", "value": "us-east-1"}
+          {"name": "AWS_DEFAULT_REGION", "value": "YOUR_AWS_REGION"}
         ],
         "secrets": [
-          {"name": "AWS_ACCESS_KEY_ID"    , "valueFrom": "arn:aws:ssm:us-east-1:<ACCOUNT_ID>:parameter/cruddur/backend-flask/AWS_ACCESS_KEY_ID"},
-          {"name": "AWS_SECRET_ACCESS_KEY", "valueFrom": "arn:aws:ssm:us-east-1:<ACCOUNT_ID>:parameter/cruddur/backend-flask/AWS_SECRET_ACCESS_KEY"},
-          {"name": "CONNECTION_URL"       , "valueFrom": "arn:aws:ssm:us-east-1:<ACCOUNT_ID>:parameter/cruddur/backend-flask/CONNECTION_URL" },
-          {"name": "ROLLBAR_ACCESS_TOKEN" , "valueFrom": "arn:aws:ssm:us-east-1:<ACCOUNT_ID>:parameter/cruddur/backend-flask/ROLLBAR_ACCESS_TOKEN" },
-          {"name": "OTEL_EXPORTER_OTLP_HEADERS" , "valueFrom": "arn:aws:ssm:us-east-1:<ACCOUNT_ID>:parameter/cruddur/backend-flask/OTEL_EXPORTER_OTLP_HEADERS" }
+          {"name": "AWS_ACCESS_KEY_ID"    , "valueFrom": "YOUR_SSM_PARAMTER_ARN/cruddur/backend-flask/AWS_ACCESS_KEY_ID"},
+          {"name": "AWS_SECRET_ACCESS_KEY", "valueFrom": "YOUR_SSM_PARAMTER_ARN/cruddur/backend-flask/AWS_SECRET_ACCESS_KEY"},
+          {"name": "CONNECTION_URL"       , "valueFrom": "YOUR_SSM_PARAMTER_ARN/cruddur/backend-flask/CONNECTION_URL" },
+          {"name": "ROLLBAR_ACCESS_TOKEN" , "valueFrom": "YOUR_SSM_PARAMTER_ARN/cruddur/backend-flask/ROLLBAR_ACCESS_TOKEN" },
+          {"name": "OTEL_EXPORTER_OTLP_HEADERS" , "valueFrom": "YOUR_SSM_PARAMTER_ARN/cruddur/backend-flask/OTEL_EXPORTER_OTLP_HEADERS" }
         ]
       }
     ]
