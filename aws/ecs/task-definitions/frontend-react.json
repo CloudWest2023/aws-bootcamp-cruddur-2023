@@ -1,0 +1,32 @@
+{
+    "family": "frontend-react-js",
+    "executionRoleArn": "arn:aws:iam::AWS_ACCOUNT_ID:role/CruddurServiceExecutionRole",
+    "taskRoleArn": "arn:aws:iam::AWS_ACCOUNT_ID:role/CruddurTaskRole",
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+      {
+        "name": "frontend-react-js",
+        "image": "AWS_ACCOUNT_ID.dkr.ecr.AWS_REGION.amazonaws.com/frontend-react-js",
+        "cpu": 256,
+        "memory": 256,
+        "essential": true,
+        "portMappings": [  
+          {
+            "name": "frontend-react-js",
+            "containerPort": 3000,
+            "protocol": "tcp", 
+            "appProtocol": "http"
+          }
+        ],
+  
+        "logConfiguration": {
+          "logDriver": "awslogs",
+          "options": {
+              "awslogs-group": "LOG_GROUP_NAME",
+              "awslogs-region": "AWS_REGION",
+              "awslogs-stream-prefix": "frontend-react"
+          }
+        }
+      }
+    ]
+  }
