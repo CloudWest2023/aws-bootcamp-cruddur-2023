@@ -1,0 +1,3 @@
+#! /usr/bin/bash
+
+aws ecs register-task-definition --cli-input-json file://task-definitions/$1-secure.json

@@ -1,3 +1,3 @@
 #! /usr/bin/bash
 
-aws ecs delete-service --cluster cruddur-attempt-4 --service backend-flask --force
+aws ecs delete-service --cluster cruddur-attempt-4 --service $1 --force
