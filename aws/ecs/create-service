@@ -6,5 +6,5 @@ sudo dpkg -i session-manager-plugin.deb
 aws ecs create-service \
     --cli-input-json file://service-definitions/$1.json \
     --deployment-controller type=ECS \
-    --desired-count 2 \
-    --deployment-configuration "deploymentCircuitBreaker={enable=true,rollback=true}" 
+    --desired-count 1 \
+    --deployment-configuration "deploymentCircuitBreaker={enable=true,rollback=true}"

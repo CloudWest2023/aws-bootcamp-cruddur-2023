@@ -1,0 +1,14 @@
+#! /usr/bin/bash
+
+
+CONTAINER_NAME=backend-flask
+TASK_ID=$(aws ecs list-tasks --cluster $AWS_ECS_CLUSTER --query "taskArns[0]" )
+echo $TASK_ID
+
+aws ecs execute-command \
+    --region $AWS_DEFAULT_REGION \
+    --cluster $AWS_ECS_CLUSTER \
+    --task $TASK_ID \
+    --container $CONTAINER_NAME \
+    --command "/bin/bash" \
+    --interactive

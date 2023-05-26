@@ -1,0 +1,17 @@
+#! /usr/bin/bash
+
+# docker stop aws-bootcamp-cruddur-2023-backend-flask
+
+docker system prune -f;
+
+docker rmi docker aws-bootcamp-cruddur-2023-backend-flask
+
+docker build -t aws-bootcamp-cruddur-2023-backend-flask .
+
+sleep 10; 
+
+docker images;
+
+sleep 5;
+
+docker run aws-bootcamp-cruddur-2023-backend-flask;
