@@ -111,7 +111,7 @@ def rollbar_test():
     rollbar.report_message('Seeing if rollbar works locally. NOT using dotenv', 'warning')
     return "rollbar local test"
 
-@app.route('api/health-check')
+@app.route('/api/health-check')
 def health_check():
   return {'success': True}, 200
 
@@ -131,8 +131,10 @@ def health_check():
 # XRayMiddleware(app, xray_recorder)
 
 
-frontend = os.getenv('FRONTEND_URL')
-backend = os.getenv('BACKEND_URL')
+# frontend = os.getenv('FRONTEND_URL')
+# backend = os.getenv('BACKEND_URL')
+frontend = os.getenv('FRONTEND_URL_PROD')
+backend = os.getenv('BACKEND_URL_PROD')
 
 origins = [frontend, backend]
 cors = CORS(
