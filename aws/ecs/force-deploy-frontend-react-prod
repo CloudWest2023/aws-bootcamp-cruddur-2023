@@ -1,0 +1,22 @@
+#! /usr/bin/bash
+
+CLUSTER_NAME=$AWS_ECS_CLUSTER
+SERVICE_NAME="frontend-react-js-prod"
+TASK_DEFINTION_FAMILY="frontend-react-js-prod"
+
+LATEST_TASK_DEFINITION_ARN=$(aws ecs describe-task-definition \
+--task-definition $TASK_DEFINTION_FAMILY \
+--query 'taskDefinition.taskDefinitionArn' \
+--output text)
+
+aws ecs update-service \
+--cluster $CLUSTER_NAME \
+--service $SERVICE_NAME \
+--task-definition $LATEST_TASK_DEFINITION_ARN \
+--force-new-deployment
+
+#aws ecs describe-services \
+#--cluster $CLUSTER_NAME \
+#--service $SERVICE_NAME \
+#--query 'services[0].deployments' \
+#--output table
