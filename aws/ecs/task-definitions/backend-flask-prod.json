@@ -1,0 +1,64 @@
+{
+    "family": "backend-flask-prod",
+    "executionRoleArn": "arn:aws:iam::AWS_ACCOUNT_ID:role/CruddurServiceExecutionRole",
+    "taskRoleArn": "arn:aws:iam::AWS_ACCOUNT_ID:role/CruddurTaskRole",
+    "networkMode": "awsvpc",
+    "cpu": "256",
+    "memory": "512",
+    "containerDefinitions": [
+      {
+        "name": "xray",
+        "image": "public.ecr.aws/xray/aws-xray-daemon" ,
+        "essential": true,
+        "user": "1337",
+        "portMappings": [
+          {
+            "name": "xray",
+            "containerPort": 2000,
+            "protocol": "udp"
+          }
+        ]
+      },
+      {
+        "name": "backend-flask-prod",
+        "image": "AWS_ACCOUNT_ID.dkr.ecr.AWS_REGION.amazonaws.com/backend-flask-prod:latest",
+        "essential": true,
+        "healthCheck": {
+          "command": [
+            "CMD-SHELL",
+            "python /backend-flask/bin/flask/health-check"
+          ],
+          "interval": 30,
+          "timeout": 5,
+          "retries": 3,
+          "startPeriod": 60
+        },
+        "portMappings": [
+          {
+            "name": "backend-flask",
+            "containerPort": 4567,
+            "protocol": "tcp", 
+            "appProtocol": "http"
+          }
+        ],
+        "logConfiguration": {
+          "logDriver": "awslogs",
+          "options": {
+              "awslogs-group": "/week7/ECS/production-mode",
+              "awslogs-region": "AWS_REGION",
+              "awslogs-stream-prefix": "backend-flask-prod"
+          }
+        },
+        "environment": [
+          {"name": "VARIABLE_NAME", "value": "VARIABLE_VALUE"},
+          {"name": "VARIABLE_NAME", "value": "VARIABLE_VALUE"},
+          {"name": "VARIABLE_NAME", "value": "VARIABLE_VALUE"}
+        ],
+        "secrets": [
+          {"name": "SECRET_NAME", "valueFrom": "arn:aws:ssm:AWS_REGION:AWS_ACCOUNT_ID:parameter/cruddur/backend-flask/SECRET_NAME"},
+          {"name": "SECRET_NAME", "valueFrom": "arn:aws:ssm:AWS_REGION:AWS_ACCOUNT_ID:parameter/cruddur/backend-flask/SECRET_NAME"},
+          {"name": "SECRET_NAME", "valueFrom": "arn:aws:ssm:AWS_REGION:AWS_ACCOUNT_ID:parameter/cruddur/backend-flask/SECRET_NAME"}
+        ]
+      }
+    ]
+  }
