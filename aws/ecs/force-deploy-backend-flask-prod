@@ -3,7 +3,7 @@
 CLUSTER_NAME=$AWS_ECS_CLUSTER
 SERVICE_NAME="backend-flask-prod"
 TASK_DEFINTION_FAMILY="backend-flask-prod"
-
+ 
 LATEST_TASK_DEFINITION_ARN=$(aws ecs describe-task-definition \
 --task-definition $TASK_DEFINTION_FAMILY \
 --query 'taskDefinition.taskDefinitionArn' \

@@ -133,8 +133,8 @@ def health_check():
 
 # frontend = os.getenv('FRONTEND_URL')
 # backend = os.getenv('BACKEND_URL')
-frontend = os.getenv('FRONTEND_URL_PROD')
-backend = os.getenv('BACKEND_URL_PROD')
+frontend = os.getenv('FRONTEND_URL')
+backend = os.getenv('BACKEND_URL')
 
 origins = [frontend, backend]
 cors = CORS(

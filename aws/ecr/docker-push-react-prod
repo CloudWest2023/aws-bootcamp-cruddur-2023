@@ -1,0 +1,20 @@
+#! /usr/bin/bash
+
+# cd $THEIA_WORKSPACE_ROOT/frontend-react-js
+# docker build \
+#     --build-arg REACT_APP_BACKEND_URL="https://api.goodstuff.cloud" \
+#     --build-arg REACT_APP_AWS_PROJECT_REGION="$AWS_DEFAULT_REGION" \
+#     --build-arg REACT_APP_AWS_COGNITO_REGION="$AWS_DEFAULT_REGION" \
+#     --build-arg REACT_APP_AWS_COGNITO_USER_POOL_ID="$AWS_COGNITO_USER_POOL_ID" \
+#     --build-arg REACT_APP_AWS_COGNITO_USER_POOL_CLIENT_ID="$AWS_COGNITO_USER_POOL_CLIENT_ID" \
+#     -t frontend-react-js-prod \
+#     -f Dockerfile.prod \
+#     .
+
+# Tag image
+docker tag frontend-react-js-prod:latest $AWS_ECR_FRONTEND_REACT_PROD_URL:latest
+
+# Push image
+docker push $AWS_ECR_FRONTEND_REACT_PROD_URL:latest
+# If you want to test it...: 
+# docker run --rm -p 3000:3000 -it frontend-react-js
