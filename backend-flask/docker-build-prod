@@ -1,0 +1,20 @@
+#! /usr/bin/bash
+
+docker build \
+    --build-arg FRONTEND_URL="$FRONTEND_URL_PROD" \
+    --build-arg BACKEND_URL="$BACKEND_URL_PROD" \
+    --build-arg AWS_RDS_POSTGRES_ENDPOINT="$AWS_RDS_POSTGRES_ENDPOINT" \
+    --build-arg AWS_DYNAMODB_ENDPOINT="$AWS_DYNAMODB_ENDPOINT" \
+    --build-arg AWS_DYNAMODB_TABLE="$AWS_DYNAMODB_TABLE" \
+    --build-arg AWS_COGNITO_USER_POOL_ID="$AWS_COGNITO_USER_POOL_ID" \
+    --build-arg AWS_COGNITO_USER_POOL_CLIENT_ID="$AWS_COGNITO_USER_POOL_CLIENT_ID" \
+    --build-arg AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION" \
+    --build-arg ROLLBAR_ACCESS_TOKEN="$ROLLBAR_ACCESS_TOKEN" \
+    -t backend-flask-prod \
+    -f Dockerfile.prod \
+    .
+
+docker tag backend-flask-prod:latest $AWS_ECR_BACKEND_REACT_URL_PROD:latest
+
+# Push image
+docker push $AWS_ECR_BACKEND_REACT_URL_PROD:latest

@@ -15,7 +15,7 @@ class ddb:
   def client():
     printh("ddb.client() ...")
 
-    endpoint_url = os.getenv("AWS_ENDPOINT_URL") 
+    endpoint_url = os.getenv("AWS_DYNAMODB_ENDPOINT") 
     
     if endpoint_url:
       attrs = { 'endpoint_url': endpoint_url }

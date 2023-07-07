@@ -17,16 +17,9 @@ class db:
     def init_pool(self):
         printh("db.init_pool() ...")
 
-        psql_url = os.getenv("URL_PROD")
-        printc(f"   psql_url: {psql_url}")
-        db_name = os.getenv("DB_NAME_PROD")
-        printc(f"   db_name: {db_name}")
-
-        connection_url = str(f"{psql_url}{db_name}")
+        connection_url = os.getenv("AWS_RDS_POSTGRES_ENDPOINT")
         printc(f"   connection_url: {connection_url}")
 
-        if db_name in connection_url:
-            printc(f"    Connecting to: AWS RDS production db - {db_name}")
         self.pool = ConnectionPool(connection_url)
         printc(f"    {self.pool}")
         printh(f"    ... db.init_pool()\n")
