@@ -4,6 +4,7 @@ pickup.txt
 node_modules
 
 frontend-react-js/.env
+frontend-react-js/build/
 backend-flask/.env
 backend-flask/test.py
 backend-flask/.rds.txt
@@ -15,4 +16,6 @@ test/*
 /docker/*
 .env
 
+env.txt
 notes.txt
+**/*/session-manager-plugin.deb

@@ -3,16 +3,6 @@
 # OVERWRITE EXISTING ENV VARIABLES
 # aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/CONNECTION_URL" --value $CONNECTION_URL --overwrite
 
-
-AWS_COGNITO_USER_POOL_ID
-AWS_COGNITO_USER_POOL_CLIENT_ID
-AWS_DEFAULT_REGION
-
-ROLLBAR_ACCESS_TOKEN
-
-FRONTEND_URL
-BACKEND_URL
-
 # STORE NEW ENV VARIABLES 
 # aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/URL_PROD" --value $URL_PROD
 # aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/DB_NAME_PROD" --value $DB_NAME_PROD
@@ -24,10 +14,13 @@ BACKEND_URL
 # aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/ROLLBAR_ACCESS_TOKEN" --value $ROLLBAR_ACCESS_TOKEN
 # aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/OTEL_EXPORTER_OTLP_HEADERS" --value "x-honeycomb-team=$HONEYCOMB_API_KEY"
 
-aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/FRONTEND_URL_PROD" --value $FRONTEND_URL_PROD
-aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/BACKEND_URL_PROD" --value $BACKEND_URL_PROD
-aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/URL_PROD" --value $URL_PROD
-aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_XRAY_URL" --value $AWS_XRAY_URL
-aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_XRAY_DAEMON_ADDRESS" --value $AWS_XRAY_DAEMON_ADDRESS
-aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/HONEYCOMB_SERVICE_NAME" --value $HONEYCOMB_SERVICE_NAME
-aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_DYNAMODB_TABLE" --value $AWS_DYNAMODB_TABLE
+# aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/FRONTEND_URL_PROD" --value $FRONTEND_URL_PROD
+# aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/BACKEND_URL_PROD" --value $BACKEND_URL_PROD
+# aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/URL_PROD" --value $URL_PROD
+# aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_XRAY_URL" --value $AWS_XRAY_URL
+# aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_XRAY_DAEMON_ADDRESS" --value $AWS_XRAY_DAEMON_ADDRESS
+# aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/HONEYCOMB_SERVICE_NAME" --value $HONEYCOMB_SERVICE_NAME
+# aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_DYNAMODB_TABLE" --value $AWS_DYNAMODB_TABLE
+
+# aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_RDS_POSTGRES_ENDPOINT" --value $AWS_RDS_POSTGRES_ENDPOINT
+aws ssm put-parameter --type "SecureString" --name "/cruddur/backend-flask/AWS_RDS_POSTGRES_ENDPOINT" --value $AWS_RDS_POSTGRES_ENDPOINT --overwrite
