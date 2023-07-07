@@ -1,14 +1,23 @@
 #! /usr/bin/bash
 
-
-CONTAINER_NAME=backend-flask
-TASK_ID=$(aws ecs list-tasks --cluster $AWS_ECS_CLUSTER --query "taskArns[0]" )
+export TASK_ID=$(aws ecs list-tasks --cluster $AWS_ECS_CLUSTER --service-name $1 --query 'taskArns[*]' --output json | jq -r 'join(",")')
 echo $TASK_ID
 
 aws ecs execute-command \
     --region $AWS_DEFAULT_REGION \
     --cluster $AWS_ECS_CLUSTER \
     --task $TASK_ID \
-    --container $CONTAINER_NAME \
+    --container $1 \
     --command "/bin/bash" \
     --interactive
+
+######################## CONTAINER NAMES ########################
+# backend-flaks-prod
+# frontend-react-js-prod
+
+########################## TROUBLESHOOT ########################## 
+# it fails to ssh into the frontend container. 
+#
+# SessionId: ecs-execute-command-0261eedaedbf3dd64 : 
+# ----------ERROR-------
+# Unable to start command: Failed to start pty: fork/exec /bin/bash: no such file or directory

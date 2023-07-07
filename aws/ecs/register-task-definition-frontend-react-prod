@@ -1,3 +1,0 @@
-#! /usr/bin/bash
-
-aws ecs register-task-definition --cli-input-json file://task-definitions/frontend-react-prod-secure.json

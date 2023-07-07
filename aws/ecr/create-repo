@@ -1,5 +1,5 @@
 #! /usr/bin/bash
 
 aws ecr create-repository \
-    --repository-name "frontend-react-js" \
+    --repository-name $1 \
     --image-tag-mutability MUTABLE

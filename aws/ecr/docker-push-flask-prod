@@ -4,6 +4,6 @@ export AWS_ECR_BACKEND_FLASK_PROD_URL="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGI
 echo $AWS_ECR_BACKEND_FLASK_PROD_URL
 
 cd $THEIA_WORKSPACE_ROOT/backend-flask
-docker build -t backend-flask-prod -f Dockerfile.prod .
+# docker build -t backend-flask-prod -f Dockerfile.prod .
 docker tag backend-flask-prod:latest $AWS_ECR_BACKEND_FLASK_PROD_URL:latest
 docker push $AWS_ECR_BACKEND_FLASK_PROD_URL:latest
