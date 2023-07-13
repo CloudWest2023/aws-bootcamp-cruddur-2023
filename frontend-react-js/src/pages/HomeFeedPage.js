@@ -6,7 +6,7 @@ import DesktopSidebar     from '../components/DesktopSidebar';
 import ActivityFeed from '../components/ActivityFeed';
 import ActivityForm from '../components/ActivityForm';
 import ReplyForm from '../components/ReplyForm';
-import checkAuth from '../lib/checkAuth';
+import { checkAuth, getAccessToken } from '../lib/checkAuth';
 
 
 export default function HomeFeedPage() {
@@ -23,12 +23,18 @@ export default function HomeFeedPage() {
       console.log("React App Backend url: " + `${process.env.REACT_APP_BACKEND_URL}`)
 
       const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/activities/home`
+
+      await getAccessToken()
+      const access_token = localStorage.getItem("access_token")
+      console.log('access_token: ', access_token)
+
       const res = await fetch(backend_url, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`
+          Authorization: `Bearer ${access_token}`
         },
         method: "GET"
       });
+
       let resJson = await res.json();
       if (res.status === 200) {
         setActivities(resJson)

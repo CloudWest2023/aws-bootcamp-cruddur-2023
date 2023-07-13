@@ -12,14 +12,12 @@ export default function SigninPage() {
   const [password, setPassword] = React.useState('');
   const [errors, setErrors] = React.useState('');
 
-  
   const onsubmit = async (event) => {
     setErrors('')             // set the errors to blank so we don't see the errors.
     event.preventDefault();   // makes it not submit the form.b 
     
       Auth.signIn(email, password)
         .then(user => {
-          
           localStorage.setItem("access_token", user.signInUserSession.accessToken.jwtToken) // jwtToken was the source of error cause we didn't have one. 
           window.location.href = "/"
         })
@@ -28,7 +26,7 @@ export default function SigninPage() {
             window.location.href = "/confirm"
           }
           setErrors(error.message)
-         });
+        });
     return false
   }
   
