@@ -5,7 +5,7 @@ import sys, os
 
 
 attrs = {
-            'endpoint_url': os.getenv("AWS_ENDPOINT_URL")
+            'endpoint_url': os.getenv("AWS_DYNAMODB_ENDPOINT")
         }
 
 if len(sys.argv) == 2:

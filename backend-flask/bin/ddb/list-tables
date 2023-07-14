@@ -7,10 +7,10 @@ NO_COLOR="\033[0m"
 LABEL="dynamodb-list-table"
 printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
-ENDPOINT_URL=$AWS_ENDPOINT_URL
+# ENDPOINT=$AWS_DYNAMODB_ENDPOINT
+ENDPOINT="dynamodb.us-east-1.amazonaws.com"
 
 # Lists the names of existing tables
 aws dynamodb list-tables \
-    --endpoint-url $ENDPOINT_URL \
     --query TableNames \
     --output table
