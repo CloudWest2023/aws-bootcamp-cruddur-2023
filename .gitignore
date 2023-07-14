@@ -14,7 +14,7 @@ start-rds
 onstart
 test/*
 /docker/*
-.env
+*/.env
 
 env.txt
 notes.txt

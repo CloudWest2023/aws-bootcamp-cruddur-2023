@@ -17,6 +17,10 @@ COPY requirements.txt requirements.txt
 # Install the python libraries used for the app
 RUN pip3 install -r requirements.txt
 
+# Test. Remove for actual production
+RUN apt-get update -y
+# RUN apt-get install -y ping telnet
+RUN apt-get install -y iputils-ping
 
 # Outside Container -> Inside Container
 # . means everything in the current directory

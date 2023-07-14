@@ -1,10 +1,23 @@
 #! /usr/bin/bash
 
-docker run --rm -p 3000:3000 \
-    -e FRONTEND_URL="${FRONTEND_URL_PROD}" \
-    -e BACKEND_URL="${BACKEND_URL_PROD}" \
-    -e AWS_PROJECT_REGION=$AWS_DEFAULT_REGION \
-    -e AWS_COGNITO_REGION=$AWS_DEFAULT_REGION \
-    -e AWS_COGNITO_USER_POOL_ID=$AWS_COGNITO_USER_POOL_ID \
-    -e AWS_COGNITO_USER_POOL_CLIENT_ID=$AWS_COGNITO_USER_POOL_CLIENT_ID \
+ABS_PATH=$(readlink -f "$0")
+FRONTEND_PATH=$(dirname $ABS_PATH)
+PROJECT_PATH=$(dirname $FRONTEND_PATH)
+ENVFILE_PATH="$PROJECT_PATH/frontend-react-js.env"
+
+echo $ENVFILE_PATH
+
+docker run --rm \
+    --env-file $ENVFILE_PATH \
+    --network cruddur-net \
+    --publish 3000:3000 \
     -it frontend-react-js-prod
+
+# -p 3000:3000 \
+    # -e FRONTEND_URL="${FRONTEND_URL_PROD}" \
+    # -e BACKEND_URL="${BACKEND_URL_PROD}" \
+    # -e AWS_PROJECT_REGION=$AWS_DEFAULT_REGION \
+    # -e AWS_COGNITO_REGION=$AWS_DEFAULT_REGION \
+    # -e AWS_COGNITO_USER_POOL_ID=$AWS_COGNITO_USER_POOL_ID \
+    # -e AWS_COGNITO_USER_POOL_CLIENT_ID=$AWS_COGNITO_USER_POOL_CLIENT_ID \
+    # -it frontend-react-js-prod

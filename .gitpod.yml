@@ -2,22 +2,24 @@ tasks:
   - name: aws-cli
     env:
       AWS_CLI_AUTO_PROMPT: on-partial
-    init: |
+    before: |
       cd /workspace
       curl "https:/awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
       unzip awscliv2.zip
       sudo ./aws/install
       cd $THEIA_WORKSPACE_ROOT
-  - name: backend
+  - name: flask
     command: |
+      source "$THEIA_WORKSPACE_ROOT/backend-flask/generate-env"
       cd $THEIA_WORKSPACE_ROOT/backend-flask
       pip install -r requirements.txt
   - name: react-js
     command: |
+      source "$THEIA_WORKSPACE_ROOT/frontend-react-js/generate-env"
       cd frontend-react-js
       npm i     
   - name: postgres
-    command: |
+    before: |
       curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
       echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
       sudo apt update
@@ -25,6 +27,11 @@ tasks:
       export GITPOD_IP=$(curl ifconfig.me)
       gp env GITPOD_IP=$(curl ifconfig.me)
       source "$THEIA_WORKSPACE_ROOT/backend-flask/bin/rds/update-sg-rule"
+  - name: fargate
+    before: |
+      curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
+      sudo dpkg -i session-manager-plugin.deb
+      cd backend-flask
 
 vscode:
   extensions:
