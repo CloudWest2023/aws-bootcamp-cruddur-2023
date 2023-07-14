@@ -1,18 +1,29 @@
 #! /usr/bin/bash
 
+# Colouring
+CYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+LABEL="aws/ecs/force-deploy"
+printf "${CYAN}====== ${LABEL}${NO_COLOR}\n"
+
+# Variables 
 CLUSTER_NAME=$AWS_ECS_CLUSTER
 SERVICE_NAME="backend-flask-prod"
 TASK_DEFINTION_FAMILY="backend-flask-prod"
- 
+
 LATEST_TASK_DEFINITION_ARN=$(aws ecs describe-task-definition \
 --task-definition $TASK_DEFINTION_FAMILY \
 --query 'taskDefinition.taskDefinitionArn' \
 --output text)
 
+echo "TASK DEF. ARN:"
+printf "${CYAN}     ${LATEST_TASK_DEFINITION_ARN}${NO_COLOR}\n"
+
 aws ecs update-service \
 --cluster $CLUSTER_NAME \
 --service $SERVICE_NAME \
 --task-definition $LATEST_TASK_DEFINITION_ARN \
+--desired-count $1 \
 --force-new-deployment
 
 #aws ecs describe-services \
