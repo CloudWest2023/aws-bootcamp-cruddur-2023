@@ -5,10 +5,15 @@ node_modules
 
 frontend-react-js/.env
 frontend-react-js/build/
+
 backend-flask/.env
 backend-flask/test.py
 backend-flask/.rds.txt
 backend-flask/bin/ddb/thepath
+
+serverless-cdk/cdk.out
+serverless-cdk/node_modules
+serverless-cdk/synth.yaml
 
 start-rds
 onstart

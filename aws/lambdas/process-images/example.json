@@ -1,0 +1,37 @@
+{
+  "Records": [
+      {
+          "eventVersion": "2.1",
+          "eventSource": "aws:s3",
+          "awsRegion": "us-east-1",
+          "eventName": "ObjectCreated:Put",
+          "userIdentity": {
+              "principalId": "AKIAXJUW3O6S4BUHHA73"
+          },
+          "requestParameters": {
+              "sourceIPAddress": "127.0.0.1"
+          },
+          "responseElements": {
+              "x-amz-request-id": "TEST-123456789",
+              "x-amz-id-2": "TEST123/abcdefghijklmno/123456789"
+          },
+          "s3": {
+              "s3SchemaVersion": "1.0",
+              "configurationId": "TESTConfig",
+              "bucket": {
+                  "name": "assets.goodstuff.cloud",
+                  "ownerIdentity": {
+                      "principalId": "AKIAXJUW3O6S4BUHHA73"
+                  },
+                  "arn": "arn:aws:s3:::assets.goodstuff.cloud"
+              },
+              "object": {
+                  "key": "avatars/original/gwen.jpg",
+                  "size": 1024,
+                  "eTag": "TEST-ETAG",
+                  "sequencer": "TEST-SEQUENCER"
+              }
+          }
+      }
+  ]
+}

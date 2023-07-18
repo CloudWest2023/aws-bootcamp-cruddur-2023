@@ -29,10 +29,17 @@ tasks:
       source "$THEIA_WORKSPACE_ROOT/backend-flask/bin/rds/update-sg-rule"
   - name: fargate
     before: |
+      cd /workspace
       curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
-      sudo dpkg -i session-manager-plugin.deb
+      sudo dpkg -i session-manager-plugin.debd
+      cd $THEIA_WORKSPACE_ROOT
       cd backend-flask
-
+  - name: cdk
+    before: |
+      npm instasll aws-cdk -g
+      cd serverless-cdk
+      cp .env .env
+      npm i
 vscode:
   extensions:
     - 42Crunch.vscode-openapi

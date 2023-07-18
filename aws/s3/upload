@@ -1,0 +1,11 @@
+#! /usr/bin/bash
+
+ABS_PATH=$(readlink -f "$0")
+CDK_PATH=$(dirname $ABS_PATH)
+FILE_PATH="$CDK_PATH/files/"
+
+# One file at a time
+# aws s3 cp "$FILE_PATH$1" "s3://$AWS_S3_BUCKET_ASSETS_ORIGINAL/avatars/original/$1"
+
+# Upload entire folder
+aws s3 sync $FILE_PATH s3://$AWS_S3_BUCKET_ASSETS_ORIGINAL/avatars/original/
