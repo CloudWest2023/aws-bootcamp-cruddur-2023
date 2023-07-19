@@ -2,6 +2,10 @@ const { getClient, getOriginalImage, processImage, uploadProcessedImage } = requ
 const path = require('path');
 const process = require('process');
 
+const uploadsBucketName = process.env.AVATARS_UPLOAD_BUCKET_NAME
+const processedBucketName = process.env.AVATARS_PROCESSED_BUCKET_NAME
+const folderInput = process.env.AVATARS_S3_FOLDER_INPUT
+const folderOutput = process.env.AVATARS_S3_FOLDER_OUTPUT
 const width = parseInt(process.env.PROCESS_WIDTH)
 const height = parseInt(process.env.PROCESS_HEIGHT)
 
@@ -22,8 +26,8 @@ exports.handler = async (event) => {
 
     // Upload processed image
     filename = path.parse(srcKey).name;
-    const dstBucket = event.Records[0].s3.bucket.name;
-    const dstKey = srcKey.replace("original", "processed")
+    const dstBucket = srcBucket.replace("uploads", "avatars");
+    const dstKey =  `${filename}.jpg`;
     await uploadProcessedImage(client, dstBucket, dstKey, processedImage);
     console.log('index.handler.dstBucket', dstBucket)
     console.log('index.handler.dstKey', dstKey)

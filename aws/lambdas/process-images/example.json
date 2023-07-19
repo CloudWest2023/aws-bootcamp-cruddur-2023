@@ -19,14 +19,14 @@
               "s3SchemaVersion": "1.0",
               "configurationId": "TESTConfig",
               "bucket": {
-                  "name": "assets.goodstuff.cloud",
+                  "name": "uploads.goodstuff.cloud",
                   "ownerIdentity": {
                       "principalId": "AKIAXJUW3O6S4BUHHA73"
                   },
-                  "arn": "arn:aws:s3:::assets.goodstuff.cloud"
+                  "arn": "arn:aws:s3:::uploads.goodstuff.cloud"
               },
               "object": {
-                  "key": "avatars/original/gwen.jpg",
+                  "key": "gwen.jpg",
                   "size": 1024,
                   "eTag": "TEST-ETAG",
                   "sequencer": "TEST-SEQUENCER"

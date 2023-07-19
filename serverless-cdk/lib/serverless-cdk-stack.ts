@@ -19,44 +19,57 @@ export class ServerlessCdkStack extends cdk.Stack {
     // The code that defines your stack goes here
     const dotenv = require('dotenv');
     dotenv.config();
-    
-    const bucketName: string = process.env.ASSETS_BUCKET_NAME as string;
-    const folderInput: string = process.env.ASSETS_S3_FOLDER_INPUT as string;
-    const folderOutput: string = process.env.ASSETS_S3_FOLDER_OUTPUT as string;
-    const webhookUrl: string = process.env.ASSETS_WEBHOOK_URL as string;
-    const topicName: string = process.env.ASSETS_TOPIC_NAME as string;
-    const functionPath: string = process.env.ASSETS_FUNCTION_PATH as string;
-    console.log('bucketName', bucketName)
-    console.log('folderInput', folderInput)
-    console.log('folderOutput', folderOutput)
-    console.log('webhookUrl', webhookUrl)
-    console.log('topicName', topicName)
-    console.log('functionPath', functionPath)
-    
-    // const bucket = this.createBucket(bucketName);
-    const bucket = this.importBucket(bucketName);
+
+    const uploadsBucketName: string = process.env.AVATARS_UPLOAD_BUCKET_NAME as string;
+    const processedBucketName: string = process.env.AVATARS_PROCESSED_BUCKET_NAME as string;
+    const folderInput: string = process.env.AVATARS_S3_FOLDER_INPUT as string;
+    const folderOutput: string = process.env.AVATARS_S3_FOLDER_OUTPUT as string;
+    const webhookUrl: string = process.env.AVATARS_WEBHOOK_URL as string;
+    const topicName: string = process.env.AVATARS_TOPIC_NAME as string;
+    const functionPath: string = process.env.AVATARS_FUNCTION_PATH as string;
+    console.log('uploadsBucketName', uploadsBucketName);
+    console.log('processedBucketName', processedBucketName);
+    console.log('folderInput', folderInput);
+    console.log('folderOutput', folderOutput);
+    console.log('webhookUrl', webhookUrl);
+    console.log('topicName', topicName);
+    console.log('functionPath', functionPath);
+
+    const uploadsBucket = this.createBucket(uploadsBucketName);
+    const processedBucket = this.importBucket(processedBucketName);
     // createLambda(functionPath: string, bucketName: string, folderInput: string, folderOutput: string)
     // const lambda = this.createLambda(folderInput, folderOutput, functionPath, bucketName)
-    const lambda = this.createLambda(functionPath, bucketName, folderInput, folderOutput)
-    const s3ReadWritePolicy = this.createPolicyBucketAccess(bucket.bucketArn)
-
-    lambda.addToRolePolicy(s3ReadWritePolicy)
+    const lambda = this.createLambda(
+      functionPath,
+      uploadsBucketName,
+      processedBucketName,
+      folderInput,
+      folderOutput
+    );
 
     // create SNS topic and subscriptions
-    const snsTopic = this.createSnsTopic(topicName)
-    this.createSnsSubscription(snsTopic,webhookUrl)
+    const snsTopic = this.createSnsTopic(topicName);
+    this.createSnsSubscription(snsTopic, webhookUrl);
     // We don't need to attach the policy to Lambda because it is not Lambda that pushes to SNS. 
     // const snsPublishPolicy = this.createPolicySnSPublish(snsTopic.topicArn)
     // lambda.addToRolePolicy(snsPublishPolicy);
 
     // add trigger and destination
     // Send notifications to SNS and Lambda
-    this.createS3NotifyToSns(folderOutput, snsTopic, bucket)
-    this.createS3NotifyToLambda(folderInput, lambda, bucket)
+    this.createS3NotifyToSns(folderInput, snsTopic, uploadsBucket);
+    this.createS3NotifyToLambda(folderInput, lambda, processedBucket);
+
+    // create policies
+    const s3UploadsReadWritePolicy = this.createPolicyBucketAccess(uploadsBucket.bucketArn);
+    const s3ProcessedReadWritePolicy = this.createPolicyBucketAccess(processedBucket.bucketArn);
+    
+    // attach policies for permissions
+    lambda.addToRolePolicy(s3UploadsReadWritePolicy);
+    lambda.addToRolePolicy(s3ProcessedReadWritePolicy);
   }
 
   createBucket(bucketName: string): s3.IBucket {
-    const bucket = new s3.Bucket(this, 'AssetsBucket', {
+    const bucket = new s3.Bucket(this, 'UploadsBucket', {
       bucketName: bucketName,
       removalPolicy: cdk.RemovalPolicy.DESTROY
     });
@@ -65,19 +78,21 @@ export class ServerlessCdkStack extends cdk.Stack {
 
   importBucket(bucketName: string): s3.IBucket {
     // new is not needed as we are calling a static function.
-    const bucket = s3.Bucket.fromBucketName(this, "AssetsBucket", bucketName); 
+    const bucket = s3.Bucket.fromBucketName(this, "ProcessedBucket", bucketName); 
     return bucket;
   }
 
-  createLambda(functionPath: string, bucketName: string, folderInput: string, folderOutput: string): lambda.IFunction {
-    const lambdaFunction = new lambda.Function(this, 'Assetslambda', {
+  // we no longer need uploadsBucketName as an argument 
+  // because its information will be passed into the function.
+  createLambda(functionPath: string, uploadsBucketName: string, processedBucketName: string, folderInput: string, folderOutput: string): lambda.IFunction {
+    const lambdaFunction = new lambda.Function(this, 'ImageProcessingLambda', {
       runtime: lambda.Runtime.NODEJS_18_X,
       handler: 'index.handler',
       code: lambda.Code.fromAsset(functionPath),
       environment: {
-        DEST_BUCKET_NAME: bucketName,
-        FOLDER_INPUT: folderInput,
-        FOLDER_OUTPUT: folderOutput,
+        DEST_BUCKET_NAME: processedBucketName,
+        FOLDER_INPUT: uploadsBucketName,
+        FOLDER_OUTPUT: processedBucketName,
         PROCESS_WIDTH: '512',
         PROCESS_HEIGHT: '512'
       }
