@@ -20,10 +20,10 @@ export class ServerlessCdkStack extends cdk.Stack {
     const dotenv = require('dotenv');
     dotenv.config();
 
-    const uploadsBucketName: string = process.env.AVATARS_UPLOAD_BUCKET_NAME as string;
-    const processedBucketName: string = process.env.AVATARS_PROCESSED_BUCKET_NAME as string;
-    const folderInput: string = process.env.AVATARS_S3_FOLDER_INPUT as string;
-    const folderOutput: string = process.env.AVATARS_S3_FOLDER_OUTPUT as string;
+    const uploadsBucketName  : string = process.env.AWS_S3_BUCKET_UPLOADS as string;
+    const processedBucketName: string = process.env.AWS_S3_BUCKET_PROCESSED as string;
+    const folderInput : string = process.env.AWS_S3_FOLDER_AVATARS_INPUT as string;
+    const folderOutput: string = process.env.AWS_S3_FOLDER_AVATARS_OUTPUT as string;
     const webhookUrl: string = process.env.AVATARS_WEBHOOK_URL as string;
     const topicName: string = process.env.AVATARS_TOPIC_NAME as string;
     const functionPath: string = process.env.AVATARS_FUNCTION_PATH as string;
