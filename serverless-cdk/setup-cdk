@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-
+cd /workspace/aws-bootcamp-cruddur-2023/
 sudo ./aws/install
 npm i aws-cdk -g
 cd /workspace/aws-bootcamp-cruddur-2023/serverless-cd

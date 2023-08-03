@@ -3,7 +3,7 @@
 ABS_PATH=$(readlink -f "$0")
 CDK_PATH=$(dirname $ABS_PATH)
 FILE_PATH="$CDK_PATH/images"
-FILE_NAME="exam_tasting.png"
+FILE_NAME="snappacci.png"
 
 echo $FILE_PATH
 

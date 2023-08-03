@@ -24,7 +24,7 @@ export class ServerlessCdkStack extends cdk.Stack {
     const processedBucketName: string = process.env.AWS_S3_BUCKET_PROCESSED as string;
     const folderInput : string = process.env.AWS_S3_FOLDER_AVATARS_INPUT as string;
     const folderOutput: string = process.env.AWS_S3_FOLDER_AVATARS_OUTPUT as string;
-    const webhookUrl: string = process.env.AVATARS_WEBHOOK_URL as string;
+    const webhookUrl: string = process.env.AVATARS_WEBHOOK_URL as string; 
     const topicName: string = process.env.AVATARS_TOPIC_NAME as string;
     const functionPath: string = process.env.AVATARS_FUNCTION_PATH as string;
     console.log('uploadsBucketName', uploadsBucketName);
@@ -89,6 +89,7 @@ export class ServerlessCdkStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_18_X,
       handler: 'index.handler',
       code: lambda.Code.fromAsset(functionPath),
+      memorySize: 512,
       environment: {
         DEST_BUCKET_NAME: processedBucketName,
         FOLDER_INPUT: uploadsBucketName,
@@ -109,6 +110,8 @@ export class ServerlessCdkStack extends cdk.Stack {
   }
 
   createPolicyBucketAccess(bucketArn: string) {
+    console.log("test: createPolicyBucketAccess ==================================")
+    console.log("bucketArn: ", bucketArn)
     const s3ReadWritePolicy = new iam.PolicyStatement({
       actions: [
         's3:GetObject',

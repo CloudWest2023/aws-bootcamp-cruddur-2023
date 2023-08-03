@@ -14,13 +14,17 @@ async function getOriginalImage(client, srcBucket, srcKey){
   };
   console.log('params', params)
   const command = new GetObjectCommand(params);
+  console.log('command: ', command)
   const response = await client.send(command);
+  console.log('response: ', response)
 
   const chunks = [];
   for await (const chunk of response.Body) {
     chunks.push(chunk);
   }
+  console.log('chunks: ', chunks)
   const buffer = Buffer.concat(chunks);
+  console.log('buffer: ', buffer)
   return buffer;
 }
 
