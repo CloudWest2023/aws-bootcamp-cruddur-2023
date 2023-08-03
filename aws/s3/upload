@@ -2,10 +2,13 @@
 
 ABS_PATH=$(readlink -f "$0")
 CDK_PATH=$(dirname $ABS_PATH)
-FILE_PATH="$CDK_PATH/files/"
+FILE_PATH="$CDK_PATH/images"
+FILE_NAME="exam_tasting.png"
+
+echo $FILE_PATH
 
 # One file at a time
-# aws s3 cp "$FILE_PATH$1" "s3://$AWS_S3_BUCKET_ASSETS_ORIGINAL/avatars/original/$1"
+aws s3 cp "$FILE_PATH/$FILE_NAME" "s3://$AWS_S3_BUCKET_UPLOADS/$FILE_NAME"
 
 # Upload entire folder
-aws s3 sync $FILE_PATH s3://$AWS_S3_BUCKET_ASSETS_ORIGINAL/avatars/original/
+# aws s3 sync $FILE_PATH/ s3://$AWS_S3_BUCKET_UPLOADS/

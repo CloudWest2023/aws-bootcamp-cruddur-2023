@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+# This is a one-off operation in your dev environment. 
+# If you do not run this, lambda will throw an error when you run it on AWS.
+npm init
+npm install sharp @aws-sdk/client-s3 --save

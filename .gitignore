@@ -24,3 +24,6 @@ test/*
 env.txt
 notes.txt
 **/*/session-manager-plugin.deb
+
+package-lock.json
+package.json

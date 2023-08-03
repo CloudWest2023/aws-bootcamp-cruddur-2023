@@ -1,4 +1,4 @@
 #! /usr/bin/bash
 
-aws s3 rm "s3://$AWS_S3_BUCKET_ASSETS/avatars/original/" --recursive
-aws s3 rm "s3://$AWS_S3_BUCKET_ASSETS/avatars/processed/" --recursive
+aws s3 rm "s3://$AWS_S3_BUCKET_UPLOADS/" --recursive
+aws s3 rm "s3://$AWS_S3_BUCKET_PROCESSED/" --recursive
