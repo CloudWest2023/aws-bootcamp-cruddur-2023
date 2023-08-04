@@ -27,6 +27,7 @@ export class ServerlessCdkStack extends cdk.Stack {
     const webhookUrl: string = process.env.AVATARS_WEBHOOK_URL as string; 
     const topicName: string = process.env.AVATARS_TOPIC_NAME as string;
     const functionPath: string = process.env.AVATARS_FUNCTION_PATH as string;
+
     console.log('uploadsBucketName', uploadsBucketName);
     console.log('processedBucketName', processedBucketName);
     console.log('folderInput', folderInput);
@@ -56,8 +57,8 @@ export class ServerlessCdkStack extends cdk.Stack {
 
     // add trigger and destination
     // Send notifications to SNS and Lambda
-    this.createS3NotifyToSns(folderInput, snsTopic, uploadsBucket);
-    this.createS3NotifyToLambda(folderInput, lambda, processedBucket);
+    this.createS3NotifyToLambda(folderInput, lambda, uploadsBucket);
+    this.createS3NotifyToSns(folderOutput, snsTopic, processedBucket);
 
     // create policies
     const s3UploadsReadWritePolicy = this.createPolicyBucketAccess(uploadsBucket.bucketArn);
@@ -89,11 +90,12 @@ export class ServerlessCdkStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_18_X,
       handler: 'index.handler',
       code: lambda.Code.fromAsset(functionPath),
-      memorySize: 512,
+      // memorySize: 512,
       environment: {
+        SRC_BUCKET_NAME: uploadsBucketName, 
         DEST_BUCKET_NAME: processedBucketName,
-        FOLDER_INPUT: uploadsBucketName,
-        FOLDER_OUTPUT: processedBucketName,
+        FOLDER_INPUT: folderInput,
+        FOLDER_OUTPUT: folderOutput,
         PROCESS_WIDTH: '512',
         PROCESS_HEIGHT: '512'
       }
@@ -125,7 +127,7 @@ export class ServerlessCdkStack extends cdk.Stack {
   }
 
   createSnsTopic(topicName: string): sns.ITopic{
-    const logicalName = "Topic";
+    const logicalName = "process-images";
     const snsTopic = new sns.Topic(this, logicalName, {
       topicName: topicName
     });
