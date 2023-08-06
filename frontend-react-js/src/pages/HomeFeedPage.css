@@ -4,3 +4,14 @@ article {
   justify-content: center;
 }
 
+.home_feed_heading {
+  padding: 16px;
+  padding-bottom: 48px;
+  border-bottom: solid 1px rgb(58,63,78);
+}
+
+.home_feed_heading .title{
+  color: #fff;
+  font-weight: 800;
+  font-size: 20px;
+}
