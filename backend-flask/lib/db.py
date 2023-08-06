@@ -98,7 +98,7 @@ class db:
     def query_json_object(self, sql, params={}):
         printh("db.query_json_object() ...")
         print_sql('json', sql)
-        wrapped_sql = self.query_wrap_object(sql)
+        wrapped_sql = self.query_wrap_json_object(sql)
         
         with self.pool.connection() as conn:
             with conn.cursor() as cur:
@@ -135,6 +135,11 @@ class db:
 
 
     def query_wrap_json_object(self, template):
+        sql = f"""
+        (SELECT COALESCE(row_to_json(object_row),'{{}}'::json) FROM (
+        {template}
+        ) object_row);
+        """
 
         printh("db.query_wrap_json_object() in action ...")
         print_sql("Object", sql)
