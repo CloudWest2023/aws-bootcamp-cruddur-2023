@@ -1,6 +1,6 @@
 import './SignupPage.css';
 import React from "react";
-import {ReactComponent as Logo} from '../components/svg/logo.svg';
+import {ReactComponent as Logo} from 'components/svg/logo.svg';
 import { Link } from "react-router-dom";
 
 // AWS Cognito for Authenication

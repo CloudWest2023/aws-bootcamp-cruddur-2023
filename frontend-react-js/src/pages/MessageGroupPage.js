@@ -2,11 +2,11 @@ import './MessageGroupPage.css';
 import React from "react";
 import { useParams } from 'react-router-dom';
 
-import { checkAuth, getAccessToken } from '../lib/checkAuth';
-import DesktopNavigation  from '../components/DesktopNavigation';
-import MessageGroupFeed from '../components/MessageGroupFeed';
-import MessagesFeed from '../components/MessageFeed';
-import MessagesForm from '../components/MessageForm';
+import { checkAuth, getAccessToken } from 'lib/checkAuth';
+import DesktopNavigation  from 'components/DesktopNavigation';
+import MessageGroupFeed from 'components/MessageGroupFeed';
+import MessagesFeed from 'components/MessageFeed';
+import MessagesForm from 'components/MessageForm';
 
 
 export default function MessageGroupPage() {
