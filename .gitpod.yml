@@ -40,6 +40,9 @@ tasks:
       cd serverless-cdk
       cp .env .env
       npm i
+  - name: docker
+    before: |
+      "$THEIA_WORKSPACE_ROOT/bin/ecr/login"
 vscode:
   extensions:
     - 42Crunch.vscode-openapi
