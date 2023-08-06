@@ -3,7 +3,9 @@ services:
   backend-flask:
     env_file:
       - backend-flask.env
-    build: ./backend-flask
+    build: 
+      context: ./backend-flask
+      dockerfile: Dockerfile.prod
     ports:
       - "4567:4567"
     volumes: 
@@ -21,7 +23,7 @@ services:
       - ./frontend-react-js:/frontend-react-js
     networks:
       - cruddur-net
-  
+      
   dynamodb-local:
   # https://stackoverflow.com/questions/67533058/persist-local-dynamodb-data-in-volumes-lack-permission-unable-to-open-databa
   # We needed to add user:root to get this working.

@@ -1,0 +1,11 @@
+#! /usr/bin/bash
+
+sudo ./aws/install
+# curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
+sudo apt update
+sudo apt install -y postgresql-client-13 libpq-dev
+export GITPOD_IP=$(curl ifconfig.me)
+gp env GITPOD_IP=$(curl ifconfig.me)
+source "$THEIA_WORKSPACE_ROOT/backend-flask/bin/rds/update-sg-rule"
+source "$THEIA_WORKSPACE_ROOT/aws/ecr/login"
