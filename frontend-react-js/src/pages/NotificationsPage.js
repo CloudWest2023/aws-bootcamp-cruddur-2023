@@ -6,7 +6,7 @@ import DesktopSidebar     from '../components/DesktopSidebar';
 import ActivityFeed from '../components/ActivityFeed';
 import ActivityForm from '../components/ActivityForm';
 import ReplyForm from '../components/ReplyForm';
-import checkAuth from '../lib/checkAuth';
+import { checkAuth, getAccessToken } from '../lib/checkAuth';
 
 export default function NotificationsPage() {
   const [activities, setActivities] = React.useState([]);
