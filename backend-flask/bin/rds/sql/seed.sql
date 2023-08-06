@@ -15,8 +15,18 @@
 INSERT INTO public.activities (user_uuid, message, expires_at)
 VALUES
     (
-        (SELECT uuid FROM public.users WHERE users.handle = 'clouds.of.things' LIMIT 1),
-        'Almost finishing up Conversations with DynamoDB !!!',
+        (SELECT uuid FROM public.users WHERE users.handle = 'mariachiinajar' LIMIT 1),
+        'for week 8 - Implement Users Profile Page - seeding more data to test Profile page user data!!!',
         current_timestamp + interval '10 day'
+    ),
+        (
+        (SELECT uuid FROM public.users WHERE users.handle = 'mariachiinajar' LIMIT 1),
+        'for week 8 - My app is full of errors but I will get through this!',
+        current_timestamp + interval '7 day'
+    ),
+        (
+        (SELECT uuid FROM public.users WHERE users.handle = 'mariachiinajar' LIMIT 1),
+        'for week 8 - More test data',
+        current_timestamp + interval '5 day'
     );
     

@@ -5,7 +5,7 @@ NO_COLOR='\033[0m'
 LABEL="db-seed"
 printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
-SEED_PATH="$(realpath .)/sql/seed.sql"
+SEED_PATH="$(realpath .)/bin/rds/sql/seed.sql"
 echo $SEED_PATH
 
-psql $CONNECTION_URL$DB_NAME_PROD < $SEED_PATH
+psql $AWS_RDS_POSTGRES_ENDPOINT < $SEED_PATH
