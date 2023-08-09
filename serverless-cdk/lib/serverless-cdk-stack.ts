@@ -6,7 +6,7 @@ import * as s3n from 'aws-cdk-lib/aws-s3-notifications';
 import * as sns from 'aws-cdk-lib/aws-sns';
 import * as subscriptions from 'aws-cdk-lib/aws-sns-subscriptions';
 import { Construct } from 'constructs';
-import * as dotenv from 'dotenv'
+import * as dotenv from 'dotenv';
 
 // load env variables
 // const dotenv = require('dotenv')
@@ -15,10 +15,6 @@ dotenv.config();
 export class ServerlessCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
-
-    // The code that defines your stack goes here
-    const dotenv = require('dotenv');
-    dotenv.config();
 
     const uploadsBucketName  : string = process.env.AWS_S3_BUCKET_UPLOADS as string;
     const processedBucketName: string = process.env.AWS_S3_BUCKET_PROCESSED as string;
@@ -107,7 +103,7 @@ export class ServerlessCdkStack extends cdk.Stack {
     const destination = new s3n.LambdaDestination(lambda);
     bucket.addEventNotification(s3.EventType.OBJECT_CREATED_PUT,
       destination,
-      {prefix: prefix} // folder to contain the original images
+      // {prefix: prefix} // folder to contain the original images
     )
   }
 

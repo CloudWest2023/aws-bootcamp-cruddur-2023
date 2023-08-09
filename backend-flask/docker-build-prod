@@ -3,6 +3,8 @@
 ABS_PATH=$(readlink -f "$0")
 BACKEND_FLASK_PATH=$(dirname $ABS_PATH)
 
+echo $BACKEND_FLASK_PATH
+
 # Leave out all the --build-args 
 # as they will be injected when docker run.
 docker build \

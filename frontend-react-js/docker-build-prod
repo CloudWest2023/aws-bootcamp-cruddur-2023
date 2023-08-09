@@ -17,4 +17,4 @@ docker build \
 #     --build-arg REACT_APP_AWS_COGNITO_USER_POOL_CLIENT_ID="$AWS_COGNITO_USER_POOL_CLIENT_ID" \
 #     -t frontend-react-js-prod \
 #     -f Dockerfile.prod \
-#     .
+#     .a

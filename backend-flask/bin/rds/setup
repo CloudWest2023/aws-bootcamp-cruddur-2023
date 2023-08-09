@@ -6,8 +6,11 @@ LABEL="db-setup"
 printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
 BIN_PATH="$(realpath .)/bin"
+PROJECT_DIR=$(dirname $BIN_PATH)
 
-source "$BIN_PATH/db-drop"
-source "$BIN_PATH/db-create"
-source "$BIN_PATH/db-schema-load"
-source "$BIN_PATH/db-seed"
+echo $PROJECT_DIR
+
+# source "$BIN_PATH/drop"
+# source "$BIN_PATH/create"
+# source "$BIN_PATH/schema-load"
+# source "$BIN_PATH/seed"

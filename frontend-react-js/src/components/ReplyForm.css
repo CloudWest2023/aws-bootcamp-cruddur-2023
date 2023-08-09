@@ -1,4 +1,4 @@
-.popup_form_wrap {
+/* .popup_form_wrap {
   position: fixed;
   height: 100%;
   width: 100%;
@@ -17,7 +17,7 @@
   box-shadow: 0px 0px 6px rgba(190, 9, 190, 0.6);
   border-radius: 16px;
   width: 600px;
-}
+} */
 
 form.replies_form {
   padding: 16px;

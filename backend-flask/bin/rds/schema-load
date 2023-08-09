@@ -6,11 +6,11 @@ NO_COLOR='\033[0m'
 LABEL="db-schema-load"
 printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
-SCHEMA_PATH=$(realpath .)/db/schema.sql
+SCHEMA_PATH=$(realpath .)/sql/schema.sql
 
 echo $SCHEMA_PATH
 echo "== db-schema-load"
-
+    
 if [ "$1" = "prod" ]; 
 then
     echo "Running in production mode"
@@ -19,4 +19,4 @@ else
     URL=$CONNECTION_URL
 fi
 
-psql $URL sample_cruddur < $SCHEMA_PATH
+psql $AWS_RDS_POSTGRES_ENDPOINT < $SCHEMA_PATH

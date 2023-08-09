@@ -26,5 +26,10 @@ def print_sql(title, sql, params={}):
     print(f"{bcolors.OKCYAN}SQL STATEMENT-[{title}]---------{bcolors.ENDC}\n")
     print(sql, params)
 
+def print_params(params):
+    print(f'{bcolors.OKBLUE} SQL Params:{bcolors.ENDC}')
+    for key, value in params.items():
+        print(key, ":", value)
+
 def printb(string):
     print(f"{bcolors.HEADER}{bcolors.BOLD}{string}{bcolors.ENDC}")
