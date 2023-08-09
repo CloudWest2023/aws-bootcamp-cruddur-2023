@@ -1,0 +1,3 @@
+#! /usr/bin/bash
+
+npm i @aws-sdk/client-s3 --save
