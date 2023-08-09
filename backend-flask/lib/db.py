@@ -52,8 +52,10 @@ class db:
     
     # Commit data such as an insert
     # Be sure to check for 'RETURNING' in all uppercases. 
-    def query_commit(self, sql, params={}):
+    def query_commit(self, sql, params={}, verbose=True):
         printh("db.query_commit() ...")
+        if verbose:
+            print_sql('commit with returning id', sql, params)
 
         pattern = r"\bRETURNING\b"
         is_returning_id = re.search(pattern, sql) # params
@@ -65,16 +67,15 @@ class db:
 
             if is_returning_id:
                 returning_id = cur.fetchone()[0]
-                printc("    returning_id: ")
-            else: 
-                printe("    No match found.")
-
-            conn.commit()
-
-            if is_returning_id:
+                printc(f"    returning_id: {returning_id}")
+                conn.commit()
                 return returning_id
+            else: 
+                conn.commit()
+                printe("    No match was found...")
 
         except Exception as err:
+            conn.commit()
             printe("    query_commit().Exception in action...")
             self.print_err(err)
         
@@ -82,9 +83,10 @@ class db:
 
 
     # Simple query
-    def query_value(self, sql, params={}):
+    def query_value(self, sql, params={}, verbose=True):
         printh("db.query_value() ...")
-        print_sql('value', sql=sql, params=params)
+        if verbose:
+            print_sql('value', sql, params)
         with self.pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(sql, params)
@@ -95,25 +97,27 @@ class db:
 
 
     # Return a json object
-    def query_json_object(self, sql, params={}):
+    def query_json_object(self, sql, params={}, verbose=True):
         printh("db.query_json_object() ...")
-        print_sql('json', sql)
+        if verbose:
+            print_sql('object', sql, params)
+            print_params(params)
         wrapped_sql = self.query_wrap_json_object(sql)
         
         with self.pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(wrapped_sql, params)
                 json = cur.fetchone()
-
+                printe("=======   ┻━━━━━━━┻ ︵   ╰(°□°╰)")
+                print(f"json: {json}")
                 printh("    ... db.query_json_object()")
-
                 return json[0]
-    
 
     # Return an array of json object
-    def query_json_array(self, sql, params={}):
+    def query_json_array(self, sql, params={}, verbose=True):
+        if verbose:
+            print_sql('array', sql, params)
         printh("db.query_json_array() ...")
-        print_sql(title="Array", sql=sql)
 
         wrapped_sql = self.query_wrap_json_array(sql)
         with self.pool.connection() as conn:

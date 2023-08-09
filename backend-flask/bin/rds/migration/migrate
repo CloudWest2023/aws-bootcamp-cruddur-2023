@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+
+import os, sys, glob
+import re, time, importlib
+
+current_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+parent_path = os.path.abspath(os.path.join(current_path, '..', '..'))
+sys.path.append(parent_path)
+from lib.db import db
+
+def get_last_successful_run():
+    sql = """
+        SELECT last_successful_run
+        FROM public.schema_information
+        LIMIT 1
+    """
+    return int(db.query_value(sql=sql, params={}))
+  
+def set_last_successful_run(value):
+    sql = """
+        UPDATE schema_information
+        SET last_successful_run = %(last_successful_run)s
+        WHERE id = 1
+    """
+    db.query_commit(sql=sql, params={'last_successful_run': value})
+    print(f"value: {value}")
+    return value
+
+last_successful_run = get_last_successful_run()
+
+migration_path = os.path.abspath(os.path.join(current_path, '..', '..', 'bin', 'rds', 'migration', 'generated'))
+sys.path.append(migration_path)
+migration_files = glob.glob(f"{migration_path}/*")
+
+for m_file in migration_files:
+    filename = os.path.basename(m_file)
+    module_name = os.path.splitext(filename)[0]
+    match = re.match(r'^\d+', filename)
+    print(match)
+    if match:
+        file_time = int(match.group())
+        print(f"file_time: {file_time}")
+        if int(last_successful_run) <= file_time:
+            print("last_successful_run <= file_time ====================")
+            mod = importlib.import_module(module_name)
+            print(f"mod: {mod}")
+            print('===== running migration: ', module_name)
+            mod.migration.migrate()
+            timestamp = str(time.time()).replace(".", "")
+            last_successful_run = set_last_successful_run(timestamp)
