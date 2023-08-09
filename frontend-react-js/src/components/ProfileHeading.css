@@ -23,28 +23,40 @@
   .container-user-info {
     display: flex;
     flex-grow: 1;
-    padding: 0% 3%;
+    padding: 0% 3% 0% 3%;
     margin-top: -10%;
     flex-direction: row;
-    padding-bottom: 3%;
   }
 
   .container-avatar {
-    flex-direction: row;
-    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
   }
 
   .container-info {
     display: flex;
+    flex-direction: column;
     flex-grow: 1;
-    flex-direction: row;
-    justify-content: space-between;
     margin-top: auto;
     padding-bottom: 3%;
   }
 
   .container-info .title {
     font-size: 1.5rem;
+  }
+
+  .id-info { 
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-between;
+  }
+
+  .bio {
+    color: #fff;
+    font-size: 0.5 rem;
+    z-index: 10;
   }
 
   .profile_heading .avatar {

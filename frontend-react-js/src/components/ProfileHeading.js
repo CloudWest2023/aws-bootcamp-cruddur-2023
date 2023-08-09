@@ -19,15 +19,18 @@ export default function ProfileHeading(props) {
                     </div> */}
                 </div>
                 <div className='container-info'>
-                    <div>
-                        <div className='title'>{props.profile.display_name}</div>
-                        <div className='cruds_count'>{props.profile.cruds_count} stuffs</div>
-                    </div>
-                    <div>
-                        <EditProfileButton setPopped={props.setPopped} />
+                    <div className='id-info'>
+                        <div>
+                            <div className='title'>{props.profile.display_name}</div>
+                            <div className='cruds_count'>{props.profile.cruds_count} stuffs</div>
+                        </div>
+                        <div>
+                            <EditProfileButton setPopped={props.setPopped} />
+                        </div>
                     </div>
                 </div>
             </div>
+            <div className='bio'>Bio: {props.profile.bio}</div>
         </div>
     );
 }

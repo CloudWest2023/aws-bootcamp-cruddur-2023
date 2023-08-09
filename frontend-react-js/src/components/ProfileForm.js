@@ -4,10 +4,12 @@ import process from 'process';
 import { getAccessToken } from '../lib/checkAuth';
 
 export default function ProfileForm(props) {
-    // const [bio, setBio] = React.useState("");
+    const [bio, setBio] = React.useState("");
     const [displayName, setDisplayName] = React.useState("");
 
     React.useEffect(() => {
+      console.log('useEffects', props);
+      setBio(props.profile.bio);
       setDisplayName(props.profile.display_name);
     }, [props.profile])
 
@@ -83,13 +85,13 @@ export default function ProfileForm(props) {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              // bio: bio,
+              bio: bio,
               display_name: displayName
             }),
           });
           let data = await res.json();
           if (res.status === 200) {
-            // setBio(null)
+            setBio(null)
             setDisplayName(null)
             props.setPopped(false)
           } else {
@@ -140,14 +142,14 @@ export default function ProfileForm(props) {
                     onChange={display_name_onchange} 
                   />
                 </div>
-                {/* <div className="field bio">
+                <div className="field bio">
                   <label>Bio</label>
                   <textarea
                     placeholder="Bio"
                     value={bio}
                     onChange={bio_onchange} 
                   />
-                </div> */}
+                </div>
               </div>
             </form>
           </div>
