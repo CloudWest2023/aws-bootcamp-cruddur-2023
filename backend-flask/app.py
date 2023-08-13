@@ -358,7 +358,7 @@ def data_activities_reply(activity_uuid):
     return model['data'], 200
   return
 
-@app.route("/api/profile/update", methods=['POST', 'OPTIONS'])
+@app.route("/api/profile/update", methods=['POST', 'PUT', 'OPTIONS'])
 @cross_origin()
 def data_update_profile():
   bio          = request.json.get('bio', None)

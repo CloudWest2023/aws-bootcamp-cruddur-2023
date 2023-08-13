@@ -1,0 +1,4 @@
+#! /usr/bin/bash
+
+cd $THEIA_WORKSPACE_ROOT/aws/lambda/upload-avatars/
+bundle install
