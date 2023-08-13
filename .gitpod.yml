@@ -8,6 +8,7 @@ tasks:
       unzip awscliv2.zip
       sudo ./aws/install
       cd $THEIA_WORKSPACE_ROOT
+      bash aws/ecr/login
   - name: flask
     command: |
       source "$THEIA_WORKSPACE_ROOT/backend-flask/generate-env"
@@ -24,7 +25,7 @@ tasks:
       echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
       sudo apt update
       sudo apt install -y postgresql-client-13 libpq-dev
-      export GITPOD_IP=$(curl ifconfig.me)
+      export GITPOD_IP=$(curl ifconfig.me) 
       gp env GITPOD_IP=$(curl ifconfig.me)
       source "$THEIA_WORKSPACE_ROOT/backend-flask/bin/rds/update-sg-rule"
   - name: fargate

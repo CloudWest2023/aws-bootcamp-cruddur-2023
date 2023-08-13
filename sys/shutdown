@@ -1,0 +1,5 @@
+#! /usr/bin/bash
+
+source "$THEIA_WORKSPACE_ROOT/aws/rds/stop"
+cd $THEIA_WORKSPACE_ROOT/serverless-cdk
+cdk destroy

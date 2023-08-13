@@ -1,0 +1,8 @@
+#! /usr/bin/bash
+
+# frontened
+# s3 for client-side javascript bucket upload. 
+source "$THEIA_WORKSPACE_ROOT/frontend-react-js/setup-s3"
+
+# docker
+docker compose -f "docker-compose.yaml" up -d --build

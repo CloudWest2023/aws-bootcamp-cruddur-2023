@@ -1,16 +1,26 @@
 #! /usr/bin/bash
 
+# AWS
 sudo ./aws/install
+
+# Lambda
+source "$THEIA_WORKSPACE_ROOT/aws/lambda/upload-avatars/setup"
+source "$THEIA_WORKSPACE_ROOT/aws/lambda/lambda-authorizer/setup"
+
+# PostgreSQL
 # curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc|sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
 echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
 sudo apt update
 sudo apt install -y postgresql-client-13 libpq-dev
+
+# CDK
+source "$THEIA_WORKSPACE_ROOT/serverless-cdk/setup-cdk"
+cd "$THEIA_WORKSPACE_ROOT/serverless-cdk/"
+cdk deploy
+
+# PostgreSQL setup
 export GITPOD_IP=$(curl ifconfig.me)
 gp env GITPOD_IP=$(curl ifconfig.me)
 source "$THEIA_WORKSPACE_ROOT/backend-flask/bin/rds/update-sg-rule"
 source "$THEIA_WORKSPACE_ROOT/aws/ecr/login"
 source "$THEIA_WORKSPACE_ROOT/aws/rds/start"
-
-# frontened
-# s3 for client-side javascript bucket upload. 
-source "$THEIA_WORKSPACE_ROOT/frontend-react-js/setup-s3"

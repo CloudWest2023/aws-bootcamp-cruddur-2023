@@ -2,7 +2,7 @@
 cd /workspace/aws-bootcamp-cruddur-2023/
 sudo ./aws/install
 npm i aws-cdk -g
-cd /workspace/aws-bootcamp-cruddur-2023/serverless-cd
+cd /workspace/aws-bootcamp-cruddur-2023/serverless-cdk
 
 npm install
 rm -rf node_modules/sharp
