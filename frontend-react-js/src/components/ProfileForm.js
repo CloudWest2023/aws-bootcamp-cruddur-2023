@@ -2,35 +2,42 @@ import './ProfileForm.css';
 import React from "react";
 import process from 'process';
 import { getAccessToken } from '../lib/checkAuth';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
 
 export default function ProfileForm(props) {
-    const [presignedurl, setPresignedurl] = React.useState(0);
-    const [bio, setBio] = React.useState(0);
-    const [displayName, setDisplayName] = React.useState(0);
+    const [presignedurl, setPresignedurl] = React.useState("");
+    const [bio, setBio] = React.useState("");
+    const [displayName, setDisplayName] = React.useState("");
 
     React.useEffect(() => {
-      console.log('useEffects', props);
-      setBio(props.profile.bio);
+      setBio(props.profile.bio || '');
       setDisplayName(props.profile.display_name);
     }, [props.profile])
 
     const s3uploadkey = async (event)=> {
         try {
           console.log('s3 upload key')
+          console.log('event: ', event)
+          // const gateway_url = `${process.env.REACT_APP_AWS_API_GATEWAY_ENDPOINT_URL}/avatars/key_upload`
           const gateway_url = "https://3r93j0vel8.execute-api.us-east-1.amazonaws.com/avatars/key_upload"
           await getAccessToken()
           const access_token = localStorage.getItem("access_token")
+          const json = {
+            extension: ""
+          }
           const res = await fetch(gateway_url, {
             method: "POST",
             headers: {
-              'Origin': "https://3000-mariachiina-awsbootcamp-f0x6sksrrgh.ws-us103.gitpod.io", 
+              'Origin': `${process.env.REACT_APP_FRONTEND_URL}`,
               'Authorization': `Bearer ${access_token}`,
               'Accept': 'application/json',
               'Content-Type': 'application/json'
             }
           })
+          console.log("response:  ", res);
           let data = await res.json();
+          console.log("data:  ", data);
+          console.log("data.url:  ", data.url);
+          console.log('s3uploadkey - presigned url: ', data)
           if (res.status === 200) {
             console.log('s3uploadkey - presigned url: ', data)
             return data.url
@@ -51,9 +58,9 @@ export default function ProfileForm(props) {
         const preview_image_url = URL.createObjectURL(file)
         console.log('file: ', filename, size, type)
         
-        // const fileparts = filename.split('.')
-        // const extension = fileparts[fileparts.length-1]
-        const presignedurl = await s3uploadkey()
+        const fileparts = filename.split('.')
+        const extension = fileparts[fileparts.length-1]
+        const presignedurl = await s3uploadkey(extension)
         console.log('︵ ┻━━━━┻ ︵ ╰(°□°╰) presigned url: ', presignedurl)
 
         try {
@@ -65,7 +72,7 @@ export default function ProfileForm(props) {
               'Content-Type': type
             }
           })
-          let data = await res.json();
+          let data = await res.json(); // remove later
           if (res.status === 200) {
             setPresignedurl(data.url)
           } else {
@@ -77,11 +84,16 @@ export default function ProfileForm(props) {
       }
     
       const onsubmit = async (event) => {
+        console.log("onsubmit - event: ", event)
         event.preventDefault();
+        console.log("onsubmit - event.preventDefault(): ", event)
         try {
-          const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/profile/update`
+          // const backend_url = `${process.env.REACT_APP_BACKEND_URL}/api/profile/update`
+          const backend_url = "https://4567-mariachiina-awsbootcamp-f0x6sksrrgh.ws-us102.gitpod.io/api/profile/update"
+          console.log("onsubmit - backend_url: ", backend_url, "  ┻━━━━┻ ︵  ︵ ︵ ︵︵︵ ╰(°□°╰)")
           await getAccessToken()
           const access_token = localStorage.getItem("access_token")
+          console.log("onsubmit - access_token: ", access_token)
           const res = await fetch(backend_url, {
             method: "POST",
             headers: {
@@ -94,6 +106,7 @@ export default function ProfileForm(props) {
               display_name: displayName
             }),
           });
+          console.log("onsubmit - res: ", res.body)
           let data = await res.json();
           if (res.status === 200) {
             setBio(null)

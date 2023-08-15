@@ -1,0 +1,16 @@
+#! /usr/bin/bash
+
+# gem i firebase-ruby -Ni ruby/gems/2.7.0
+gem i jwt -Ni /tmp/lambda-layer/ruby-jwt/ruby/gems/2.7.0
+
+FILE_NAME="lambda-layer"
+
+zip -r $FILE_NAME . -x ".*" -x "*/.*" 
+zipinfo -t $FILE_NAME 
+
+aws lambda publish-layer-version \
+    --layer-name jwt \
+    --description "Lambda Layer for JWT" \
+    --license-info "MIT" \
+    --zip-file fileb://lambda-layer.zip \
+    --compatible-runtimes ruby2.7
