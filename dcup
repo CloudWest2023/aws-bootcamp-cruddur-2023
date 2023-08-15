@@ -5,4 +5,4 @@
 source "$THEIA_WORKSPACE_ROOT/frontend-react-js/setup-s3"
 
 # docker
-docker compose -f "docker-compose.yaml" up -d --build
+docker compose -f "$THEIA_WORKSPACE_ROOT/docker-compose.yaml" up -d --build

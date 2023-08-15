@@ -1,0 +1,11 @@
+#! /usr/bin/bash
+
+CONTAINER_ID=$(docker ps -aqf "name=aws-bootcamp-cruddur-2023-frontend-react-js")
+docker stop $CONTAINER_ID
+docker rm $CONTAINER_ID
+
+IMAGE_ID=$(docker images -q aws-bootcamp-cruddur-2023-frontend-react-js)
+docker rmi $IMAGE_ID
+
+docker system prune -f 
+docker compose -f "docker-compose.yaml" up -d --build
