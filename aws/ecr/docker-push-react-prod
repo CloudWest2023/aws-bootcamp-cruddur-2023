@@ -12,9 +12,9 @@
 #     .
 
 # Tag image
-docker tag frontend-react-js-prod:latest $AWS_ECR_FRONTEND_REACT_PROD_URL:latest
+docker tag frontend-react-js-prod:latest $AWS_ECR_FRONTEND_REACT_URL_PROD:latest
 
 # Push image
-docker push $AWS_ECR_FRONTEND_REACT_PROD_URL:latest
+docker push $AWS_ECR_FRONTEND_REACT_URL_PROD:latest
 # If you want to test it...: 
 # docker run --rm -p 3000:3000 -it frontend-react-js

@@ -1,7 +1,7 @@
 #! /usr/bin/bash
 
 # AWS
-sudo ./aws/install
+sudo "$THEIA_WORKSPACE_ROOT/aws/install"
 
 # Lambda
 source "$THEIA_WORKSPACE_ROOT/aws/lambda/upload-avatars/setup"

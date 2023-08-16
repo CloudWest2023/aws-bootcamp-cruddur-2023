@@ -7,7 +7,7 @@ FRONTEND_REACT_JS_PATH=$(dirname $ABS_PATH)
 # as they will be injected when docker run.
 docker build \
     -f "$FRONTEND_REACT_JS_PATH/Dockerfile.prod" \
-    -t backend-flask-prod \
+    -t frontend-react-js-prod \
     "$FRONTEND_REACT_JS_PATH/."
 
 #     --build-arg REACT_APP_BACKEND_URL="https://api.goodstuff.cloud" \
